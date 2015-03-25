@@ -14,7 +14,7 @@ do
   echo $post_with_space
 
   ./pmd "$post_dir/$post" > "$gen_dir/$post_without_md.html"
-  echo "[$post_with_space]($gen_dir/$post_without_md.html)" >> index.md
+  echo -e "[$post_with_space]($gen_dir/$post_without_md.html)\n" >> index.md
 done
 
 ./pmd index.md > index.html
