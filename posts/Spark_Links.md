@@ -33,8 +33,6 @@
 [赛赛的网络日志 Jerry Shao](http://jerryshao.me/)
 
 
-
-
 ## Spark调优 ##
 [Tuning Spark](http://spark.apache.org/docs/latest/tuning.html)
 
@@ -52,7 +50,7 @@
 
 
 ## Spark Meetup ##
-[Spark Submit](http://spark-summit.org/2014)
+[Spark Submit](http://spark-summit.org/)
 
 [Spark Users Meetup](http://www.meetup.com/spark-users/)
 
@@ -64,6 +62,18 @@
 
 
 ## Spark 参与者 ##
+
+#### Matei Zaharia ###
+[Home Page](http://people.csail.mit.edu/matei/)
+
+
+#### Holden Karau ####
+[Resume](http://www.holdenkarau.com/resume.pdf?q=github)
+
+[Fast Data Processing with spark](http://it-ebooks.info/book/3185/)
+
+[Learning Spark](http://shop.oreilly.com/product/0636920028512.do)
+
 
 #### Reynold Xin (hashjoin) ####
 Databricks大数据公司联合创始人, Apache Spark PMC member
@@ -85,14 +95,6 @@ Databricks software engineer, Apache Spark contributor
 [个人主页](http://blog.liancheng.info/)
 
 
-#### 王家林 ####
-Spark亚太研究院院长和首席专家
-
-[Spark亚太研究院决胜大数据时代100期公益大讲堂](http://edu.51cto.com/course/course_id-1659.html)
-
-[百度云资料](http://pan.baidu.com/share/home?uk=4013289088#category/type=0)
-
-
 #### 陈超 ####
  Apache Spark Contributor, Spark meetup(Hangzhou) 发起人
 
@@ -112,7 +114,6 @@ A Ph.D student in ISCAS 中国科学院软件学院
 
 [Spark Internals](https://github.com/JerryLead/SparkInternals/blob/master/markdown/0-Introduction.md)
 
-[友情序言 to 《Learning Spark: Lightning-fast big data analytics》](http://www.cnblogs.com/jerrylead/archive/2013/04/27/Spark.html)
 
 #### JasonDai ####
 英特尔大数据首席架构师，Apache Spark项目Committer及PMC成员
@@ -126,12 +127,11 @@ A Ph.D student in ISCAS 中国科学院软件学院
 [张包峰的博客](http://blog.csdn.net/pelick)
 
 
-## Spark贡献者 ##
-[Matei Zaharia](http://people.csail.mit.edu/matei/)
+#### 王家林 ####
+Spark亚太研究院院长和首席专家
 
-[Holden Karau](http://www.holdenkarau.com/resume.pdf?q=github)
+[Spark亚太研究院决胜大数据时代100期公益大讲堂](http://edu.51cto.com/course/course_id-1659.html)
 
-1. [Fast Data Processing with spark](http://it-ebooks.info/book/3185/)
+[百度云资料](http://pan.baidu.com/share/home?uk=4013289088#category/type=0)
 
-2. [Learning Spark](http://shop.oreilly.com/product/0636920028512.do)
 
