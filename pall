@@ -1,21 +1,28 @@
 #!/bin/bash
 
-post_dir="posts"
-gen_dir="gen"
+function pall(){
+  post_dir=$1
+  gen_dir=$2
+  index=$3
+  title=$4
 
-mkdir -p $gen_dir
+  mkdir -p $gen_dir
+  echo "#$title" > "$index.md"
 
-echo "#Mars的笔记" > index.md
+  for post in `ls $post_dir`
+  do 
+    post_without_md=${post%.md}
+    post_with_space=${post_without_md//_/ }
+    echo $post_with_space
 
-for post in `ls $post_dir`
-do 
-  post_without_md=${post%.md}
-  post_with_space=${post_without_md//_/ }
-  echo $post_with_space
+    ./pmd "$post_dir/$post" > "$gen_dir/$post_without_md.html"
+    echo -e "[$post_with_space]($gen_dir/$post_without_md.html)\n" >> "$index.md"
+  done
 
-  ./pmd "$post_dir/$post" > "$gen_dir/$post_without_md.html"
-  echo -e "[$post_with_space]($gen_dir/$post_without_md.html)\n" >> index.md
-done
+  ./pmd "$index.md" > "$index.html"
+}
 
-./pmd index.md > index.html
+rm -rf gen
+pall "posts" "gen" "index" "Mars的笔记"
+pall "drafts" "gen" "drafts" "Mars的草稿"
 
