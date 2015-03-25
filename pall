@@ -1,0 +1,21 @@
+#!/bin/bash
+
+post_dir="posts"
+gen_dir="gen"
+
+mkdir -p $gen_dir
+
+echo "#Mars的笔记" > index.md
+
+for post in `ls $post_dir`
+do 
+  post_without_md=${post%.md}
+  post_with_space=${post_without_md//_/ }
+  echo $post_with_space
+
+  ./pmd "$post_dir/$post" > "$gen_dir/$post_without_md.html"
+  echo "[$post_with_space]($gen_dir/$post_without_md.html)" >> index.md
+done
+
+./pmd index.md > index.html
+

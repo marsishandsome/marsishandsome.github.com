@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cat <<EOF
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
@@ -12,3 +14,4 @@ markdown $1
 
 echo ""
 echo "</html>"
+
