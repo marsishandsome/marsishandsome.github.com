@@ -7,11 +7,23 @@
 
 ### [9 个帮助你进行Java性能调优的工具](http://www.open-open.com/news/view/1ec20f6)
 
-### VisualVM
+### VisualVM 
+- 在服务器端起一个监控程序
 - [官网](http://visualvm.java.net/)
 - [使用 VisualVM 进行性能分析及调优](http://www.ibm.com/developerworks/cn/java/j-lo-visualvm/)
 - [visualvm监控jvm及远程jvm监控方法](http://www.blogjava.net/titanaly/archive/2012/03/20/372318.html)
 
-### profiler4j
+### profiler4j 
+- java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 - [官网](http://profiler4j.sourceforge.net/)
+
+### YourKit 
+- 增加 -agentpath:<full agent library path> VM 选项到java 命令行启动参数
+- [官网](https://www.yourkit.com/overview/)
+- [yourkit性能监控工具，远程监控](http://zhwj184.iteye.com/blog/764575)
+
+### Spark
+- spark.python.profile
+- spark.python.profile.dump
+- [Profiling Spark Applications Using YourKit](https://cwiki.apache.org/confluence/display/SPARK/Profiling+Spark+Applications+Using+YourKit)
 
