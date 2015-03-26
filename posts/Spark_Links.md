@@ -4,7 +4,7 @@
 - [Discretized Streams: An Efficient and Fault-Tolerant Model for Stream Processing on Large Clusters](http://www.cs.berkeley.edu/~matei/papers/2012/hotcloud_spark_streaming.pdf) - Matei Zaharia的SparkStreaming论文
 - [Shark: SQL and Rich Analytics at Scale](http://www.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-214.pdf) - Reynold Shi Xin, Matei Zaharia的Shark论文
 
-## Spark简介/概述/使用
+## Spark入门
 - [Scala-Spark Handon Exercises](http://ampcamp.berkeley.edu/big-data-mini-course/index.html) - Spark交互式动手练习
 - [Apache Spark API By Example](http://homepage.cs.latrobe.edu.au/zhe/files/SparkAPIMaster.pdf) - Spark API
 
@@ -31,6 +31,18 @@
 
 ## Videos
 - [Advanced Spark Internals and Tuning](https://www.youtube.com/watch?v=HG2Yd-3r4-M) - Reynold Xin @ Spark summit 2014
+
+
+## Spark调优
+- [Tuning Spark](http://spark.apache.org/docs/latest/tuning.html) - 官网资料
+- [executor-cores vs. num-executors](http://apache-spark-user-list.1001560.n3.nabble.com/executor-cores-vs-num-executors-td9878.html)
+
+
+## Java调优
+- [Java SE 6 HotSpot[tm] Virtual Machine Garbage Collection Tuning](http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html)
+- [Everything I Ever Learned about JVM Performance Tuning](http://www.infoq.com/presentations/JVM-Performance-Tuning-twitter)
+- [java profiling heapster](https://github.com/mariusae/heapster) - Production heap profiling for the JVM
+- [java profiling jvmgcprof](https://github.com/twitter/jvmgcprof) - A simple utility for profile allocation and garbage collection activity in the JVM
 
 
 ## Spark参与者
@@ -92,12 +104,4 @@ Spark亚太研究院院长和首席专家
 - [Spark亚太研究院决胜大数据时代100期公益大讲堂](http://edu.51cto.com/course/course_id-1659.html)
 - [百度云资料](http://pan.baidu.com/share/home?uk=4013289088#category/type=0)
 
-## Spark调优 ##
-- [Tuning Spark](http://spark.apache.org/docs/latest/tuning.html)
-- [Spark调优](http://www.oschina.net/translate/spark-tuning?lang=eng)
-- [executor-cores vs. num-executors](http://apache-spark-user-list.1001560.n3.nabble.com/executor-cores-vs-num-executors-td9878.html)
-- [Java SE 6 HotSpot[tm] Virtual Machine Garbage Collection Tuning](http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html)
-- [Everything I Ever Learned about JVM Performance Tuning](http://www.infoq.com/presentations/JVM-Performance-Tuning-twitter)
-- [java profiling heapster](https://github.com/mariusae/heapster)
-- [java profiling jvmgcprof](https://github.com/twitter/jvmgcprof)
 
