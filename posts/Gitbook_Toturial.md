@@ -1,4 +1,4 @@
-# 介绍
+# Gitbook Toturial
 
 GitBook是一款开源的电子书制作软件，基于Node.js，让你能够使用GitHub/Git和Marsdwon构建出美丽的pdf文档。
 
