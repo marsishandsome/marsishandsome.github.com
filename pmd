@@ -12,6 +12,5 @@ EOF
 
 markdown $1
 
-echo ""
-echo "</html>"
+echo -e "\n</body></html>"
 
