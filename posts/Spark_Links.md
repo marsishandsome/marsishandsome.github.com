@@ -22,7 +22,7 @@
 ## Spark Meetup
 [百度云下载地址](http://pan.baidu.com/s/1dDrQ5ix)
 
-- [Spark Submit](http://spark-summit.org/)
+- [Spark Summit](http://spark-summit.org/)
 - [Spark Users Meetup](http://www.meetup.com/spark-users/)
 - [北京 Spark Meetup](http://www.meetup.com/spark-user-beijing-Meetup/)
 - [上海 Spark Meetup](http://www.meetup.com/Shanghai-Apache-Spark-Meetup/)
@@ -54,9 +54,8 @@ Senior Software Development Engineer @ Databricks
 
 - [Resume](http://www.holdenkarau.com/resume.pdf?q=github)
 - [Github](https://github.com/holdenk)
-- Books
-  - [Fast Data Processing with spark](http://it-ebooks.info/book/3185/)
-  - [Learning Spark](http://shop.oreilly.com/product/0636920028512.do)
+- [Book: Fast Data Processing with spark](http://it-ebooks.info/book/3185/)
+- [Book: Learning Spark](http://shop.oreilly.com/product/0636920028512.do)
 
 #### 连城404
 Databricks software engineer, Apache Spark contributor
