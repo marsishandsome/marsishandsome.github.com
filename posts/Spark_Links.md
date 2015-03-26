@@ -9,39 +9,50 @@
 - [Apache Spark API By Example](http://homepage.cs.latrobe.edu.au/zhe/files/SparkAPIMaster.pdf) - Spark API
 
 ## Spark深入研究
-- [Spark Internals](https://github.com/JerryLead/SparkInternals/blob/master/markdown/0-Introduction.md)
-- [许鹏：从零开始学习，Apache Spark源码走读](http://www.csdn.net/article/2014-05-29/2820013)
+- [Spark Internals](https://github.com/JerryLead/SparkInternals/blob/master/markdown/0-Introduction.md) - Spark设计思想、运行原理、实现架构及性能调优
+- [许鹏：从零开始学习，Apache Spark源码走读](http://www.csdn.net/article/2014-05-29/2820013) - Spark源码解读
 
 ## Spark博客
-- [mmicky的hadoop、Spark世界](http://blog.csdn.net/book_mmicky)
-- [徽沪一郎](http://www.cnblogs.com/hseagle/)
-- [OopsOutOfMemory](http://blog.csdn.net/oopsoom)
-- [赛赛的网络日志 Jerry Shao](http://jerryshao.me/)
-- [baishuo491](http://baishuo491.iteye.com/blog)
+- [mmicky的hadoop、Spark世界](http://blog.csdn.net/book_mmicky) - SparkCore, SparkSQL分析
+- [徽沪一郎](http://www.cnblogs.com/hseagle/) - Spark Common使用
+- [OopsOutOfMemory](http://blog.csdn.net/oopsoom) - Spark分析
+- [赛赛的网络日志 Jerry Shao](http://jerryshao.me/) - Spark内部实现
+- [baishuo491](http://baishuo491.iteye.com/blog) - Spark源码
 
 ## Spark Meetup
+- [百度云下载地址](http://pan.baidu.com/s/1dDrQ5ix)
 - [Spark Submit](http://spark-summit.org/)
 - [Spark Users Meetup](http://www.meetup.com/spark-users/)
 - [北京 Spark Meetup](http://www.meetup.com/spark-user-beijing-Meetup/)
 - [上海 Spark Meetup](http://www.meetup.com/Shanghai-Apache-Spark-Meetup/)
 - [杭州 Spark Meetup](http://www.meetup.com/Hangzhou-Apache-Spark-Meetup/)
 
+
+## Videos
+- [Spark Summit 2014 - Advanced Spark Training - Advanced Spark Internals and Tuning](https://www.youtube.com/watch?v=HG2Yd-3r4-M) - Reynold Xin
+
+
 ## Spark参与者
 
 #### Matei Zaharia
+- Co-founder and CTO of Databricks
+- [Wikipedia](http://en.wikipedia.org/wiki/Matei_Zaharia)
 - [Home Page](http://people.csail.mit.edu/matei/)
-
-#### Holden Karau
-- [Resume](http://www.holdenkarau.com/resume.pdf?q=github)
-- [Fast Data Processing with spark](http://it-ebooks.info/book/3185/)
-- [Learning Spark](http://shop.oreilly.com/product/0636920028512.do)
+- [Github](https://github.com/mateiz)
 
 #### Reynold Xin (hashjoin)
 - Databricks大数据公司联合创始人, Apache Spark PMC member
 - [Github](https://github.com/rxin)
 - [新浪微博 @hashjoin](http://www.weibo.com/hashjoin)
 - [伯克利主页](http://www.cs.berkeley.edu/~rxin/)
-- [Spark Summit 2014 - Advanced Spark Training - Advanced Spark Internals and Tuning](https://www.youtube.com/watch?v=HG2Yd-3r4-M)
+
+#### Holden Karau
+Senior Software Development Engineer @ Databricks
+- [Resume](http://www.holdenkarau.com/resume.pdf?q=github)
+- [Github](https://github.com/holdenk)
+- Books
+  - [Fast Data Processing with spark](http://it-ebooks.info/book/3185/)
+  - [Learning Spark](http://shop.oreilly.com/product/0636920028512.do)
 
 #### 连城404
 - Databricks software engineer, Apache Spark contributor
