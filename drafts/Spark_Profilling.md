@@ -49,5 +49,11 @@
 - [Github](https://github.com/brendangregg/FlameGraph)
 - [Flame Graphs](http://www.brendangregg.com/flamegraphs.html)
 
+### Graphite
+- [HTTP API](https://github.com/brutasse/graphite-api/blob/master/docs/api.rst)
+
+
+### Others
+[Simz](http://www.autoletics.com/)
 
 
