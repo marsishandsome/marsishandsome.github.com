@@ -32,3 +32,13 @@
 - spark.python.profile.dump
 - [Profiling Spark Applications Using YourKit](https://cwiki.apache.org/confluence/display/SPARK/Profiling+Spark+Applications+Using+YourKit)
 
+### 论文
+- [JaViz: A client/server Java profiling tool](http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5387066&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5387066)
+
+
+### statsd-jvm-profiler
+- [Introducing statsd-jvm-profiler: A JVM Profiler for Hadoop](https://codeascraft.com/2015/01/14/introducing-statsd-jvm-profiler-a-jvm-profiler-for-hadoop/)
+- [Understanding StatsD and Graphite](https://blog.pkhamre.com/understanding-statsd-and-graphite/)
+- [How To Configure StatsD to Collect Arbitrary Stats for Graphite](https://www.digitalocean.com/community/tutorials/how-to-configure-statsd-to-collect-arbitrary-stats-for-graphite-on-ubuntu-14-04)
+- [Flame Graphs](http://www.brendangregg.com/flamegraphs.html)
+
