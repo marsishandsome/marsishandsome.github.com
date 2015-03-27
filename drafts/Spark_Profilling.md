@@ -37,8 +37,17 @@
 
 
 ### statsd-jvm-profiler
+- [Github](https://github.com/etsy/statsd-jvm-profiler)
 - [Introducing statsd-jvm-profiler: A JVM Profiler for Hadoop](https://codeascraft.com/2015/01/14/introducing-statsd-jvm-profiler-a-jvm-profiler-for-hadoop/)
+
+### StatsD
+- [Github](https://github.com/etsy/statsd)
 - [Understanding StatsD and Graphite](https://blog.pkhamre.com/understanding-statsd-and-graphite/)
 - [How To Configure StatsD to Collect Arbitrary Stats for Graphite](https://www.digitalocean.com/community/tutorials/how-to-configure-statsd-to-collect-arbitrary-stats-for-graphite-on-ubuntu-14-04)
+
+### Flame
+- [Github](https://github.com/brendangregg/FlameGraph)
 - [Flame Graphs](http://www.brendangregg.com/flamegraphs.html)
+
+
 
