@@ -42,4 +42,3 @@
 - [How To Configure StatsD to Collect Arbitrary Stats for Graphite](https://www.digitalocean.com/community/tutorials/how-to-configure-statsd-to-collect-arbitrary-stats-for-graphite-on-ubuntu-14-04)
 - [Flame Graphs](http://www.brendangregg.com/flamegraphs.html)
 
-
