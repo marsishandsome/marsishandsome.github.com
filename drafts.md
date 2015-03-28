@@ -3,5 +3,5 @@
 
 [Markdown](gen/Markdown.html)
 
-[Spark Profilling](gen/Spark_Profilling.html)
+[Spark Profiling](gen/Spark_Profiling.html)
 
