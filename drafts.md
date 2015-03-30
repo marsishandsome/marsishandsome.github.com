@@ -5,3 +5,5 @@
 
 [Spark Profiling](gen/Spark_Profiling.html)
 
+[Spark Summit East 2015](gen/Spark_Summit_East_2015.html)
+
