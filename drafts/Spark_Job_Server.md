@@ -5,7 +5,7 @@
 
 ![](/images/spark_job_server_arch.png)
 
-![](spark_job_server_remoting.png)
+![](/images/spark_job_server_remoting.png)
 
 1. Fine grained configuration of Spark Context
 2. Progress Reporting
