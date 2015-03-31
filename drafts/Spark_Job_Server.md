@@ -23,17 +23,22 @@
 
 ### Spark Job Server
 - [Spark Summit](http://spark-summit.org/wp-content/uploads/2014/07/Spark-Job-Server-Easy-Spark-Job-Management-Chan-Chu.pdf)
-- [Github](http://github.com/ooyala/spark-jobserver)
+- [Github New](https://github.com/spark-jobserver/spark-jobserver)
+- [Github Old](http://github.com/ooyala/spark-jobserver)
 
-1. REST API for Spark jobs and contexts. Easily operate Spark from any language or environment.
-2. Runs jobs in their own Contexts or share 1 context amongst jobs
-3. Great for sharing cached RDDs across jobs and low-latency jobs
-4. Works for Spark Streaming as well!
-5. Works with Standalone, Mesos, any Spark config
-6. Jars, job history and config are persisted via a pluggable API
-7. Async and sync API, JSON job results
+1. "Spark as a Service": Simple REST interface for all aspects of job, context management
+2. Support for Spark SQL Contexts/jobs and custom job contexts, Works for Spark Streaming as well!
+3. Supports sub-second low-latency jobs via long-running job contexts
+4. Start and stop job contexts for RDD sharing and low-latency jobs; change resources on restart
+5. Kill running jobs via stop context
+6. Separate jar uploading step for faster job startup
+7. Asynchronous and synchronous job API. Synchronous API is great for low latency jobs!
+8. Works with Standalone Spark as well as Mesos and yarn-client
+9. Job and jar info is persisted via a pluggable DAO interface
+10. Named RDDs to cache and retrieve RDDs by name, improving RDD sharing and reuse among jobs.
+11. Jars, job history and config are persisted via a pluggable API
+12. Async and sync API, JSON job results
 
-sbt assembly -> fat jar -> upload to job server
 
 ```
 /**
@@ -53,29 +58,58 @@ override def runJob(sc: SparkContext, config: Config): Any = {
 }
 ```
 
-- Job does not create Context, Job Server does 
-- Decide when I run the job: in own context, or in pre-created context
-- Upload new jobs to diagnose your RDD issues:
-  - POST /contexts/newContext
-  - POST /jobs .... context=newContext
-  - Upload a new diagnostic jar... POST /jars/newDiag
-  - Run diagnostic jar to dump into on cached RDDs
+sbt assembly -> fat jar -> upload to job server
+```
+curl --data-binary @job-server-tests/target/job-server-tests-$VER.jar localhost:8090/jars/test
+OK
+```
 
+Ad-hoc Mode - Single, Unrelated Jobs (Transient Context)
 ```
-curl --data-binary @../target/mydemo.jar localhost:8090/jars/demo
-OK[11:32 PM] ~
-curl -d "input.string = A lazy dog jumped mean dog" 'localhost:8090/jobs?
-appName=demo&classPath=WordCountExample&sync=true'
+curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample'
 {
- "status": "OK",
- "RESULT": {
- "lazy": 1,
- "jumped": 1,
- "A": 1,
- "mean": 1,
- "dog": 2
- }
+  "status": "STARTED",
+  "result": {
+    "jobId": "5453779a-f004-45fc-a11d-a39dae0f9bf4",
+    "context": "b7ea0eb5-spark.jobserver.WordCountExample"
+  }
+}
+
+curl localhost:8090/jobs/5453779a-f004-45fc-a11d-a39dae0f9bf4
+{
+  "status": "OK",
+  "result": {
+    "a": 2,
+    "b": 2,
+    "c": 1,
+    "see": 1
+  }
+}
 ```
+
+Persistent Context Mode - Faster & Required for Related Jobs
+```
+curl -d "" 'localhost:8090/contexts/test-context?num-cpu-cores=4&memory-per-node=512m'
+OK
+
+curl localhost:8090/contexts
+["test-context"]
+
+curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample&context=test-context&sync=true'
+{
+  "status": "OK",
+  "result": {
+    "a": 2,
+    "b": 2,
+    "c": 1,
+    "see": 1
+  }
+}
+```
+
+
+### Spark-Admin -- provides administrators and developers a GUI to provision and manage Spark clusters easily
+- [github](https://github.com/adatao/adatao-admin)
 
 
 ### 二进制兼容问题
