@@ -1,0 +1,91 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <meta name="author" content="Mars Gu" />
+   <link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+</head>
+<body>
+<h1>Spark Job Server</h1>
+<h3>Zoomdata</h3>
+<ul>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-14-Zoomdata-Alarcon.pdf">Spark Summit</a></li>
+</ul>
+<p><img alt="" src="/images/spark_job_server_arch.png" /></p>
+<p><img alt="" src="spark_job_server_remoting.png" /></p>
+<ol>
+<li>Fine grained configuration of Spark Context</li>
+<li>Progress Reporting</li>
+<li>Custom Parsers of Raw Values JdbcRdd.convertValue</li>
+<li>TSV support</li>
+<li>XML support</li>
+<li>YARN support</li>
+<li>Spark programming model</li>
+<li>load and read requests in separate scheduler’s pools</li>
+<li>Cancel queries</li>
+</ol>
+<h3>HiveThriftServer</h3>
+<h3>Spark Job Server</h3>
+<ul>
+<li><a href="http://spark-summit.org/wp-content/uploads/2014/07/Spark-Job-Server-Easy-Spark-Job-Management-Chan-Chu.pdf">Spark Summit</a></li>
+<li>
+<p><a href="http://github.com/ooyala/spark-jobserver">Github</a></p>
+</li>
+<li>
+<p>REST API for Spark jobs and contexts. Easily operate Spark from any language or environment.</p>
+</li>
+<li>Runs jobs in their own Contexts or share 1 context amongst jobs</li>
+<li>Great for sharing cached RDDs across jobs and low-latency jobs</li>
+<li>Works for Spark Streaming as well!</li>
+<li>Works with Standalone, Mesos, any Spark config</li>
+<li>Jars, job history and config are persisted via a pluggable API</li>
+<li>Async and sync API, JSON job results</li>
+</ul>
+<p>sbt assembly -&gt; fat jar -&gt; upload to job server</p>
+<p><code>/**
+* A super-simple Spark job example that implements the SparkJob trait and
+* can be submitted to the job server.
+*/
+object WordCountExample extends SparkJob {
+override def validate(sc: SparkContext, config: Config): SparkJobValidation = {
+ Try(config.getString(“input.string”))
+ .map(x =&gt; SparkJobValid)
+ .getOrElse(SparkJobInvalid(“No input.string”))
+ }
+override def runJob(sc: SparkContext, config: Config): Any = {
+ val dd = sc.parallelize(config.getString(“input.string”).split(" ").toSeq)
+ dd.map((_, 1)).reduceByKey(_ + _).collect().toMap
+ }
+}</code></p>
+<ul>
+<li>Job does not create Context, Job Server does </li>
+<li>Decide when I run the job: in own context, or in pre-created context</li>
+<li>Upload new jobs to diagnose your RDD issues:</li>
+<li>POST /contexts/newContext</li>
+<li>POST /jobs .... context=newContext</li>
+<li>Upload a new diagnostic jar... POST /jars/newDiag</li>
+<li>Run diagnostic jar to dump into on cached RDDs</li>
+</ul>
+<p><code>curl --data-binary @../target/mydemo.jar localhost:8090/jars/demo
+OK[11:32 PM] ~
+curl -d "input.string = A lazy dog jumped mean dog" 'localhost:8090/jobs?
+appName=demo&amp;classPath=WordCountExample&amp;sync=true'
+{
+ "status": "OK",
+ "RESULT": {
+ "lazy": 1,
+ "jumped": 1,
+ "A": 1,
+ "mean": 1,
+ "dog": 2
+ }</code></p>
+<h3>二进制兼容问题</h3>
+<ul>
+<li>Reading from HDFS</li>
+<li>Spark driver’s hadoop libraries need to match those on the spark cluster</li>
+<li>We made these libraries configurable by:</li>
+<li>Decoupling the spark driver into a separate process</li>
+<li>Allowing administrators to configure what libraries through a UI</li>
+<li>Kicking off a spark driver process with the configured hadoop libraries</li>
+</ul>
+</body>
+</html>
