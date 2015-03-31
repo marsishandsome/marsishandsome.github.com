@@ -18,9 +18,6 @@
 9. Cancel queries
 
 
-### HiveThriftServer
-
-
 ### Spark Job Server
 - [Spark Summit](http://spark-summit.org/wp-content/uploads/2014/07/Spark-Job-Server-Easy-Spark-Job-Management-Chan-Chu.pdf)
 - [Github New](https://github.com/spark-jobserver/spark-jobserver)
@@ -41,10 +38,6 @@
 
 
 ```
-/**
-* A super-simple Spark job example that implements the SparkJob trait and
-* can be submitted to the job server.
-*/
 object WordCountExample extends SparkJob {
 override def validate(sc: SparkContext, config: Config): SparkJobValidation = {
  Try(config.getString(“input.string”))
@@ -59,12 +52,14 @@ override def runJob(sc: SparkContext, config: Config): Any = {
 ```
 
 sbt assembly -> fat jar -> upload to job server
+
 ```
 curl --data-binary @job-server-tests/target/job-server-tests-$VER.jar localhost:8090/jars/test
 OK
 ```
 
 Ad-hoc Mode - Single, Unrelated Jobs (Transient Context)
+
 ```
 curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample'
 {
@@ -88,6 +83,7 @@ curl localhost:8090/jobs/5453779a-f004-45fc-a11d-a39dae0f9bf4
 ```
 
 Persistent Context Mode - Faster & Required for Related Jobs
+
 ```
 curl -d "" 'localhost:8090/contexts/test-context?num-cpu-cores=4&memory-per-node=512m'
 OK
@@ -106,6 +102,12 @@ curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&classPa
   }
 }
 ```
+
+### Spark Kernel (IBM)
+- [github](https://github.com/ibm-et/spark-kernel)
+
+
+### HiveThriftServer
 
 
 ### Spark-Admin -- provides administrators and developers a GUI to provision and manage Spark clusters easily
