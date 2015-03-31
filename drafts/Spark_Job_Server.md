@@ -53,11 +53,15 @@ Example
 ### Spark Kernel (IBM)
 - [github](https://github.com/ibm-et/spark-kernel)
 
+![](https://raw.githubusercontent.com/wiki/ibm-et/spark-kernel/overview.png)
+
 
 ### HiveThriftServer
+- [github](https://github.com/apache/spark/tree/master/sql)
 
 
-### Spark-Admin -- provides administrators and developers a GUI to provision and manage Spark clusters easily
+### Spark-Admin 
+- provides administrators and developers a GUI to provision and manage Spark clusters easily
 - [github](https://github.com/adatao/adatao-admin)
 
 
