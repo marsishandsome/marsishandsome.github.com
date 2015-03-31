@@ -37,71 +37,63 @@
 12. Async and sync API, JSON job results
 
 
-```
-object WordCountExample extends SparkJob {
-override def validate(sc: SparkContext, config: Config): SparkJobValidation = {
- Try(config.getString(“input.string”))
- .map(x => SparkJobValid)
- .getOrElse(SparkJobInvalid(“No input.string”))
- }
-override def runJob(sc: SparkContext, config: Config): Any = {
- val dd = sc.parallelize(config.getString(“input.string”).split(" ").toSeq)
- dd.map((_, 1)).reduceByKey(_ + _).collect().toMap
- }
-}
-```
+    object WordCountExample extends SparkJob {
+    override def validate(sc: SparkContext, config: Config): SparkJobValidation = {
+     Try(config.getString(“input.string”))
+     .map(x => SparkJobValid)
+     .getOrElse(SparkJobInvalid(“No input.string”))
+     }
+    override def runJob(sc: SparkContext, config: Config): Any = {
+     val dd = sc.parallelize(config.getString(“input.string”).split(" ").toSeq)
+     dd.map((_, 1)).reduceByKey(_ + _).collect().toMap
+     }
+    }
 
 sbt assembly -> fat jar -> upload to job server
 
-```
-curl --data-binary @job-server-tests/target/job-server-tests-$VER.jar localhost:8090/jars/test
-OK
-```
+    curl --data-binary @job-server-tests/target/job-server-tests-$VER.jar localhost:8090/jars/test
+    OK
 
 Ad-hoc Mode - Single, Unrelated Jobs (Transient Context)
 
-```
-curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample'
-{
-  "status": "STARTED",
-  "result": {
-    "jobId": "5453779a-f004-45fc-a11d-a39dae0f9bf4",
-    "context": "b7ea0eb5-spark.jobserver.WordCountExample"
-  }
-}
+    curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample'
+    {
+      "status": "STARTED",
+      "result": {
+        "jobId": "5453779a-f004-45fc-a11d-a39dae0f9bf4",
+        "context": "b7ea0eb5-spark.jobserver.WordCountExample"
+      }
+    }
 
-curl localhost:8090/jobs/5453779a-f004-45fc-a11d-a39dae0f9bf4
-{
-  "status": "OK",
-  "result": {
-    "a": 2,
-    "b": 2,
-    "c": 1,
-    "see": 1
-  }
-}
-```
+    curl localhost:8090/jobs/5453779a-f004-45fc-a11d-a39dae0f9bf4
+    {
+      "status": "OK",
+      "result": {
+        "a": 2,
+        "b": 2,
+        "c": 1,
+        "see": 1
+      }
+    }
 
 Persistent Context Mode - Faster & Required for Related Jobs
 
-```
-curl -d "" 'localhost:8090/contexts/test-context?num-cpu-cores=4&memory-per-node=512m'
-OK
+    curl -d "" 'localhost:8090/contexts/test-context?num-cpu-cores=4&memory-per-node=512m'
+    OK
 
-curl localhost:8090/contexts
-["test-context"]
+    curl localhost:8090/contexts
+    ["test-context"]
 
-curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample&context=test-context&sync=true'
-{
-  "status": "OK",
-  "result": {
-    "a": 2,
-    "b": 2,
-    "c": 1,
-    "see": 1
-  }
-}
-```
+    curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample&context=test-context&sync=true'
+    {
+      "status": "OK",
+      "result": {
+        "a": 2,
+        "b": 2,
+        "c": 1,
+        "see": 1
+      }
+    }
 
 ### Spark Kernel (IBM)
 - [github](https://github.com/ibm-et/spark-kernel)

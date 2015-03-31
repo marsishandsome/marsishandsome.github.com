@@ -43,9 +43,9 @@
 <li>Job and jar info is persisted via a pluggable DAO interface</li>
 <li>Named RDDs to cache and retrieve RDDs by name, improving RDD sharing and reuse among jobs.</li>
 <li>Jars, job history and config are persisted via a pluggable API</li>
-<li>Async and sync API, JSON job results</li>
-</ul>
-<p><code>object WordCountExample extends SparkJob {
+<li>
+<p>Async and sync API, JSON job results</p>
+<p>object WordCountExample extends SparkJob {
 override def validate(sc: SparkContext, config: Config): SparkJobValidation = {
  Try(config.getString(“input.string”))
  .map(x =&gt; SparkJobValid)
@@ -55,21 +55,24 @@ override def runJob(sc: SparkContext, config: Config): Any = {
  val dd = sc.parallelize(config.getString(“input.string”).split(" ").toSeq)
  dd.map((_, 1)).reduceByKey(_ + _).collect().toMap
  }
-}</code></p>
+}</p>
+</li>
+</ul>
 <p>sbt assembly -&gt; fat jar -&gt; upload to job server</p>
-<p><code>curl --data-binary @job-server-tests/target/job-server-tests-$VER.jar localhost:8090/jars/test
-OK</code></p>
+<pre><code>curl --data-binary @job-server-tests/target/job-server-tests-$VER.jar localhost:8090/jars/test
+OK
+</code></pre>
 <p>Ad-hoc Mode - Single, Unrelated Jobs (Transient Context)</p>
-<p>```
-curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&amp;classPath=spark.jobserver.WordCountExample'
+<pre><code>curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&amp;classPath=spark.jobserver.WordCountExample'
 {
   "status": "STARTED",
   "result": {
     "jobId": "5453779a-f004-45fc-a11d-a39dae0f9bf4",
     "context": "b7ea0eb5-spark.jobserver.WordCountExample"
   }
-}</p>
-<p>curl localhost:8090/jobs/5453779a-f004-45fc-a11d-a39dae0f9bf4
+}
+
+curl localhost:8090/jobs/5453779a-f004-45fc-a11d-a39dae0f9bf4
 {
   "status": "OK",
   "result": {
@@ -79,14 +82,15 @@ curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&amp;cla
     "see": 1
   }
 }
-```</p>
+</code></pre>
 <p>Persistent Context Mode - Faster &amp; Required for Related Jobs</p>
-<p>```
-curl -d "" 'localhost:8090/contexts/test-context?num-cpu-cores=4&amp;memory-per-node=512m'
-OK</p>
-<p>curl localhost:8090/contexts
-["test-context"]</p>
-<p>curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&amp;classPath=spark.jobserver.WordCountExample&amp;context=test-context&amp;sync=true'
+<pre><code>curl -d "" 'localhost:8090/contexts/test-context?num-cpu-cores=4&amp;memory-per-node=512m'
+OK
+
+curl localhost:8090/contexts
+["test-context"]
+
+curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&amp;classPath=spark.jobserver.WordCountExample&amp;context=test-context&amp;sync=true'
 {
   "status": "OK",
   "result": {
@@ -96,7 +100,7 @@ OK</p>
     "see": 1
   }
 }
-```</p>
+</code></pre>
 <h3>Spark Kernel (IBM)</h3>
 <ul>
 <li><a href="https://github.com/ibm-et/spark-kernel">github</a></li>
