@@ -43,9 +43,10 @@
 <li>Job and jar info is persisted via a pluggable DAO interface</li>
 <li>Named RDDs to cache and retrieve RDDs by name, improving RDD sharing and reuse among jobs.</li>
 <li>Jars, job history and config are persisted via a pluggable API</li>
-<li>
-<p>Async and sync API, JSON job results</p>
-<p>object WordCountExample extends SparkJob {
+<li>Async and sync API, JSON job results</li>
+</ul>
+<p>Example</p>
+<pre><code>object WordCountExample extends SparkJob {
 override def validate(sc: SparkContext, config: Config): SparkJobValidation = {
  Try(config.getString(“input.string”))
  .map(x =&gt; SparkJobValid)
@@ -55,9 +56,8 @@ override def runJob(sc: SparkContext, config: Config): Any = {
  val dd = sc.parallelize(config.getString(“input.string”).split(" ").toSeq)
  dd.map((_, 1)).reduceByKey(_ + _).collect().toMap
  }
-}</p>
-</li>
-</ul>
+}
+</code></pre>
 <p>sbt assembly -&gt; fat jar -&gt; upload to job server</p>
 <pre><code>curl --data-binary @job-server-tests/target/job-server-tests-$VER.jar localhost:8090/jars/test
 OK

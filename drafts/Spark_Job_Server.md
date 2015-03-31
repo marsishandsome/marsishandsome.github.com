@@ -36,6 +36,7 @@
 11. Jars, job history and config are persisted via a pluggable API
 12. Async and sync API, JSON job results
 
+Example
 
     object WordCountExample extends SparkJob {
     override def validate(sc: SparkContext, config: Config): SparkJobValidation = {
