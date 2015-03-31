@@ -7,16 +7,6 @@
 
 ![](/images/spark_job_server_remoting.png)
 
-1. Fine grained configuration of Spark Context
-2. Progress Reporting
-3. Custom Parsers of Raw Values JdbcRdd.convertValue
-4. TSV support
-5. XML support
-6. YARN support
-7. Spark programming model
-8. load and read requests in separate scheduler’s pools
-9. Cancel queries
-
 
 ### Spark Job Server
 - [Spark Summit](http://spark-summit.org/wp-content/uploads/2014/07/Spark-Job-Server-Easy-Spark-Job-Management-Chan-Chu.pdf)
