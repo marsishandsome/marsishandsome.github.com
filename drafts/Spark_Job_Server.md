@@ -3,7 +3,7 @@
 ### Zoomdata
 - [Spark Summit](http://spark-summit.org/wp-content/uploads/2015/03/SSE15-14-Zoomdata-Alarcon.pdf)
 
-<img src="/images/spark_job_server_arch.png" width="400px">
+<img src="/images/spark_job_server_arch.png" width="1000px">
 
 ![](/images/spark_job_server_remoting.png)
 
