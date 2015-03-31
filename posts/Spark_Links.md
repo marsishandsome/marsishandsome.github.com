@@ -31,6 +31,7 @@
 
 ## Videos
 - [Advanced Spark Internals and Tuning](https://www.youtube.com/watch?v=HG2Yd-3r4-M) - Reynold Xin @ Spark summit 2014
+- [Everyday I am Shuffling - Tips for Writing Better Spark Programs](https://www.youtube.com/watch?v=Wg2boMqLjCg) - Holen Karau @ Strata San Jose 2015
 
 
 ## Spark调优
@@ -87,7 +88,8 @@ A Ph.D student in ISCAS 中国科学院软件学院
 - [Github IO](http://jerrylead.github.io/)
 - [Github](https://github.com/JerryLead)
 - [JerryLead博客园](http://www.cnblogs.com/jerrylead/default.html?page=1)
-- [Spark Internals](https://github.com/JerryLead/SparkInternals/blob/master/markdown/0-Introduction.md)
+- [Spark Internals by JerryLead](https://github.com/JerryLead/SparkInternals/blob/master/markdown/0-Introduction.md)
+- [Spark Study by shijinkui](https://github.com/shijinkui/spark_study)
 
 #### JasonDai
 英特尔大数据首席架构师，Apache Spark项目Committer及PMC成员

@@ -31,10 +31,10 @@
 <li>Don’t wrap Spark</li>
 <li>Think of Spark Client API like ODBC/JDBC</li>
 <li>using existing JVM IDE environment instead of spark-submit for easier debugging</li>
-<li>Dynamically deploy code to cluster at run-time with lambda closures 
-<code>val sc = new SparkContext(conf)
-sc.addJar(JarCreator.createJarFile(JarCreator.getClassesFromClassPath(getClass.getPackage.getName)))</code></li>
+<li>Dynamically deploy code to cluster at run-time with lambda closures </li>
 </ul>
+<p><code>val sc = new SparkContext(conf)
+sc.addJar(JarCreator.createJarFile(JarCreator.getClassesFromClassPath(getClass.getPackage.getName)))</code></p>
 <h3>Spark User Concurrency and Context/RDD Sharing at Production Scale</h3>
 <ul>
 <li>Farzad Aref (Zoomdata), Justin Langseth (Zoomdata)</li>

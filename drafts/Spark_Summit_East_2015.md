@@ -24,6 +24,7 @@ unified engine across data sources, workloads and environments
 - Think of Spark Client API like ODBC/JDBC
 - using existing JVM IDE environment instead of spark-submit for easier debugging
 - Dynamically deploy code to cluster at run-time with lambda closures 
+
 ```
 val sc = new SparkContext(conf)
 sc.addJar(JarCreator.createJarFile(JarCreator.getClassesFromClassPath(getClass.getPackage.getName)))
