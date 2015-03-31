@@ -10,7 +10,8 @@
 <ul>
 <li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-14-Zoomdata-Alarcon.pdf">Spark Summit</a></li>
 </ul>
-<p><img alt="" src="/images/spark_job_server_arch.png" /></p>
+<img src="/images/spark_job_server_arch.png" width="400px">
+
 <p><img alt="" src="/images/spark_job_server_remoting.png" /></p>
 <ol>
 <li>Fine grained configuration of Spark Context</li>
@@ -56,49 +57,6 @@ override def runJob(sc: SparkContext, config: Config): Any = {
  val dd = sc.parallelize(config.getString(“input.string”).split(" ").toSeq)
  dd.map((_, 1)).reduceByKey(_ + _).collect().toMap
  }
-}
-</code></pre>
-<p>sbt assembly -&gt; fat jar -&gt; upload to job server</p>
-<pre><code>curl --data-binary @job-server-tests/target/job-server-tests-$VER.jar localhost:8090/jars/test
-OK
-</code></pre>
-<p>Ad-hoc Mode - Single, Unrelated Jobs (Transient Context)</p>
-<pre><code>curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&amp;classPath=spark.jobserver.WordCountExample'
-{
-  "status": "STARTED",
-  "result": {
-    "jobId": "5453779a-f004-45fc-a11d-a39dae0f9bf4",
-    "context": "b7ea0eb5-spark.jobserver.WordCountExample"
-  }
-}
-
-curl localhost:8090/jobs/5453779a-f004-45fc-a11d-a39dae0f9bf4
-{
-  "status": "OK",
-  "result": {
-    "a": 2,
-    "b": 2,
-    "c": 1,
-    "see": 1
-  }
-}
-</code></pre>
-<p>Persistent Context Mode - Faster &amp; Required for Related Jobs</p>
-<pre><code>curl -d "" 'localhost:8090/contexts/test-context?num-cpu-cores=4&amp;memory-per-node=512m'
-OK
-
-curl localhost:8090/contexts
-["test-context"]
-
-curl -d "input.string = a b c a b see" 'localhost:8090/jobs?appName=test&amp;classPath=spark.jobserver.WordCountExample&amp;context=test-context&amp;sync=true'
-{
-  "status": "OK",
-  "result": {
-    "a": 2,
-    "b": 2,
-    "c": 1,
-    "see": 1
-  }
 }
 </code></pre>
 <h3>Spark Kernel (IBM)</h3>
