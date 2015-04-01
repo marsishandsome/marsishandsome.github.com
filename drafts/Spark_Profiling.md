@@ -10,6 +10,14 @@
 
 [9 个帮助你进行Java性能调优的工具](http://www.open-open.com/news/view/1ec20f6)
 
+
+# Java调优
+- [Java SE 6 HotSpot[tm] Virtual Machine Garbage Collection Tuning](http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html)
+- [Everything I Ever Learned about JVM Performance Tuning](http://www.infoq.com/presentations/JVM-Performance-Tuning-twitter)
+- [java profiling heapster](https://github.com/mariusae/heapster) - Production heap profiling for the JVM
+- [java profiling jvmgcprof](https://github.com/twitter/jvmgcprof) - A simple utility for profile allocation and garbage collection activity in the JVM
+
+
 ### VisualVM 
 - 在服务器端起一个监控程序
 - [官网](http://visualvm.java.net/)

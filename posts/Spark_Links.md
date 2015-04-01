@@ -1,8 +1,16 @@
 # Spark论文
-- [Spark: Cluster Computing with Working Sets](http://people.csail.mit.edu/matei/papers/2010/hotcloud_spark.pdf) - Matei Zaharia的Spark论文
-- [Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing](http://www.cs.berkeley.edu/~matei/papers/2012/nsdi_spark.pdf) - Matei Zaharia的Spark论文
-- [Discretized Streams: An Efficient and Fault-Tolerant Model for Stream Processing on Large Clusters](http://www.cs.berkeley.edu/~matei/papers/2012/hotcloud_spark_streaming.pdf) - Matei Zaharia的SparkStreaming论文
-- [Shark: SQL and Rich Analytics at Scale](http://www.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-214.pdf) - Reynold Shi Xin, Matei Zaharia的Shark论文
+
+### Spark Core
+- [Spark: Cluster Computing with Working Sets](http://people.csail.mit.edu/matei/papers/2010/hotcloud_spark.pdf)
+- [Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing](http://www.cs.berkeley.edu/~matei/papers/2012/nsdi_spark.pdf)
+
+### Spark SQL
+- [Shark: SQL and Rich Analytics at Scale](http://www.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-214.pdf)
+- [Spark SQL: Relational Data Processing in Spark](http://people.csail.mit.edu/matei/papers/2015/sigmod_spark_sql.pdf)
+
+
+### Spark Streaming
+- [Discretized Streams: An Efficient and Fault-Tolerant Model for Stream Processing on Large Clusters](http://www.cs.berkeley.edu/~matei/papers/2012/hotcloud_spark_streaming.pdf)
 
 
 # Spark入门
@@ -43,15 +51,7 @@
 - [杭州 Spark Meetup](http://www.meetup.com/Hangzhou-Apache-Spark-Meetup/)
 
 
-# Java调优
-- [Java SE 6 HotSpot[tm] Virtual Machine Garbage Collection Tuning](http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html)
-- [Everything I Ever Learned about JVM Performance Tuning](http://www.infoq.com/presentations/JVM-Performance-Tuning-twitter)
-- [java profiling heapster](https://github.com/mariusae/heapster) - Production heap profiling for the JVM
-- [java profiling jvmgcprof](https://github.com/twitter/jvmgcprof) - A simple utility for profile allocation and garbage collection activity in the JVM
-
-
-# Spark参与者
-
+# Spark参与者 
 #### Matei Zaharia
 Co-founder and CTO of Databricks
 
