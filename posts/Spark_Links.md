@@ -13,6 +13,7 @@
 # Spark深入研究
 - [Spark Internals](https://github.com/JerryLead/SparkInternals/blob/master/markdown/0-Introduction.md) - Spark设计思想、运行原理、实现架构及性能调优
 - [许鹏：从零开始学习，Apache Spark源码走读](http://www.csdn.net/article/2014-05-29/2820013) - Spark源码解读
+- [Spark八法 by 时金魁](https://github.com/shijinkui/spark_study)
 
 
 # Spark博客
