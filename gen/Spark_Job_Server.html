@@ -17,12 +17,11 @@
 <ul>
 <li><a href="http://spark-summit.org/wp-content/uploads/2014/07/Spark-Job-Server-Easy-Spark-Job-Management-Chan-Chu.pdf">Spark Summit</a></li>
 <li><a href="https://github.com/spark-jobserver/spark-jobserver">Github New</a></li>
-<li>
-<p><a href="http://github.com/ooyala/spark-jobserver">Github Old</a></p>
-</li>
-<li>
-<p>"Spark as a Service": Simple REST interface for all aspects of job, context management</p>
-</li>
+<li><a href="http://github.com/ooyala/spark-jobserver">Github Old</a></li>
+</ul>
+<p><img alt="" src="/images/spark_job_server_spark_job_server.png" /></p>
+<ol>
+<li>"Spark as a Service": Simple REST interface for all aspects of job, context management</li>
 <li>Support for Spark SQL Contexts/jobs and custom job contexts, Works for Spark Streaming as well!</li>
 <li>Supports sub-second low-latency jobs via long-running job contexts</li>
 <li>Start and stop job contexts for RDD sharing and low-latency jobs; change resources on restart</li>
@@ -34,7 +33,7 @@
 <li>Named RDDs to cache and retrieve RDDs by name, improving RDD sharing and reuse among jobs.</li>
 <li>Jars, job history and config are persisted via a pluggable API</li>
 <li>Async and sync API, JSON job results</li>
-</ul>
+</ol>
 <p>Example</p>
 <pre><code>object WordCountExample extends SparkJob {
 override def validate(sc: SparkContext, config: Config): SparkJobValidation = {

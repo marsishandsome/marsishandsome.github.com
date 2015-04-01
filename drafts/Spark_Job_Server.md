@@ -13,6 +13,8 @@
 - [Github New](https://github.com/spark-jobserver/spark-jobserver)
 - [Github Old](http://github.com/ooyala/spark-jobserver)
 
+![](/images/spark_job_server_spark_job_server.png)
+
 1. "Spark as a Service": Simple REST interface for all aspects of job, context management
 2. Support for Spark SQL Contexts/jobs and custom job contexts, Works for Spark Streaming as well!
 3. Supports sub-second low-latency jobs via long-running job contexts

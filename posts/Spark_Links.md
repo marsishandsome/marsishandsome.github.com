@@ -1,25 +1,38 @@
-## Spark论文
+# Spark论文
 - [Spark: Cluster Computing with Working Sets](http://people.csail.mit.edu/matei/papers/2010/hotcloud_spark.pdf) - Matei Zaharia的Spark论文
 - [Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing](http://www.cs.berkeley.edu/~matei/papers/2012/nsdi_spark.pdf) - Matei Zaharia的Spark论文
 - [Discretized Streams: An Efficient and Fault-Tolerant Model for Stream Processing on Large Clusters](http://www.cs.berkeley.edu/~matei/papers/2012/hotcloud_spark_streaming.pdf) - Matei Zaharia的SparkStreaming论文
 - [Shark: SQL and Rich Analytics at Scale](http://www.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-214.pdf) - Reynold Shi Xin, Matei Zaharia的Shark论文
 
-## Spark入门
+
+# Spark入门
 - [Scala-Spark Handon Exercises](http://ampcamp.berkeley.edu/big-data-mini-course/index.html) - Spark交互式动手练习
 - [Apache Spark API By Example](http://homepage.cs.latrobe.edu.au/zhe/files/SparkAPIMaster.pdf) - Spark API
 
-## Spark深入研究
+
+# Spark深入研究
 - [Spark Internals](https://github.com/JerryLead/SparkInternals/blob/master/markdown/0-Introduction.md) - Spark设计思想、运行原理、实现架构及性能调优
 - [许鹏：从零开始学习，Apache Spark源码走读](http://www.csdn.net/article/2014-05-29/2820013) - Spark源码解读
 
-## Spark博客
+
+# Spark博客
 - [mmicky的hadoop、Spark世界](http://blog.csdn.net/book_mmicky) - SparkCore, SparkSQL分析
 - [徽沪一郎](http://www.cnblogs.com/hseagle/) - Spark Common使用
 - [OopsOutOfMemory](http://blog.csdn.net/oopsoom) - Spark分析
 - [赛赛的网络日志 Jerry Shao](http://jerryshao.me/) - Spark内部实现
 - [baishuo491](http://baishuo491.iteye.com/blog) - Spark源码
 
-## Spark Meetup
+
+# Spark调优
+- [Tuning Spark](http://spark.apache.org/docs/latest/tuning.html) - 官网资料
+- [Advanced Spark Internals and Tuning](https://www.youtube.com/watch?v=HG2Yd-3r4-M) - Reynold Xin @ Spark summit 2014
+- [Everyday I am Shuffling - Tips for Writing Better Spark Programs](https://www.youtube.com/watch?v=Wg2boMqLjCg) - Holen Karau @ Strata San Jose 2015
+- [How-to: Tune Your Apache Spark Jobs (Part 1)](http://blog.cloudera.com/blog/2015/03/how-to-tune-your-apache-spark-jobs-part-1/) - Cloudera
+- [How-to: Tune Your Apache Spark Jobs (Part 2)](http://blog.cloudera.com/blog/2015/03/how-to-tune-your-apache-spark-jobs-part-2/) - Cloudera
+- [executor-cores vs. num-executors](http://apache-spark-user-list.1001560.n3.nabble.com/executor-cores-vs-num-executors-td9878.html)
+
+
+# Spark Meetup
 [百度云下载地址](http://pan.baidu.com/s/1dDrQ5ix)
 
 - [Spark Summit](http://spark-summit.org/)
@@ -29,24 +42,14 @@
 - [杭州 Spark Meetup](http://www.meetup.com/Hangzhou-Apache-Spark-Meetup/)
 
 
-## Videos
-- [Advanced Spark Internals and Tuning](https://www.youtube.com/watch?v=HG2Yd-3r4-M) - Reynold Xin @ Spark summit 2014
-- [Everyday I am Shuffling - Tips for Writing Better Spark Programs](https://www.youtube.com/watch?v=Wg2boMqLjCg) - Holen Karau @ Strata San Jose 2015
-
-
-## Spark调优
-- [Tuning Spark](http://spark.apache.org/docs/latest/tuning.html) - 官网资料
-- [executor-cores vs. num-executors](http://apache-spark-user-list.1001560.n3.nabble.com/executor-cores-vs-num-executors-td9878.html)
-
-
-## Java调优
+# Java调优
 - [Java SE 6 HotSpot[tm] Virtual Machine Garbage Collection Tuning](http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html)
 - [Everything I Ever Learned about JVM Performance Tuning](http://www.infoq.com/presentations/JVM-Performance-Tuning-twitter)
 - [java profiling heapster](https://github.com/mariusae/heapster) - Production heap profiling for the JVM
 - [java profiling jvmgcprof](https://github.com/twitter/jvmgcprof) - A simple utility for profile allocation and garbage collection activity in the JVM
 
 
-## Spark参与者
+# Spark参与者
 
 #### Matei Zaharia
 Co-founder and CTO of Databricks
