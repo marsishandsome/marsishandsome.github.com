@@ -93,7 +93,6 @@ A Ph.D student in ISCAS 中国科学院软件学院
 - [Github](https://github.com/JerryLead)
 - [JerryLead博客园](http://www.cnblogs.com/jerrylead/default.html?page=1)
 - [Spark Internals by JerryLead](https://github.com/JerryLead/SparkInternals/blob/master/markdown/0-Introduction.md)
-- [Spark Study by shijinkui](https://github.com/shijinkui/spark_study)
 
 #### JasonDai
 英特尔大数据首席架构师，Apache Spark项目Committer及PMC成员
