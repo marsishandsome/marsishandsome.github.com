@@ -1,3 +1,7 @@
+# Spark相关项目
+- [jaws-spark-sql-rest](https://github.com/Atigeo/jaws-spark-sql-rest) - Restful service for running Spark SQL/Shark queries
+
+
 # Spark论文
 
 ### Spark Core
