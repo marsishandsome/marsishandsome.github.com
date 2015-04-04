@@ -1,12 +1,12 @@
 [source](https://gist.github.com/debasishg/b4df1648d3f1776abdff)
 
-1. *Feature Learning*
+# Feature Learning
   * [Learning Feature Representations with K-means](http://www.cs.stanford.edu/~acoates/papers/coatesng_nntot2012.pdf) by Adam Coates and Andrew Y. Ng 
   * [The devil is in the details: an evaluation of recent feature encoding methods](http://www.robots.ox.ac.uk/~vgg/publications/2011/Chatfield11/chatfield11.pdf) by Chatfield et. al. 
   * [Emergence of Object-Selective Features in Unsupervised Feature Learning](http://web.stanford.edu/~acoates/papers/coateskarpathyng_nips2012.pdf) by Coates, Ng
   * [Scaling Learning Algorithms towards AI](http://yann.lecun.com/exdb/publis/pdf/bengio-lecun-07.pdf) Benjio & LeCun
 
-2. *Deep Learning*
+# Deep Learning
   * [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf) by Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever and Ruslan Salakhutdinov
   * [Understanding the difficulty of training deep feedforward neural networks](http://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf) by Xavier Glorot and Yoshua Bengio
   * [On the difficulty of training Recurrent Neural Networks](http://arxiv.org/pdf/1211.5063v2.pdf) by Razvan Pascanu, Tomas Mikolov and Yoshua Bengio
@@ -20,7 +20,7 @@
   * [Training Recurrent Neural Networks](http://www.cs.utoronto.ca/~ilya/pubs/ilya_sutskever_phd_thesis.pdf) Phd thesis of Ilya Sutskever
   * [A Probabilistic Theory of Deep Learning](http://arxiv.org/pdf/1504.00641v1.pdf) by Ankit B. Patel, Tan Nguyen, Richard G. Baraniuk
   
-3. *Scalable Machine Learning*
+# Scalable Machine Learning
   * [Bring the Noise: Embracing Randomness is the Key to Scaling Up Machine Learning Algorithms](http://online.liebertpub.com/doi/pdf/10.1089/big.2013.0010) by Brian Delssandro
   * [Large Scale Machine Learning with Stochastic Gradient Descent](http://leon.bottou.org/publications/pdf/compstat-2010.pdf) by Leon Bottou
   * [The TradeOffs of Large Scale Learning](http://papers.nips.cc/paper/3323-the-tradeoffs-of-large-scale-learning.pdf) by Leon Bottou & Olivier Bousquet
@@ -28,15 +28,15 @@
   * [Feature Hashing for Large Scale Multitask Learning](http://arxiv.org/pdf/0902.2206.pdf) by Weinberger et. al.
   * [Large-Scale Learning with Less RAM via Randomization](http://www.eecs.tufts.edu/~dsculley/papers/round-model-icml.pdf) by a group of authors from Google
 
-4. *Gradient based Training*
+# Gradient based Training
   * [Practical Recommendations for Gradient-Based Training of Deep Architectures](http://arxiv.org/pdf/1206.5533v2.pdf) by Yoshua Bengio
   * [Stochastic Gradient Descent Tricks](http://research.microsoft.com/pubs/192769/tricks-2012.pdf) by L´eon Bottou
 
-5. *Non Linear Units*
+# Non Linear Units
   * [Rectified Linear Units Improve Restricted Boltzmann Machines](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.165.6419&rep=rep1&type=pdf) by Nair & Hinton
   * [Mathematical Intuition for Performance of Rectified Linear Unit in Deep Neural Networks](https://www.academia.edu/7826776/Mathematical_Intuition_for_Performance_of_Rectified_Linear_Unit_in_Deep_Neural_Networks) by Alexandre Dalyec
 
-6. *Interesting blog posts*
+# Interesting blog posts
   * [Hacker's Guide to Neural Networks](https://karpathy.github.io/neuralnets/) by Andrej Karpathy
   * [Breaking Linear Classifiers on ImageNet](http://karpathy.github.io/2015/03/30/breaking-convnets/) by Andrej Karpathy
   * [Classifying plankton with Deep Neural Networks](http://benanne.github.io/2015/03/17/plankton.html)
@@ -45,7 +45,7 @@
   * [A Brief Overview of Deep Learning](http://yyue.blogspot.in/2015/01/a-brief-overview-of-deep-learning.html) by Ilya Sutskever
   * [Recurrent Neural Networks for Collaborative Filtering](http://erikbern.com/?p=589)
 
-7. *Interesting courses* 
+# Interesting courses
   * [CS231n: Convolutional Neural Networks for Visual Recognition](http://cs231n.stanford.edu/) at Stanford by Andrej Karpathy
   * [CS224d: Deep Learning for Natural Language Processing](http://cs224d.stanford.edu/) at Stanford by Richard Socher
   * [STA 4273H (Winter 2015): Large Scale Machine Learning](http://www.cs.toronto.edu/~rsalakhu/STA4273_2015/) at Toronto by Russ Salakhutdinov
