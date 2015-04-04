@@ -3,6 +3,8 @@
 
 [Git Usage](gen/Git_Usage.html)
 
+[Machine Learning](gen/Machine_Learning.html)
+
 [Markdown](gen/Markdown.html)
 
 [Spark Job Server](gen/Spark_Job_Server.html)
