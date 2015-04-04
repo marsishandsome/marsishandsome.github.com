@@ -7,6 +7,8 @@
 
 [Markdown](gen/Markdown.html)
 
+[Spark Detail](gen/Spark_Detail.html)
+
 [Spark Job Server](gen/Spark_Job_Server.html)
 
 [Spark Profiling](gen/Spark_Profiling.html)
