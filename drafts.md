@@ -1,4 +1,6 @@
 #Mars的草稿
+[Chromelogger4j](gen/Chromelogger4j.html)
+
 [Flink](gen/Flink.html)
 
 [Git Usage](gen/Git_Usage.html)
