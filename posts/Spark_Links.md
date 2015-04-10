@@ -14,7 +14,8 @@
 
 
 # Spark入门
-- [Scala-Spark Handon Exercises](http://ampcamp.berkeley.edu/big-data-mini-course/index.html) - Spark交互式动手练习
+- [Spark Hands-on Exercises](http://ampcamp.berkeley.edu/big-data-mini-course/index.html) - Spark交互式练习
+- [AMPLab Hands-on Exercises](http://ampcamp.berkeley.edu/5/exercises/index.html) [Video](http://pan.baidu.com/s/1kTIdlMv#path=%252F) - Spark Tachyon交互式练习
 - [Apache Spark API By Example](http://homepage.cs.latrobe.edu.au/zhe/files/SparkAPIMaster.pdf) - Spark API
 
 
