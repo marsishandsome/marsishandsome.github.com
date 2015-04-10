@@ -1,5 +1,6 @@
 # Spark R
 SparkR项目最近已经merge到spark的master分支，将会在spark-1.4.0中正式发布。SparkR项目的意义在于：
+
 - 使用R语言的专业人士可以无缝地通过R语言来使用Spark
 - 在Spark上可以使用R的上千个package，避免重复发明轮子
 - 证明了Spark框架的可扩展性
@@ -12,7 +13,7 @@ SparkR项目最近已经merge到spark的master分支，将会在spark-1.4.0中�
 
 ![](/images/spark_r_dataflow.png)
 
-![](/images/spark_r_how_work.png)
+![](/images/spark_r_workflow.png)
 
 
 
