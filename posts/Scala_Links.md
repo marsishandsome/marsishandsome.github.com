@@ -31,6 +31,9 @@
 # Scala Code Style
 - [Scala Style Guide](http://docs.scala-lang.org/style/) - Scala官网的Style Guide
 
+$ 工具
+- [Scala Diagrams](https://github.com/mikeyhu/scaladiagrams) - 画类图
+
 
 # 项目
 - [Scala Offheap](https://github.com/densh/scala-offheap) - Type-safe off-heap memory for Scala
