@@ -5,3 +5,5 @@
 
 [Spark Links](gen/Spark_Links.html)
 
+[Spark R Architecture](gen/Spark_R_Architecture.html)
+

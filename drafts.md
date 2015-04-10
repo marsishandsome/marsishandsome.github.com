@@ -19,7 +19,5 @@
 
 [Spark Profiling](gen/Spark_Profiling.html)
 
-[Spark R](gen/Spark_R.html)
-
 [Spark Summit East 2015](gen/Spark_Summit_East_2015.html)
 

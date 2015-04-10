@@ -1,4 +1,4 @@
-# Spark R
+# Spark R 架构分析
 SparkR项目最近已经merge到spark的master分支，将会在spark-1.4.0中正式发布。
 
 我认为SparkR项目的意义在于：
@@ -58,6 +58,5 @@ SparkR的架构类似于PySpark，Driver端除了一个JVM进程（包含一个S
 
 
 ### Details
-- [解惑rJava R与Java的高速通道](http://blog.fens.me/r-rjava-java/)
 - [How R Searches and Finds Stuff](http://blog.obeautifulcode.com/R/How-R-Searches-And-Finds-Stuff/)
 
