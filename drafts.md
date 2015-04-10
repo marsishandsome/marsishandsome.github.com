@@ -1,4 +1,6 @@
 #Mars的草稿
+[Amazon Machine Learning](gen/Amazon_Machine_Learning.html)
+
 [API Design](gen/API_Design.html)
 
 [Chromelogger4j](gen/Chromelogger4j.html)
