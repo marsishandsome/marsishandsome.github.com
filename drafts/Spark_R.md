@@ -1,5 +1,7 @@
 # Spark R
-SparkR项目最近已经merge到spark的master分支，将会在spark-1.4.0中正式发布。SparkR项目的意义在于：
+SparkR项目最近已经merge到spark的master分支，将会在spark-1.4.0中正式发布。
+
+我认为SparkR项目的意义在于：
 
 1. 使用R语言的专业人士可以无缝地通过R语言来使用Spark
 2. 在Spark上可以使用R的上千个package，避免重复发明轮子
@@ -15,7 +17,7 @@ SparkR的架构类似于PySpark，Driver端除了一个JVM进程（包含一个S
 
 通过R生成的RDD都会是RRDD类型，当触发RRDD的action时，Spark的执行器会开启一个R进程(worker.R)，执行器和R进程通过Socket进行通信。执行器会把任务和所需的环境发送给R进程，R进程会加载对应的package，执行任务，并返回结果。
 
-![](/images/spark_r_dataflow.png)
+<img src="/images/spark_r_dataflow.png" width="800px">
 
 
 下面是介绍一些执行SparkR端详细的流程：
@@ -34,7 +36,7 @@ SparkR的架构类似于PySpark，Driver端除了一个JVM进程（包含一个S
 
 1-6属于driver端，7-10属于executor端。
 
-![](/images/spark_r_workflow.png)
+<img src="/images/spark_r_workflow.png" width="800px">
 
 
 ### 可能的问题及改进
