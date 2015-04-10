@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <meta name="author" content="Mars Gu" />
+   <link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+</head>
+<body>
+<h1>Spark on Yarn</h1>
+<h3>Data Locality</h3>
+<p>使用preferredNodeLocationData</p>
+<pre><code>val locData = InputFormatInfo.computePreferredLocations(
+  Seq(new InputFormatInfo(conf, classOf[TextInputFormat], new Path("hdfs:///myfile.txt")))
+val sc = new SparkContext(conf, locData)
+</code></pre>
+<h3>存在问题及改进</h3>
+<ol>
+<li>Spark无法动态增加/减少资源，Container-Resizing <a href="https://issues.apache.org/jira/browse/YARN-1197">YARN-1197</a></li>
+<li>Timeline Store, <a href="https://issues.apache.org/jira/browse/YARN-321">YARN-321</a></li>
+</ol>
+<h3>Links</h3>
+<ul>
+<li><a href="http://dongxicheng.org/framework-on-yarn/spark-on-yarn-challenge/">spark on yarn的技术挑战</a> - 董的博客</li>
+<li><a href="http://www.chinastor.org/upload/2014-07/14070710043699.pdf">Spark on Yarn: a deep dive</a> - Sandy Ryza @Cloudera</li>
+</ul>
+</body>
+</html>
