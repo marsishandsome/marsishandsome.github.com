@@ -6,7 +6,8 @@
 </head>
 <body>
 <h1>Spark R</h1>
-<p>SparkR项目最近已经merge到spark的master分支，将会在spark-1.4.0中正式发布。SparkR项目的意义在于：</p>
+<p>SparkR项目最近已经merge到spark的master分支，将会在spark-1.4.0中正式发布。</p>
+<p>我认为SparkR项目的意义在于：</p>
 <ol>
 <li>使用R语言的专业人士可以无缝地通过R语言来使用Spark</li>
 <li>在Spark上可以使用R的上千个package，避免重复发明轮子</li>
@@ -17,7 +18,8 @@
 <p>SparkR的架构类似于PySpark，Driver端除了一个JVM进程（包含一个SparkContext）外，还有起一个R的进程，这两个进程通过Socket进行通信，用户可以提交R语言代码，R的进程会执行这些R代码，当R代码调用Spark相关函数时，R进程会通过Socket触发JVM中的对应任务。</p>
 <p>当R进程向JVM进程提交任务的时候，R会把子任务需要的环境(enclosing environment)进行打包，并发送到JVM的driver端。</p>
 <p>通过R生成的RDD都会是RRDD类型，当触发RRDD的action时，Spark的执行器会开启一个R进程(worker.R)，执行器和R进程通过Socket进行通信。执行器会把任务和所需的环境发送给R进程，R进程会加载对应的package，执行任务，并返回结果。</p>
-<p><img alt="" src="/images/spark_r_dataflow.png" /></p>
+<img src="/images/spark_r_dataflow.png" width="800px">
+
 <p>下面是介绍一些执行SparkR端详细的流程：</p>
 <ol>
 <li>SparkSubmit判断是SparkR类型的任务，启动RRunner</li>
@@ -32,7 +34,8 @@
 <li>compute函数读取R进程发来的结果数据，并返回iterator</li>
 </ol>
 <p>1-6属于driver端，7-10属于executor端。</p>
-<p><img alt="" src="/images/spark_r_workflow.png" /></p>
+<img src="/images/spark_r_workflow.png" width="800px">
+
 <h3>可能的问题及改进</h3>
 <ol>
 <li>Standalone模式如何控制R进程的资源？</li>
