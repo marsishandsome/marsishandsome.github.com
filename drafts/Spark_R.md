@@ -18,6 +18,10 @@
 - [How R Searches and Finds Stuff](http://blog.obeautifulcode.com/R/How-R-Searches-And-Finds-Stuff/)
 
 ### Arc
+
 ![](/images/spark_r_dataflow.png)
+
 ![](/images/spark_r_how_work.png)
+
+![](/images/spark_r_workflow.png)
 
