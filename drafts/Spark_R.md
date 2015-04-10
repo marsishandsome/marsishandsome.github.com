@@ -20,14 +20,14 @@ SparkR的架构类似于PySpark，Driver端除了一个JVM进程（包含一个S
 <img src="/images/spark_r_dataflow.png" width="1000px">
 
 
-下面是介绍一些执行SparkR端详细的流程：
+下面是介绍一些执行SparkR的详细流程：
 
 1. SparkSubmit判断是SparkR类型的任务，启动RRunner
-2. RRunner首先启动RBackend，然后再启动R进程执行R脚本
+2. RRunner首先启动RBackend，然后再启动R进程执行用户的R脚本
 3. RBackend开启Socket Server，等待R进程链接
 4. R进程通过Socket连接到RBackend
 5. R脚本生成SparkContext，通过Socket通信，会在JVM中生成JavaSparkContext
-6. R脚本触发RRDD的action，通过Socket通信，Driver启动executor
+6. R脚本触发RRDD的action，通过Socket通信，Driver启动executor，并执行对于的任务
 7. 在每个执行器中都会调用RRDD的compute函数，来计算RRDD中的数据
 8. compute函数首先开启Socket Server，等待R进程链接，然后启动一个R进程(worker.R)
 9. R进程通过Socket链接到执行器，读取执行器发送过来的任务，执行任务，并返回结果
@@ -41,7 +41,7 @@ SparkR的架构类似于PySpark，Driver端除了一个JVM进程（包含一个S
 
 ### 可能的问题及改进
 1. Standalone模式如何控制R进程的资源？
-2. 进程间通过Socket进行通信，代价多高？可否用共享内存？
+2. JVM进程和R进程通过Socket进行通信，代价多高？可否用共享内存？
 
 
 ### Links

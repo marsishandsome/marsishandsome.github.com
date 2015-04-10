@@ -20,14 +20,14 @@
 <p>通过R生成的RDD都会是RRDD类型，当触发RRDD的action时，Spark的执行器会开启一个R进程(worker.R)，执行器和R进程通过Socket进行通信。执行器会把任务和所需的环境发送给R进程，R进程会加载对应的package，执行任务，并返回结果。</p>
 <img src="/images/spark_r_dataflow.png" width="1000px">
 
-<p>下面是介绍一些执行SparkR端详细的流程：</p>
+<p>下面是介绍一些执行SparkR的详细流程：</p>
 <ol>
 <li>SparkSubmit判断是SparkR类型的任务，启动RRunner</li>
-<li>RRunner首先启动RBackend，然后再启动R进程执行R脚本</li>
+<li>RRunner首先启动RBackend，然后再启动R进程执行用户的R脚本</li>
 <li>RBackend开启Socket Server，等待R进程链接</li>
 <li>R进程通过Socket连接到RBackend</li>
 <li>R脚本生成SparkContext，通过Socket通信，会在JVM中生成JavaSparkContext</li>
-<li>R脚本触发RRDD的action，通过Socket通信，Driver启动executor</li>
+<li>R脚本触发RRDD的action，通过Socket通信，Driver启动executor，并执行对于的任务</li>
 <li>在每个执行器中都会调用RRDD的compute函数，来计算RRDD中的数据</li>
 <li>compute函数首先开启Socket Server，等待R进程链接，然后启动一个R进程(worker.R)</li>
 <li>R进程通过Socket链接到执行器，读取执行器发送过来的任务，执行任务，并返回结果</li>
@@ -39,7 +39,7 @@
 <h3>可能的问题及改进</h3>
 <ol>
 <li>Standalone模式如何控制R进程的资源？</li>
-<li>进程间通过Socket进行通信，代价多高？可否用共享内存？</li>
+<li>JVM进程和R进程通过Socket进行通信，代价多高？可否用共享内存？</li>
 </ol>
 <h3>Links</h3>
 <ul>
