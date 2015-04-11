@@ -1,0 +1,39 @@
+
+<rss version=2.0>
+  <channel>
+    <title>Mars的笔记</title>
+    <link>http://marsishandsome.github.io/</link>
+    <description>by Mars</description>
+  
+
+      <item>
+        <title>Gitbook Toturial</title>
+        <link>http://marsishandsome.github.io/gen/Gitbook_Toturial.html</link>
+        <description>Gitbook Toturial</description>
+      </item>
+      
+
+      <item>
+        <title>Scala Links</title>
+        <link>http://marsishandsome.github.io/gen/Scala_Links.html</link>
+        <description>Scala Links</description>
+      </item>
+      
+
+      <item>
+        <title>Spark Links</title>
+        <link>http://marsishandsome.github.io/gen/Spark_Links.html</link>
+        <description>Spark Links</description>
+      </item>
+      
+
+      <item>
+        <title>Spark R Architecture</title>
+        <link>http://marsishandsome.github.io/gen/Spark_R_Architecture.html</link>
+        <description>Spark R Architecture</description>
+      </item>
+      
+
+  </channel>
+</rss>
+  
