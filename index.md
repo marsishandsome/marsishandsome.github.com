@@ -1,4 +1,7 @@
-#Mars的笔记
+
+# Mars的笔记
+[rss](http://feeds.feedburner.com/marsishandsome)
+  
 
 ### Common
 - [Gitbook Toturial](gen/Gitbook_Toturial.html)
