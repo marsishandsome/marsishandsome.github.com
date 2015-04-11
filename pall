@@ -14,14 +14,14 @@ function pall(){
     <title>Mars的笔记</title>
     <link>http://marsishandsome.github.io/</link>
     <description>by Mars</description>
-  " > "$index.xml"
+  " > "feed_$index.xml"
 
   pfolder $post_dir $gen_dir $index "Common"
 
   echo "
   </channel>
 </rss>
-  ">> "$index.xml"
+  ">> "feed_$index.xml"
 
   ./pmd "$index.md" > "$index.html"
 }
@@ -51,7 +51,7 @@ function pfolder(){
         <link>http://marsishandsome.github.io/$gen_dir/$post_without_md.html</link>
         <description>$post_with_space</description>
       </item>
-      " >> "$index.xml"
+      " >> "feed_$index.xml"
     fi
   done
 }
