@@ -9,19 +9,19 @@ function pall(){
   mkdir -p $gen_dir
   echo "#$title" > "$index.md"
   echo "
-<rss version="2.0">
+<rss version='2.0'>
   <channel>
     <title>Mars的笔记</title>
     <link>http://marsishandsome.github.io/</link>
     <description>by Mars</description>
-  " > "feed_$index.xml"
+  " > "$index.xml"
 
   pfolder $post_dir $gen_dir $index "Common"
 
   echo "
   </channel>
 </rss>
-  ">> "feed_$index.xml"
+  ">> "$index.xml"
 
   ./pmd "$index.md" > "$index.html"
 }
@@ -51,7 +51,7 @@ function pfolder(){
         <link>http://marsishandsome.github.io/$gen_dir/$post_without_md.html</link>
         <description>$post_with_space</description>
       </item>
-      " >> "feed_$index.xml"
+      " >> "$index.xml"
     fi
   done
 }
