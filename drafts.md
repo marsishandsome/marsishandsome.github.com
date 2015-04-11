@@ -9,6 +9,7 @@
 - [Git Usage](gen/Git_Usage.html)
 - [Machine Learning](gen/Machine_Learning.html)
 - [Markdown](gen/Markdown.html)
+- [Parameter Server](gen/Parameter_Server.html)
 
 ### Spark
 - [Spark Detail](gen/Spark_Detail.html)
