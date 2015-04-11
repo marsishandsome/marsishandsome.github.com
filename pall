@@ -8,18 +8,31 @@ function pall(){
 
   mkdir -p $gen_dir
   echo "#$title" > "$index.md"
+  pfolder $post_dir $gen_dir $index "Common"
+  ./pmd "$index.md" > "$index.html"
+}
+
+function pfolder(){
+  post_dir=$1
+  gen_dir=$2
+  index=$3
+  category=$4
+
+  echo -e "\n### $category" >> "$index.md"
 
   for post in `ls $post_dir`
   do 
-    post_without_md=${post%.md}
-    post_with_space=${post_without_md//_/ }
-    echo $post_with_space
+    if [ -d "$post_dir/$post" ]; then
+      pfolder "$post_dir/$post" $gen_dir $index $post
+    else
+      post_without_md=${post%.md}
+      post_with_space=${post_without_md//_/ }
+      echo $post_with_space
 
-    ./pmd "$post_dir/$post" > "$gen_dir/$post_without_md.html"
-    echo -e "[$post_with_space]($gen_dir/$post_without_md.html)\n" >> "$index.md"
+      ./pmd "$post_dir/$post" > "$gen_dir/$post_without_md.html"
+      echo -e "- [$post_with_space]($gen_dir/$post_without_md.html)" >> "$index.md"
+    fi
   done
-
-  ./pmd "$index.md" > "$index.html"
 }
 
 rm -rf gen
