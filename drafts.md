@@ -1,6 +1,7 @@
 # Mars的草稿
-[rss feedburner](http://feeds.feedburner.com/marsishandsome)
-[rss xml](http://marsishandsome.github.io/index.xml)
+rss 
+[feedburner](http://feeds.feedburner.com/marsishandsome)
+[xml](http://marsishandsome.github.io/index.xml)
   
 
 ### Common
