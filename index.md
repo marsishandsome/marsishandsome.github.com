@@ -1,6 +1,8 @@
-
 # Mars的笔记
-[rss](http://feeds.feedburner.com/marsishandsome)
+
+### RSS
+- [feedburner](http://feeds.feedburner.com/marsishandsome)
+- [xml](http://marsishandsome.github.io/index.xml)
   
 
 ### Common

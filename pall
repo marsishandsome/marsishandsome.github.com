@@ -7,13 +7,14 @@ function pall(){
   title=$4
 
   mkdir -p $gen_dir
-  echo "
-# $title
-[rss](http://feeds.feedburner.com/marsishandsome)
+  echo "# $title
+
+### RSS
+- [feedburner](http://feeds.feedburner.com/marsishandsome)
+- [xml](http://marsishandsome.github.io/index.xml)
   " > "$index.md"
   
-  echo "
-<rss version='2.0'>
+  echo "<rss version='2.0'>
   <channel>
     <title>Mars的笔记</title>
     <link>http://marsishandsome.github.io/</link>
@@ -22,8 +23,7 @@ function pall(){
 
   pfolder $post_dir $gen_dir $index "Common"
 
-  echo "
-  </channel>
+  echo "  </channel>
 </rss>
   ">> "$index.xml"
 
