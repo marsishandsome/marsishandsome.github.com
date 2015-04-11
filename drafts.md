@@ -1,8 +1,5 @@
 # Mars的草稿
-rss 
-[feedburner](http://feeds.feedburner.com/marsishandsome)
-[xml](http://marsishandsome.github.io/index.xml)
-  
+[rss](http://feeds.feedburner.com/marsishandsome)
 
 ### Common
 - [Amazon Machine Learning](gen/Amazon_Machine_Learning.html)
