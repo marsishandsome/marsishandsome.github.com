@@ -56,6 +56,7 @@
 ### Flame
 - [Github](https://github.com/brendangregg/FlameGraph)
 - [Flame Graphs](http://www.brendangregg.com/flamegraphs.html)
+- [Node.js in Flames](http://techblog.netflix.com/2014/11/nodejs-in-flames.html)
 
 ### Graphite
 - [HTTP API](https://github.com/brutasse/graphite-api/blob/master/docs/api.rst)
