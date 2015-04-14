@@ -9,6 +9,7 @@
 - [Git Usage](gen/Git_Usage.html)
 - [Machine Learning](gen/Machine_Learning.html)
 - [Markdown](gen/Markdown.html)
+- [Operation and Maintenance](gen/Operation_and_Maintenance.html)
 - [Parameter Server](gen/Parameter_Server.html)
 - [Reactive Programming](gen/Reactive_Programming.html)
 
