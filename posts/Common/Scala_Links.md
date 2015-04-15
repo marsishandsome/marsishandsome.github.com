@@ -3,6 +3,7 @@
 - [Programming in Scala](http://www.lirmm.fr/~ducour/Doc-objets/scalabook.pdf) - Martin写的Scala入门书籍
 - [Scala By Example](http://www.scala-lang.org/docu/files/ScalaByExample.pdf) - Martin写的Scala入门书籍
 - [Scala 语言概览 中文版](http://wecite.github.io/docs/ScalaOverview-20150226.pdf) - Martin
+- [Atomic Scala](http://www.atomicscala.com/)
 
 
 # 课程
@@ -24,8 +25,10 @@
 - [Scala Collections Tips and Tricks](https://pavelfatin.com/scala-collections-tips-and-tricks/)
 
 
+
 # 视频
 - [PNWS 2014 - Towards a Safer Scala](https://www.youtube.com/watch?v=HEeB_eH326c)
+- [Scala Days San Francisco 2015](https://www.parleys.com/channel/scala-days-san-francisco-2015)
 
 
 # 博客
