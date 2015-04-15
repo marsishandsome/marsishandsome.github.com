@@ -6,6 +6,8 @@ function pall(){
   index=$3
   title=$4
 
+  echo $post_dir
+
   mkdir -p $gen_dir
   echo "# $title
 [rss](http://feeds.feedburner.com/marsishandsome)" > "$index.md"
@@ -17,7 +19,7 @@ function pall(){
     <description>by Mars</description>
   " > "$index.xml"
 
-  pFolder $post_dir $gen_dir $index
+  pFolder
 
   echo "  </channel>
 </rss>
@@ -27,36 +29,27 @@ function pall(){
 }
 
 function pFolder(){
-  post_dir=$1
-  gen_dir=$2
-  index=$3
   for post in `ls -t $post_dir`
   do 
     if [ -d "$post_dir/$post" ]; then
-      echo "mars $post_dir $post"
-      pSubFolder "$post_dir/$post" $gen_dir $index $post
-    else
-      echo "abc $post_dir $post"
+      echo "  $post"
+      pSubFolder "$post_dir/$post" $post
     fi
   done
 }
 
 function pSubFolder(){
   sub_post_dir=$1
-  gen_dir=$2
-  index=$3
-  category=$4
+  category=$2
 
   echo -e "\n### $category" >> "$index.md"
 
   for post in `ls -t $sub_post_dir`
   do 
-    if [ -d "$sub_post_dir/$post" ]; then
-      echo ""
-    else
+    if [ -f "$sub_post_dir/$post" ]; then
       post_without_md=${post%.md}
       post_with_space=${post_without_md//_/ }
-      echo $post_with_space
+      echo "    $post_with_space"
 
       ./pmd "$sub_post_dir/$post" > "$gen_dir/$post_without_md.html"
       echo -e "- [$post_with_space]($gen_dir/$post_without_md.html)" >> "$index.md"
