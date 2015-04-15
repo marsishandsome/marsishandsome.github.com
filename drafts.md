@@ -3,7 +3,6 @@
 
 ### Common
 - [Operation and Maintenance](gen/Operation_and_Maintenance.html)
-- [Reactive Programming](gen/Reactive_Programming.html)
 - [Amazon Machine Learning](gen/Amazon_Machine_Learning.html)
 - [Parameter Server](gen/Parameter_Server.html)
 - [API Design](gen/API_Design.html)
