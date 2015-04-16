@@ -7,7 +7,7 @@
 
 
 # Github的使用
-- [10 tips for better Pull Requests)(http://blog.ploeh.dk/2015/01/15/10-tips-for-better-pull-requests/) - by Mark Seemann
+- [10 tips for better Pull Requests](http://blog.ploeh.dk/2015/01/15/10-tips-for-better-pull-requests/) - by Mark Seemann
 
 
 # Git基础命令
