@@ -2,6 +2,7 @@
 [rss](http://feeds.feedburner.com/marsishandsome)
 
 ### Common
+- [Git Usage](gen/Git_Usage.html)
 - [Scala Days San Francisco 2015](gen/Scala_Days_San_Francisco_2015.html)
 - [Operation and Maintenance](gen/Operation_and_Maintenance.html)
 - [Amazon Machine Learning](gen/Amazon_Machine_Learning.html)
@@ -10,7 +11,6 @@
 - [Chromelogger4j](gen/Chromelogger4j.html)
 - [Machine Learning](gen/Machine_Learning.html)
 - [Flink](gen/Flink.html)
-- [Git Usage](gen/Git_Usage.html)
 - [Markdown](gen/Markdown.html)
 
 ### Spark
