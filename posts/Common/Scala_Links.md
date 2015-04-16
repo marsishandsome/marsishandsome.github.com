@@ -25,6 +25,10 @@
 - [Scala Collections Tips and Tricks](https://pavelfatin.com/scala-collections-tips-and-tricks/)
 
 
+# Scala 特性
+- [Quasiquotes](http://docs.scala-lang.org/overviews/quasiquotes/intro.html)
+- [Quasiquotes For Scala](http://infoscience.epfl.ch/record/185242/files/QuasiquotesForScala.pdf)
+
 
 # 视频
 - [PNWS 2014 - Towards a Safer Scala](https://www.youtube.com/watch?v=HEeB_eH326c)
