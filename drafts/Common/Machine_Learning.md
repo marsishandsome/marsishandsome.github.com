@@ -1,5 +1,8 @@
 [source](https://gist.github.com/debasishg/b4df1648d3f1776abdff)
 
+# Course
+- [TI2736-B: Big Data Processing](http://www.st.ewi.tudelft.nl/~hauff/TI2736-B.html)
+
 # Feature Learning
   * [Learning Feature Representations with K-means](http://www.cs.stanford.edu/~acoates/papers/coatesng_nntot2012.pdf) by Adam Coates and Andrew Y. Ng 
   * [The devil is in the details: an evaluation of recent feature encoding methods](http://www.robots.ox.ac.uk/~vgg/publications/2011/Chatfield11/chatfield11.pdf) by Chatfield et. al. 
