@@ -7,3 +7,8 @@
 - [Return of the Borg: How Twitter Rebuilt Google’s Secret Weapon](http://www.wired.com/2013/03/google-borg-twitter-mesos/)
 - [Borg WIKI](http://en.wikipedia.org/wiki/Borg_%28Star_Trek%29)
 
+- [Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes)
+- [Marathon](https://github.com/mesosphere/marathon)
+
+- [DockerOne](http://dockerone.com/)
+
