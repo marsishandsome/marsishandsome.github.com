@@ -2,6 +2,7 @@
 
 # Course
 - [TI2736-B: Big Data Processing](http://www.st.ewi.tudelft.nl/~hauff/TI2736-B.html)
+- [scaling-up-machine-learning](http://www.slideshare.net/hustwj/scaling-up-machine-learning-the-tutorial-kdd-2011-part-i-introduction?related=1)
 
 # Feature Learning
   * [Learning Feature Representations with K-means](http://www.cs.stanford.edu/~acoates/papers/coatesng_nntot2012.pdf) by Adam Coates and Andrew Y. Ng 

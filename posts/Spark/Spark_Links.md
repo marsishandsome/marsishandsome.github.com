@@ -3,6 +3,7 @@
 ### Spark Core
 - [Spark: Cluster Computing with Working Sets](http://people.csail.mit.edu/matei/papers/2010/hotcloud_spark.pdf)
 - [Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing](http://www.cs.berkeley.edu/~matei/papers/2012/nsdi_spark.pdf)
+- [Spark Matei PHD 论文翻译版](https://code.csdn.net/CODE_Translation/spark_matei_phd)
 
 ### Spark SQL
 - [Shark: SQL and Rich Analytics at Scale](http://www.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-214.pdf)

@@ -41,6 +41,8 @@
 
 # Scala Code Style
 - [Scala Style Guide](http://docs.scala-lang.org/style/) - Scala官网的Style Guide
+- [Databricks Scala Guide](https://github.com/databricks/scala-style-guide)
+
 
 # 工具
 - [Scala Diagrams](https://github.com/mikeyhu/scaladiagrams) - 画类图

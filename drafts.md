@@ -2,6 +2,7 @@
 [rss](http://feeds.feedburner.com/marsishandsome)
 
 ### Common
+- [TO READ](gen/TO_READ.html)
 - [Machine Learning](gen/Machine_Learning.html)
 - [Git Usage](gen/Git_Usage.html)
 - [Scala Days San Francisco 2015](gen/Scala_Days_San_Francisco_2015.html)
@@ -14,8 +15,11 @@
 - [Markdown](gen/Markdown.html)
 
 ### Paper
-- [API Design for Machine Learning Software](gen/API_Design_for_Machine_Learning_Software.html)
+- [Paper TO READ](gen/Paper_TO_READ.html)
 - [Google Cluster Management](gen/Google_Cluster_Management.html)
+
+### Book
+- [Book TO READ](gen/Book_TO_READ.html)
 
 ### Spark
 - [Spark MLlib](gen/Spark_MLlib.html)
