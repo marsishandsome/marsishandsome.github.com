@@ -2,6 +2,7 @@
 [rss](http://feeds.feedburner.com/marsishandsome)
 
 ### Common
+- [Google Cluster Management](gen/Google_Cluster_Management.html)
 - [Git Usage](gen/Git_Usage.html)
 - [Scala Days San Francisco 2015](gen/Scala_Days_San_Francisco_2015.html)
 - [Operation and Maintenance](gen/Operation_and_Maintenance.html)
