@@ -1,12 +1,9 @@
 # Spark on Yarn
 
-### Links for Yarn
+### Links
 - [YARN应用开发流程](http://my.oschina.net/u/1434348/blog/193374)
-
-
-### Links for Spark on Yarn
-- [spark on yarn的技术挑战](http://dongxicheng.org/framework-on-yarn/spark-on-yarn-challenge/) - 董的博客
 - [Spark on Yarn: a deep dive](http://www.chinastor.org/upload/2014-07/14070710043699.pdf) - Sandy Ryza @Cloudera
+- [spark on yarn的技术挑战](http://dongxicheng.org/framework-on-yarn/spark-on-yarn-challenge/) - 董的博客
 - [Apache Spark Resource Management and YARN App Models](http://blog.cloudera.com/blog/2014/05/apache-spark-resource-management-and-yarn-app-models/)
 - [Apache Spark源码走读之8 -- Spark on Yarn](http://www.cnblogs.com/hseagle/p/3728713.html)
 
@@ -23,21 +20,24 @@
 1. Spark无法动态增加/减少资源，Container-Resizing [YARN-1197](https://issues.apache.org/jira/browse/YARN-1197)
 2. [Timeline Store YARN-321](https://issues.apache.org/jira/browse/YARN-321)
 
+
 ### Yarn-Cluster模式
 1: 提交Application
 
 Client.submitApplication
 
-    // Get a new application from our RM
+    //新建一个Application
     val newApp = yarnClient.createApplication()
     val newAppResponse = newApp.getNewApplicationResponse()
     val appId = newAppResponse.getApplicationId()
 
-    // Set up the appropriate contexts to launch our AM
+    //1.1: 创建environment, java options以及启动AM的命令
     val containerContext = createContainerLaunchContext(newAppResponse)
+
+    //1.2: 创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
     val appContext = createApplicationSubmissionContext(newApp, containerContext)
 
-    // Finally, submit and monitor the application
+    //向Yarn提交Application
     yarnClient.submitApplication(appContext)
 
 
@@ -75,7 +75,7 @@ Client.createContainerLaunchContext
     UserGroupInformation.getCurrentUser().addCredentials(credentials)
 
 
-1.2: 创建提交AM的Context
+1.2: 创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
 
 Client.createApplicationSubmissionContext
 
@@ -113,31 +113,43 @@ ApplicationMaster.run
         runExecutorLauncher(securityMgr)
       }
 
-2.1: Cluster模式启动Driver
-
 ApplicationMaster.runDriver
 
+    //配置IP Filter
     addAmIpFilter()
+
+    //2.1 启动用户程序
     userClassThread = startUserApplication()
 
-    // This a bit hacky, but we need to wait until the spark.driver.port property has
-    // been set by the Thread executing the user class.
+    //等待用户启动SC
     val sc = waitForSparkContextInitialized()
 
-    // If there is no SparkContext at this point, just fail the app.
     if (sc == null) {
       finish(FinalApplicationStatus.FAILED,
         ApplicationMaster.EXIT_SC_NOT_INITED,
         "Timed out waiting for SparkContext.")
     } else {
       actorSystem = sc.env.actorSystem
+
+      //2.2 启动AMActor
       runAMActor(
         sc.getConf.get("spark.driver.host"),
         sc.getConf.get("spark.driver.port"),
         isClusterMode = true)
+
+      //2.3: 向RM注册AM相关信息(UIAddress、HistoryAddress、SecurityManager、SecurityManager、preferredNodeLocation)，并启动线程申请资源
       registerAM(sc.ui.map(_.appUIAddress).getOrElse(""), securityMgr)
       userClassThread.join()
     }
+
+2.1 启动用户程序
+
+startUserApplication
+
+    val mainArgs = new Array[String](args.userArgs.size)
+    args.userArgs.copyToArray(mainArgs, 0, args.userArgs.size)
+    mainMethod.invoke(null, mainArgs)
+    finish(FinalApplicationStatus.SUCCEEDED, ApplicationMaster.EXIT_SUCCESS)
 
 2.2 启动AMActor
 
@@ -182,7 +194,7 @@ ApplicationMaster.AMActor
     }
 
 
-2.3: registerAM
+2.3: 向RM注册AM相关信息(UIAddress、HistoryAddress、SecurityManager、SecurityManager、preferredNodeLocation)，并启动线程申请资源
 
 ApplicationMaster.registerAM
 
@@ -194,6 +206,8 @@ ApplicationMaster.registerAM
       securityMgr)
 
     allocator.allocateResources()
+
+    //2.4: launchReporterThread
     reporterThread = launchReporterThread()
 
 
@@ -333,4 +347,6 @@ startContainer
 
     nmClient.startContainer(container, ctx)
 
+
+### Yarn-Client模式
 

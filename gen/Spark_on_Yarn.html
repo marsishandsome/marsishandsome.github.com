@@ -6,14 +6,11 @@
 </head>
 <body>
 <h1>Spark on Yarn</h1>
-<h3>Links for Yarn</h3>
+<h3>Links</h3>
 <ul>
 <li><a href="http://my.oschina.net/u/1434348/blog/193374">YARN应用开发流程</a></li>
-</ul>
-<h3>Links for Spark on Yarn</h3>
-<ul>
-<li><a href="http://dongxicheng.org/framework-on-yarn/spark-on-yarn-challenge/">spark on yarn的技术挑战</a> - 董的博客</li>
 <li><a href="http://www.chinastor.org/upload/2014-07/14070710043699.pdf">Spark on Yarn: a deep dive</a> - Sandy Ryza @Cloudera</li>
+<li><a href="http://dongxicheng.org/framework-on-yarn/spark-on-yarn-challenge/">spark on yarn的技术挑战</a> - 董的博客</li>
 <li><a href="http://blog.cloudera.com/blog/2014/05/apache-spark-resource-management-and-yarn-app-models/">Apache Spark Resource Management and YARN App Models</a></li>
 <li><a href="http://www.cnblogs.com/hseagle/p/3728713.html">Apache Spark源码走读之8 -- Spark on Yarn</a></li>
 </ul>
@@ -31,16 +28,18 @@ val sc = new SparkContext(conf, locData)
 <h3>Yarn-Cluster模式</h3>
 <p>1: 提交Application</p>
 <p>Client.submitApplication</p>
-<pre><code>// Get a new application from our RM
+<pre><code>//新建一个Application
 val newApp = yarnClient.createApplication()
 val newAppResponse = newApp.getNewApplicationResponse()
 val appId = newAppResponse.getApplicationId()
 
-// Set up the appropriate contexts to launch our AM
+//1.1: 创建environment, java options以及启动AM的命令
 val containerContext = createContainerLaunchContext(newAppResponse)
+
+//1.2: 创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
 val appContext = createApplicationSubmissionContext(newApp, containerContext)
 
-// Finally, submit and monitor the application
+//向Yarn提交Application
 yarnClient.submitApplication(appContext)
 </code></pre>
 <p>1.1: 创建environment, java options以及启动AM的命令</p>
@@ -74,7 +73,7 @@ amContainer.setApplicationACLs(YarnSparkHadoopUtil.getApplicationAclsForYarn(sec
 setupSecurityToken(amContainer)
 UserGroupInformation.getCurrentUser().addCredentials(credentials)
 </code></pre>
-<p>1.2: 创建提交AM的Context</p>
+<p>1.2: 创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数</p>
 <p>Client.createApplicationSubmissionContext</p>
 <pre><code>val appContext = newApp.getApplicationSubmissionContext
 appContext.setApplicationName(args.appName)
@@ -106,29 +105,40 @@ SparkHadoopUtil.get.runAsSparkUser { () =&gt;
     runExecutorLauncher(securityMgr)
   }
 </code></pre>
-<p>2.1: Cluster模式启动Driver</p>
 <p>ApplicationMaster.runDriver</p>
-<pre><code>addAmIpFilter()
+<pre><code>//配置IP Filter
+addAmIpFilter()
+
+//2.1 启动用户程序
 userClassThread = startUserApplication()
 
-// This a bit hacky, but we need to wait until the spark.driver.port property has
-// been set by the Thread executing the user class.
+//等待用户启动SC
 val sc = waitForSparkContextInitialized()
 
-// If there is no SparkContext at this point, just fail the app.
 if (sc == null) {
   finish(FinalApplicationStatus.FAILED,
     ApplicationMaster.EXIT_SC_NOT_INITED,
     "Timed out waiting for SparkContext.")
 } else {
   actorSystem = sc.env.actorSystem
+
+  //2.2 启动AMActor
   runAMActor(
     sc.getConf.get("spark.driver.host"),
     sc.getConf.get("spark.driver.port"),
     isClusterMode = true)
+
+  //2.3: 向RM注册AM相关信息(UIAddress、HistoryAddress、SecurityManager、SecurityManager、preferredNodeLocation)，并启动线程申请资源
   registerAM(sc.ui.map(_.appUIAddress).getOrElse(""), securityMgr)
   userClassThread.join()
 }
+</code></pre>
+<p>2.1 启动用户程序</p>
+<p>startUserApplication</p>
+<pre><code>val mainArgs = new Array[String](args.userArgs.size)
+args.userArgs.copyToArray(mainArgs, 0, args.userArgs.size)
+mainMethod.invoke(null, mainArgs)
+finish(FinalApplicationStatus.SUCCEEDED, ApplicationMaster.EXIT_SUCCESS)
 </code></pre>
 <p>2.2 启动AMActor</p>
 <p>ApplicationMaster.runAMActor</p>
@@ -169,7 +179,7 @@ override def receive = {
     sender ! true
 }
 </code></pre>
-<p>2.3: registerAM</p>
+<p>2.3: 向RM注册AM相关信息(UIAddress、HistoryAddress、SecurityManager、SecurityManager、preferredNodeLocation)，并启动线程申请资源</p>
 <p>ApplicationMaster.registerAM</p>
 <pre><code>allocator = client.register(yarnConf,
   if (sc != null) sc.getConf else sparkConf,
@@ -179,6 +189,8 @@ override def receive = {
   securityMgr)
 
 allocator.allocateResources()
+
+//2.4: launchReporterThread
 reporterThread = launchReporterThread()
 </code></pre>
 <p>2.4: launchReporterThread</p>
@@ -301,5 +313,6 @@ if (sparkConf.getBoolean("spark.shuffle.service.enabled", false)) {
 
 nmClient.startContainer(container, ctx)
 </code></pre>
+<h3>Yarn-Client模式</h3>
 </body>
 </html>
