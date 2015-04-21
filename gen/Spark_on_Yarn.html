@@ -344,9 +344,7 @@ if (sparkConf.getBoolean("spark.shuffle.service.enabled", false)) {
 nmClient.startContainer(container, ctx)
 </code></pre>
 <h3>Yarn-Client模式</h3>
-<ol>
-<li>触发提交Application的过程</li>
-</ol>
+<p>4: 触发提交Application的过程</p>
 <p>SparkContext</p>
 <pre><code>case "yarn-client" =&gt;
     val scheduler = try {
@@ -389,9 +387,7 @@ appId = client.submitApplication()
 waitForApplication()
 asyncMonitorApplication()
 </code></pre>
-<ol>
-<li>ApplicationMaster (和2中cluster模式稍有不同）</li>
-</ol>
+<p>5: ApplicationMaster (和2中cluster模式稍有不同）</p>
 <p>ApplicationMaster.run</p>
 <pre><code>if (isClusterMode) {
   runDriver(securityMgr)

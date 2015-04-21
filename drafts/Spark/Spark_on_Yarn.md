@@ -380,7 +380,7 @@ startContainer
 
 
 ### Yarn-Client模式
-4. 触发提交Application的过程
+4: 触发提交Application的过程
 
 SparkContext
 
@@ -427,7 +427,7 @@ YarnClientSchedulerBackend.start
     asyncMonitorApplication()
 
 
-5. ApplicationMaster (和2中cluster模式稍有不同）
+5: ApplicationMaster (和2中cluster模式稍有不同）
 
 ApplicationMaster.run
 
@@ -481,5 +481,4 @@ ApplicationMaster.waitForSparkDriver
     sparkConf.set("spark.driver.port", driverPort.toString)
 
     runAMActor(driverHost, driverPort.toString, isClusterMode = false)
-
 
