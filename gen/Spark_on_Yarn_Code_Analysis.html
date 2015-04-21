@@ -9,6 +9,13 @@
 <p>阅读本篇需要Yarn的基础，强烈推荐Yarn入门文章: <a href="http://my.oschina.net/u/1434348/blog/193374">YARN应用开发流程</a></p>
 <p>本篇代码基于Spark-1.3.0。</p>
 <h3>Spark on Yarn调用流图</h3>
+<p>Spark on Yarn支持两种部署模式：Cluster VS Client。</p>
+<p>Yarn Cluster模式
+<img alt="" src="http://blog.cloudera.com/wp-content/uploads/2014/05/spark-yarn-f31.png" /></p>
+<p>Yarn Client模式
+<img alt="" src="http://blog.cloudera.com/wp-content/uploads/2014/05/spark-yarn-f22.png" /></p>
+<p>两种模式最大的区别在于Spark Driver的运行位置，Cluster模式下Driver运行在Application Master中，而Client模式下Driver运行在本地。
+Spark利用AKKA位置透明的特性，使得这两种模式可以同用同一套代码。</p>
 <p><img alt="" src="/images/spark_on_yarn_arch.png" /></p>
 <h3>Yarn-Cluster模式代码分析</h3>
 <p>1: Client</p>
@@ -434,7 +441,7 @@ waitForApplication()
 //7.3
 asyncMonitorApplication()
 </code></pre>
-<p>2: ApplicationMaster (和2中cluster模式稍有不同）</p>
+<p>2: ApplicationMaster (和cluster模式稍有不同）</p>
 <p>ApplicationMaster.run</p>
 <pre><code>if (isClusterMode) {
   runDriver(securityMgr)

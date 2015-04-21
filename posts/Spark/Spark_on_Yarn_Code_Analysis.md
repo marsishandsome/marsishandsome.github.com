@@ -5,10 +5,18 @@
 
 
 ### Spark on Yarn调用流图
+Spark on Yarn支持两种部署模式：Cluster VS Client。
+
+Yarn Cluster模式
+![](http://blog.cloudera.com/wp-content/uploads/2014/05/spark-yarn-f31.png)
+
+Yarn Client模式
+![](http://blog.cloudera.com/wp-content/uploads/2014/05/spark-yarn-f22.png)
+
+两种模式最大的区别在于Spark Driver的运行位置，Cluster模式下Driver运行在Application Master中，而Client模式下Driver运行在本地。
+Spark利用AKKA位置透明的特性，使得这两种模式可以同用同一套代码。
 
 ![](/images/spark_on_yarn_arch.png)
-
-
 
 
 ### Yarn-Cluster模式代码分析
@@ -488,7 +496,7 @@ YarnClientSchedulerBackend.start
     asyncMonitorApplication()
 
 
-2: ApplicationMaster (和2中cluster模式稍有不同）
+2: ApplicationMaster (和cluster模式稍有不同）
 
 ApplicationMaster.run
 
