@@ -1,0 +1,505 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <meta name="author" content="Mars Gu" />
+   <link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+</head>
+<body>
+<h1>Spark on Yarn源码分析</h1>
+<p>基于Spark-1.3.0</p>
+<h3>Architecture</h3>
+<p><img alt="" src="/images/spark_on_yarn_arch.png" /></p>
+<h3>Yarn-Cluster模式</h3>
+<p>1: Client</p>
+<p>SparkSubmit</p>
+<pre><code>if (isYarnCluster) {
+    childMainClass = "org.apache.spark.deploy.yarn.Client"
+    //...
+}
+</code></pre>
+<p>Client.main</p>
+<pre><code>val args = new ClientArguments(argStrings, sparkConf)
+new Client(args, sparkConf).run()
+</code></pre>
+<p>Client.run</p>
+<pre><code>val (yarnApplicationState, finalApplicationStatus) = monitorApplication(submitApplication())
+</code></pre>
+<p>1.1: SubmitApplication</p>
+<p>Client.submitApplication</p>
+<pre><code>//新建一个Application
+val newApp = yarnClient.createApplication()
+val newAppResponse = newApp.getNewApplicationResponse()
+val appId = newAppResponse.getApplicationId()
+
+//创建environment, java options以及启动AM的命令
+val containerContext = createContainerLaunchContext(newAppResponse)
+
+//创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
+val appContext = createApplicationSubmissionContext(newApp, containerContext)
+
+//向Yarn提交Application
+yarnClient.submitApplication(appContext)
+</code></pre>
+<p>Client.createContainerLaunchContext </p>
+<pre><code>//创建environment, java options以及启动AM的命令
+val launchEnv = setupLaunchEnv(appStagingDir)
+val amContainer = Records.newRecord(classOf[ContainerLaunchContext])
+amContainer.setLocalResources(localResources)
+amContainer.setEnvironment(launchEnv)
+
+val amClass =
+  if (isClusterMode) {
+    Class.forName("org.apache.spark.deploy.yarn.ApplicationMaster").getName
+  } else {
+    Class.forName("org.apache.spark.deploy.yarn.ExecutorLauncher").getName
+  }
+
+// Command for the ApplicationMaster
+val commands = prefixEnv ++ Seq(
+    YarnSparkHadoopUtil.expandEnvironment(Environment.JAVA_HOME) + "/bin/java", "-server"
+  ) ++
+  javaOpts ++ amArgs ++
+  Seq(
+    "1&gt;", ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/stdout",
+    "2&gt;", ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/stderr")
+val printableCommands = commands.map(s =&gt; if (s == null) "null" else s).toList
+amContainer.setCommands(printableCommands)
+
+// send the acl settings into YARN to control who has access via YARN interfaces
+val securityManager = new SecurityManager(sparkConf)
+amContainer.setApplicationACLs(YarnSparkHadoopUtil.getApplicationAclsForYarn(securityManager))
+setupSecurityToken(amContainer)
+UserGroupInformation.getCurrentUser().addCredentials(credentials)
+</code></pre>
+<p>Client.createApplicationSubmissionContext </p>
+<pre><code>//创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
+val appContext = newApp.getApplicationSubmissionContext
+appContext.setApplicationName(args.appName)
+appContext.setQueue(args.amQueue)
+appContext.setAMContainerSpec(containerContext)
+appContext.setApplicationType("SPARK")
+sparkConf.getOption("spark.yarn.maxAppAttempts").map(_.toInt) match {
+  case Some(v) =&gt; appContext.setMaxAppAttempts(v)
+  case None =&gt; logDebug("spark.yarn.maxAppAttempts is not set. " +
+      "Cluster's default value will be used.")
+}
+val capability = Records.newRecord(classOf[Resource])
+capability.setMemory(args.amMemory + amMemoryOverhead)
+capability.setVirtualCores(args.amCores)
+appContext.setResource(capability)
+</code></pre>
+<p>1.2: monitorApplication</p>
+<pre><code>val report = getApplicationReport(appId)
+val state = report.getYarnApplicationState
+val details = Seq[(String, String)](
+      ("client token", getClientToken(report)),
+      ("diagnostics", report.getDiagnostics),
+      ("ApplicationMaster host", report.getHost),
+      ("ApplicationMaster RPC port", report.getRpcPort.toString),
+      ("queue", report.getQueue),
+      ("start time", report.getStartTime.toString),
+      ("final status", report.getFinalApplicationStatus.toString),
+      ("tracking URL", report.getTrackingUrl),
+      ("user", report.getUser)
+    )
+</code></pre>
+<p>2: 启动ApplicationMaster</p>
+<p>ApplicationMaster.main</p>
+<pre><code>val amArgs = new ApplicationMasterArguments(args)
+SparkHadoopUtil.get.runAsSparkUser { () =&gt;
+  master = new ApplicationMaster(amArgs, new YarnRMClient(amArgs))
+  System.exit(master.run())
+}
+</code></pre>
+<p>ApplicationMaster.run</p>
+<pre><code>if (isClusterMode) {
+    runDriver(securityMgr)
+  } else {
+    runExecutorLauncher(securityMgr)
+  }
+</code></pre>
+<p>2.1: ApplicationMaster.runDriver</p>
+<pre><code>//配置IP Filter
+addAmIpFilter()
+
+//启动用户程序
+userClassThread = startUserApplication()
+
+//等待用户启动SC
+val sc = waitForSparkContextInitialized()
+
+if (sc == null) {
+  finish(FinalApplicationStatus.FAILED,
+    ApplicationMaster.EXIT_SC_NOT_INITED,
+    "Timed out waiting for SparkContext.")
+} else {
+  actorSystem = sc.env.actorSystem
+
+  runAMActor(
+    sc.getConf.get("spark.driver.host"),
+    sc.getConf.get("spark.driver.port"),
+    isClusterMode = true)
+
+  registerAM(sc.ui.map(_.appUIAddress).getOrElse(""), securityMgr)
+  userClassThread.join()
+}
+</code></pre>
+<p>2.2: startUserApplication</p>
+<pre><code>val mainArgs = new Array[String](args.userArgs.size)
+args.userArgs.copyToArray(mainArgs, 0, args.userArgs.size)
+mainMethod.invoke(null, mainArgs)
+finish(FinalApplicationStatus.SUCCEEDED, ApplicationMaster.EXIT_SUCCESS)
+</code></pre>
+<p>2.3: SparkContext</p>
+<pre><code>case "yarn-standalone" | "yarn-cluster" =&gt;
+    if (master == "yarn-standalone") {
+      logWarning(
+        "\"yarn-standalone\" is deprecated as of Spark 1.0. Use \"yarn-cluster\" instead.")
+    }
+    val scheduler = try {
+      val clazz = Class.forName("org.apache.spark.scheduler.cluster.YarnClusterScheduler")
+      val cons = clazz.getConstructor(classOf[SparkContext])
+      cons.newInstance(sc).asInstanceOf[TaskSchedulerImpl]
+    } catch {
+      case e: Exception =&gt; {
+        throw new SparkException("YARN mode not available ?", e)
+      }
+    }
+    val backend = try {
+      val clazz =
+        Class.forName("org.apache.spark.scheduler.cluster.YarnClusterSchedulerBackend")
+      val cons = clazz.getConstructor(classOf[TaskSchedulerImpl], classOf[SparkContext])
+      cons.newInstance(scheduler, sc).asInstanceOf[CoarseGrainedSchedulerBackend]
+    } catch {
+      case e: Exception =&gt; {
+        throw new SparkException("YARN mode not available ?", e)
+      }
+    }
+    scheduler.initialize(backend)
+    (backend, scheduler)
+</code></pre>
+<p>2.4 YarnClusterSchedulerBackend -&gt; YarnSchedulerBackend -&gt; CoarseGrainedSchedulerBackend -&gt; SchedulerBackend</p>
+<p>SchedulerBackend API</p>
+<pre><code>def start(): Unit
+def stop(): Unit
+def reviveOffers(): Unit
+def defaultParallelism(): Int
+def killTask(taskId: Long, executorId: String, interruptThread: Boolean): Unit
+def isReady(): Boolean = true
+def applicationId(): String = appId
+</code></pre>
+<p>CoarseGrainedSchedulerBackend API</p>
+<pre><code>def doRequestTotalExecutors(requestedTotal: Int): Boolean
+def doKillExecutors(executorIds: Seq[String]): Boolean
+def sufficientResourcesRegistered(): Boolean
+</code></pre>
+<p>YarnSchedulerBackend</p>
+<pre><code>private val yarnSchedulerActor: ActorRef =
+actorSystem.actorOf(
+  Props(new YarnSchedulerActor),
+  name = YarnSchedulerBackend.ACTOR_NAME)
+
+override def doRequestTotalExecutors(requestedTotal: Int): Boolean = {
+    AkkaUtils.askWithReply[Boolean](
+      RequestExecutors(requestedTotal), yarnSchedulerActor, askTimeout)
+  }
+
+override def doKillExecutors(executorIds: Seq[String]): Boolean = {
+    AkkaUtils.askWithReply[Boolean](
+      KillExecutors(executorIds), yarnSchedulerActor, askTimeout)
+  }
+</code></pre>
+<p>2.5 waitForSparkContextInitialized</p>
+<pre><code>while (sparkContextRef.get() == null &amp;&amp; System.currentTimeMillis &lt; deadline &amp;&amp; !finished) {
+    logInfo("Waiting for spark context initialization ... ")
+    sparkContextRef.wait(10000L)
+  }
+</code></pre>
+<p>3 AMActor</p>
+<p>ApplicationMaster.runAMActor</p>
+<pre><code>actor = actorSystem.actorOf(Props(new AMActor(driverUrl, isClusterMode)), name = "YarnAM")
+</code></pre>
+<p>ApplicationMaster.AMActor</p>
+<pre><code>override def preStart() = {
+  driver = context.actorSelection(driverUrl)
+  // Send a hello message to establish the connection, after which
+  // we can monitor Lifecycle Events.
+  driver ! "Hello"
+  driver ! RegisterClusterManager
+}
+
+override def receive = {
+  case x: DisassociatedEvent =&gt;
+    // In cluster mode, do not rely on the disassociated event to exit
+    // This avoids potentially reporting incorrect exit codes if the driver fails
+    if (!isClusterMode) {
+      finish(FinalApplicationStatus.SUCCEEDED, ApplicationMaster.EXIT_SUCCESS)
+    }
+
+  case x: AddWebUIFilter =&gt;
+    driver ! x
+
+  case RequestExecutors(requestedTotal) =&gt;
+    Option(allocator) match {
+      case Some(a) =&gt; a.requestTotalExecutors(requestedTotal)
+      case None =&gt; logWarning("Container allocator is not ready to request executors yet.")
+    }
+    sender ! true
+
+  case KillExecutors(executorIds) =&gt;
+    Option(allocator) match {
+      case Some(a) =&gt; executorIds.foreach(a.killExecutor)
+      case None =&gt; logWarning("Container allocator is not ready to kill executors yet.")
+    }
+    sender ! true
+}
+</code></pre>
+<p>ApplicationMaster.registerAM </p>
+<pre><code>//向RM注册AM相关信息(UIAddress、HistoryAddress、SecurityManager、SecurityManager、preferredNodeLocation)，并启动线程申请资源
+allocator = client.register(yarnConf,
+  if (sc != null) sc.getConf else sparkConf,
+  if (sc != null) sc.preferredNodeLocationData else Map(),
+  uiAddress,
+  historyAddress,
+  securityMgr)
+
+allocator.allocateResources()
+
+//launchReporterThread
+reporterThread = launchReporterThread()
+</code></pre>
+<p>launchReporterThread</p>
+<p>ApplicationMaster.launchReporterThread</p>
+<pre><code>if (allocator.getNumExecutorsFailed &gt;= maxNumExecutorFailures) {
+  finish(FinalApplicationStatus.FAILED,
+    ApplicationMaster.EXIT_MAX_EXECUTOR_FAILURES,
+    "Max number of executor failures reached")
+} else {
+  logDebug("Sending progress")
+  allocator.allocateResources()
+}
+</code></pre>
+<p>4: YarnAllocator</p>
+<p>API</p>
+<pre><code>def getNumExecutorsRunning: Int = numExecutorsRunning
+def getNumExecutorsFailed: Int = numExecutorsFailed
+def getNumPendingAllocate: Int = getNumPendingAtLocation(ANY_HOST)
+
+def requestTotalExecutors(requestedTotal: Int)
+def killExecutor(executorId: String)
+def allocateResources(): Unit
+def updateResourceRequests(): Unit
+</code></pre>
+<p>YarnAllocator.allocateResources</p>
+<pre><code>updateResourceRequests()
+val allocateResponse = amClient.allocate(progressIndicator)
+val allocatedContainers = allocateResponse.getAllocatedContainers()
+if (allocatedContainers.size &gt; 0) {
+  handleAllocatedContainers(allocatedContainers)
+}
+val completedContainers = allocateResponse.getCompletedContainersStatuses()
+if (completedContainers.size &gt; 0) {
+  processCompletedContainers(completedContainers)
+}
+</code></pre>
+<p>YarnAllocator.updateResourceRequests</p>
+<pre><code>val numPendingAllocate = getNumPendingAllocate
+val missing = targetNumExecutors - numPendingAllocate - numExecutorsRunning
+
+if (missing &gt; 0) {
+  for (i &lt;- 0 until missing) {
+    val request = new ContainerRequest(resource, null, null, RM_REQUEST_PRIORITY)
+    amClient.addContainerRequest(request)
+    val nodes = request.getNodes
+    val hostStr = if (nodes == null || nodes.isEmpty) "Any" else nodes.last
+  }
+} else if (missing &lt; 0) {
+  val numToCancel = math.min(numPendingAllocate, -missing)
+  val matchingRequests = amClient.getMatchingRequests(RM_REQUEST_PRIORITY, ANY_HOST, resource)
+  if (!matchingRequests.isEmpty) {
+    matchingRequests.head.take(numToCancel).foreach(amClient.removeContainerRequest)
+  } else {
+    logWarning("Expected to find pending requests, but found none.")
+  }
+}
+</code></pre>
+<p>5: AMRMClient[ContainerRequest]</p>
+<p>getNumPendingAtLocation</p>
+<pre><code>amClient.getMatchingRequests(RM_REQUEST_PRIORITY, location, resource).map(_.size).sum
+</code></pre>
+<p>allocateResources</p>
+<pre><code>amClient.allocate(progressIndicator)
+</code></pre>
+<p>updateResourceRequests<br />
+</p>
+<pre><code>val request = new ContainerRequest(resource, null, null, RM_REQUEST_PRIORITY)
+amClient.addContainerRequest(request)
+
+amClient.getMatchingRequests(RM_REQUEST_PRIORITY, ANY_HOST, resource)
+if (!matchingRequests.isEmpty) {
+      matchingRequests.head.take(numToCancel).foreach(amClient.removeContainerRequest)
+    } else {
+      logWarning("Expected to find pending requests, but found none.")
+    }
+</code></pre>
+<p>internalReleaseContainer</p>
+<pre><code>amClient.releaseAssignedContainer(container.getId())
+</code></pre>
+<p>6: ExecutorRunnable</p>
+<p>run</p>
+<pre><code>nmClient = NMClient.createNMClient()
+nmClient.init(yarnConf)
+nmClient.start()
+startContainer
+</code></pre>
+<p>startContainer</p>
+<pre><code>val ctx = Records.newRecord(classOf[ContainerLaunchContext])
+  .asInstanceOf[ContainerLaunchContext]
+
+val localResources = prepareLocalResources
+ctx.setLocalResources(localResources)
+
+ctx.setEnvironment(env)
+
+val credentials = UserGroupInformation.getCurrentUser().getCredentials()
+val dob = new DataOutputBuffer()
+credentials.writeTokenStorageToStream(dob)
+ctx.setTokens(ByteBuffer.wrap(dob.getData()))
+
+val commands = prepareCommand(masterAddress, slaveId, hostname, executorMemory, executorCores,
+  appId, localResources)
+
+ctx.setCommands(commands)
+ctx.setApplicationACLs(YarnSparkHadoopUtil.getApplicationAclsForYarn(securityMgr))
+
+if (sparkConf.getBoolean("spark.shuffle.service.enabled", false)) {
+  val secretString = securityMgr.getSecretKey()
+  val secretBytes =
+    if (secretString != null) {
+      // This conversion must match how the YarnShuffleService decodes our secret
+      JavaUtils.stringToBytes(secretString)
+    } else {
+      // Authentication is not enabled, so just provide dummy metadata
+      ByteBuffer.allocate(0)
+    }
+  ctx.setServiceData(Map[String, ByteBuffer]("spark_shuffle" -&gt; secretBytes))
+}
+
+nmClient.startContainer(container, ctx)
+</code></pre>
+<h3>Yarn-Client模式</h3>
+<p>7: 触发提交Application的过程</p>
+<p>SparkContext</p>
+<pre><code>case "yarn-client" =&gt;
+    val scheduler = try {
+      val clazz =
+        Class.forName("org.apache.spark.scheduler.cluster.YarnScheduler")
+      val cons = clazz.getConstructor(classOf[SparkContext])
+      cons.newInstance(sc).asInstanceOf[TaskSchedulerImpl]
+
+    } catch {
+      case e: Exception =&gt; {
+        throw new SparkException("YARN mode not available ?", e)
+      }
+    }
+
+    val backend = try {
+      val clazz =
+        Class.forName("org.apache.spark.scheduler.cluster.YarnClientSchedulerBackend")
+      val cons = clazz.getConstructor(classOf[TaskSchedulerImpl], classOf[SparkContext])
+      cons.newInstance(scheduler, sc).asInstanceOf[CoarseGrainedSchedulerBackend]
+    } catch {
+      case e: Exception =&gt; {
+        throw new SparkException("YARN mode not available ?", e)
+      }
+    }
+
+    scheduler.initialize(backend)
+    (backend, scheduler)
+</code></pre>
+<p>YarnClientSchedulerBackend.start</p>
+<pre><code>val argsArrayBuf = new ArrayBuffer[String]()
+argsArrayBuf += ("--arg", hostport)
+argsArrayBuf ++= getExtraClientArguments
+
+val args = new ClientArguments(argsArrayBuf.toArray, conf)
+totalExpectedExecutors = args.numExecutors
+client = new Client(args, conf)
+
+//7.1
+appId = client.submitApplication()
+//7.2
+waitForApplication()
+//7.3
+asyncMonitorApplication()
+</code></pre>
+<p>2: ApplicationMaster (和2中cluster模式稍有不同）</p>
+<p>ApplicationMaster.run</p>
+<pre><code>if (isClusterMode) {
+  runDriver(securityMgr)
+} else {
+  runExecutorLauncher(securityMgr)
+}
+</code></pre>
+<p>2.6: ApplicationMaster.runExecutorLauncher</p>
+<pre><code>actorSystem = AkkaUtils.createActorSystem("sparkYarnAM", Utils.localHostName, 0,
+  conf = sparkConf, securityManager = securityMgr)._1
+waitForSparkDriver()
+addAmIpFilter()
+registerAM(sparkConf.get("spark.driver.appUIAddress", ""), securityMgr)
+
+// In client mode the actor will stop the reporter thread.
+reporterThread.join()
+</code></pre>
+<p>2.7: ApplicationMaster.waitForSparkDriver</p>
+<pre><code>var driverUp = false
+val hostport = args.userArgs(0)
+val (driverHost, driverPort) = Utils.parseHostPort(hostport)
+
+val totalWaitTime = sparkConf.getLong("spark.yarn.am.waitTime", 100000L)
+val deadline = System.currentTimeMillis + totalWaitTime
+
+while (!driverUp &amp;&amp; !finished &amp;&amp; System.currentTimeMillis &lt; deadline) {
+  try {
+    val socket = new Socket(driverHost, driverPort)
+    socket.close()
+    logInfo("Driver now available: %s:%s".format(driverHost, driverPort))
+    driverUp = true
+  } catch {
+    case e: Exception =&gt;
+      logError("Failed to connect to driver at %s:%s, retrying ...".
+        format(driverHost, driverPort))
+      Thread.sleep(100L)
+  }
+}
+
+if (!driverUp) {
+  throw new SparkException("Failed to connect to driver!")
+}
+
+sparkConf.set("spark.driver.host", driverHost)
+sparkConf.set("spark.driver.port", driverPort.toString)
+
+runAMActor(driverHost, driverPort.toString, isClusterMode = false)
+</code></pre>
+<h3>Data Locality</h3>
+<p>使用preferredNodeLocationData，可以让Yarn分配距离数据较近的Container</p>
+<pre><code>val locData = InputFormatInfo.computePreferredLocations(
+  Seq(new InputFormatInfo(conf, classOf[TextInputFormat], new Path("hdfs:///myfile.txt")))
+val sc = new SparkContext(conf, locData)
+</code></pre>
+<h3>Problems</h3>
+<ol>
+<li>Spark无法动态增加/减少资源 <a href="https://issues.apache.org/jira/browse/YARN-1197">YARN-1197</a></li>
+<li>Spark日志存储问题 <a href="https://issues.apache.org/jira/browse/YARN-321">YARN-321</a></li>
+</ol>
+<h3>Links</h3>
+<ul>
+<li><a href="http://my.oschina.net/u/1434348/blog/193374">YARN应用开发流程</a></li>
+<li><a href="http://www.chinastor.org/upload/2014-07/14070710043699.pdf">Spark on Yarn: a deep dive</a> - Sandy Ryza @Cloudera</li>
+<li><a href="http://dongxicheng.org/framework-on-yarn/spark-on-yarn-challenge/">spark on yarn的技术挑战</a> - 董的博客</li>
+<li><a href="http://blog.cloudera.com/blog/2014/05/apache-spark-resource-management-and-yarn-app-models/">Apache Spark Resource Management and YARN App Models</a></li>
+<li><a href="http://www.cnblogs.com/hseagle/p/3728713.html">Apache Spark源码走读之8 -- Spark on Yarn</a></li>
+</ul>
+</body>
+</html>
