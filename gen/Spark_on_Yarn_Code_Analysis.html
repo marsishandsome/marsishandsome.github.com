@@ -15,7 +15,7 @@
 <img alt="" src="http://blog.cloudera.com/wp-content/uploads/2014/05/spark-yarn-f31.png" /></p>
 <p>Yarn Client模式
 <img alt="" src="http://blog.cloudera.com/wp-content/uploads/2014/05/spark-yarn-f22.png" /></p>
-<p>Spark利用AKKA位置透明的特性，使得这两种模式可以同用同一套代码。Spark on Yarn调用流图如下：
+<p>Spark利用AKKA位置透明的特性，使得这两种模式可以共用同一套代码。Spark on Yarn调用流图如下：
 <img alt="" src="/images/spark_on_yarn_arch.png" /></p>
 <h3>Yarn-Cluster模式代码分析</h3>
 <p>1: Client</p>
@@ -229,12 +229,14 @@ override def doKillExecutors(executorIds: Seq[String]): Boolean = {
   }
 </code></pre>
 <p>2.5 waitForSparkContextInitialized</p>
-<pre><code>while (sparkContextRef.get() == null &amp;&amp; System.currentTimeMillis &lt; deadline &amp;&amp; !finished) {
+<pre><code>//等待SC初始化完成
+while (sparkContextRef.get() == null &amp;&amp; System.currentTimeMillis &lt; deadline &amp;&amp; !finished) {
     logInfo("Waiting for spark context initialization ... ")
     sparkContextRef.wait(10000L)
   }
 </code></pre>
-<p>3 AMActor</p>
+<p>3 AMActor
+AMActor负责接收YarnSchedulerBackend的消息，来对Yarn进行资源申请。</p>
 <p>ApplicationMaster.runAMActor</p>
 <pre><code>actor = actorSystem.actorOf(Props(new AMActor(driverUrl, isClusterMode)), name = "YarnAM")
 </code></pre>
@@ -282,12 +284,12 @@ allocator = client.register(yarnConf,
   historyAddress,
   securityMgr)
 
+//申请资源
 allocator.allocateResources()
 
-//launchReporterThread
+//启动一个线程来向Yarn进行资源申请
 reporterThread = launchReporterThread()
 </code></pre>
-<p>launchReporterThread</p>
 <p>ApplicationMaster.launchReporterThread</p>
 <pre><code>//启动一个线程来向Yarn进行资源申请
 if (allocator.getNumExecutorsFailed &gt;= maxNumExecutorFailures) {
@@ -343,7 +345,8 @@ if (missing &gt; 0) {
   }
 }
 </code></pre>
-<p>5: AMRMClient[ContainerRequest]</p>
+<p>5: AMRMClient[ContainerRequest]
+Yarn提供的API，用于向Yarn申请资源。</p>
 <p>getNumPendingAtLocation</p>
 <pre><code>amClient.getMatchingRequests(RM_REQUEST_PRIORITY, location, resource).map(_.size).sum
 </code></pre>
@@ -365,7 +368,8 @@ if (!matchingRequests.isEmpty) {
 <p>internalReleaseContainer</p>
 <pre><code>amClient.releaseAssignedContainer(container.getId())
 </code></pre>
-<p>6: ExecutorRunnable</p>
+<p>6: ExecutorRunnable
+用来在Yarn的Container上启动程序</p>
 <p>run</p>
 <pre><code>nmClient = NMClient.createNMClient()
 nmClient.init(yarnConf)
@@ -409,8 +413,9 @@ nmClient.startContainer(container, ctx)
 </code></pre>
 <h3>Yarn-Client模式代码分析</h3>
 <p>7: 触发提交Application的过程</p>
-<p>SparkContext</p>
-<pre><code>case "yarn-client" =&gt;
+<p>用户新建SparkContext</p>
+<pre><code>//启动YarnClientSchedulerBackend
+case "yarn-client" =&gt;
     val scheduler = try {
       val clazz =
         Class.forName("org.apache.spark.scheduler.cluster.YarnScheduler")
@@ -455,7 +460,8 @@ asyncMonitorApplication()
 </code></pre>
 <p>2: ApplicationMaster (和cluster模式稍有不同）</p>
 <p>ApplicationMaster.run</p>
-<pre><code>if (isClusterMode) {
+<pre><code>//这次选择runExecutorLauncher
+if (isClusterMode) {
   runDriver(securityMgr)
 } else {
   runExecutorLauncher(securityMgr)
@@ -464,10 +470,11 @@ asyncMonitorApplication()
 <p>2.6: ApplicationMaster.runExecutorLauncher</p>
 <pre><code>actorSystem = AkkaUtils.createActorSystem("sparkYarnAM", Utils.localHostName, 0,
   conf = sparkConf, securityManager = securityMgr)._1
+//等待用户初始化SC
 waitForSparkDriver()
 addAmIpFilter()
+//向RM注册AM相关信息
 registerAM(sparkConf.get("spark.driver.appUIAddress", ""), securityMgr)
-
 // In client mode the actor will stop the reporter thread.
 reporterThread.join()
 </code></pre>
@@ -500,6 +507,7 @@ if (!driverUp) {
 sparkConf.set("spark.driver.host", driverHost)
 sparkConf.set("spark.driver.port", driverPort.toString)
 
+//启动AMActor
 runAMActor(driverHost, driverPort.toString, isClusterMode = false)
 </code></pre>
 <h3>Data Locality</h3>

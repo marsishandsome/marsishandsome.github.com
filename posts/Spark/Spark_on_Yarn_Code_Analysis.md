@@ -16,7 +16,7 @@ Yarn Client模式
 
 
 
-Spark利用AKKA位置透明的特性，使得这两种模式可以同用同一套代码。Spark on Yarn调用流图如下：
+Spark利用AKKA位置透明的特性，使得这两种模式可以共用同一套代码。Spark on Yarn调用流图如下：
 ![](/images/spark_on_yarn_arch.png)
 
 
@@ -256,12 +256,14 @@ YarnSchedulerBackend
 
 2.5 waitForSparkContextInitialized
 
+    //等待SC初始化完成
     while (sparkContextRef.get() == null && System.currentTimeMillis < deadline && !finished) {
         logInfo("Waiting for spark context initialization ... ")
         sparkContextRef.wait(10000L)
       }
     
 3 AMActor
+AMActor负责接收YarnSchedulerBackend的消息，来对Yarn进行资源申请。
 
 ApplicationMaster.runAMActor
 
@@ -315,13 +317,12 @@ ApplicationMaster.registerAM
       historyAddress,
       securityMgr)
 
+    //申请资源
     allocator.allocateResources()
-
-    //launchReporterThread
+    
+    //启动一个线程来向Yarn进行资源申请
     reporterThread = launchReporterThread()
 
-
-launchReporterThread
 
 ApplicationMaster.launchReporterThread
 
@@ -386,6 +387,7 @@ YarnAllocator.updateResourceRequests
 
 
 5: AMRMClient[ContainerRequest]
+Yarn提供的API，用于向Yarn申请资源。
 
 getNumPendingAtLocation
 
@@ -413,6 +415,7 @@ internalReleaseContainer
 
 
 6: ExecutorRunnable
+用来在Yarn的Container上启动程序
 
 run
 
@@ -461,8 +464,9 @@ startContainer
 ### Yarn-Client模式代码分析
 7: 触发提交Application的过程
 
-SparkContext
+用户新建SparkContext
 
+    //启动YarnClientSchedulerBackend
     case "yarn-client" =>
         val scheduler = try {
           val clazz =
@@ -512,6 +516,7 @@ YarnClientSchedulerBackend.start
 
 ApplicationMaster.run
 
+    //这次选择runExecutorLauncher
     if (isClusterMode) {
       runDriver(securityMgr)
     } else {
@@ -522,10 +527,11 @@ ApplicationMaster.run
 
     actorSystem = AkkaUtils.createActorSystem("sparkYarnAM", Utils.localHostName, 0,
       conf = sparkConf, securityManager = securityMgr)._1
+    //等待用户初始化SC
     waitForSparkDriver()
     addAmIpFilter()
+    //向RM注册AM相关信息
     registerAM(sparkConf.get("spark.driver.appUIAddress", ""), securityMgr)
-
     // In client mode the actor will stop the reporter thread.
     reporterThread.join()
 
@@ -559,6 +565,7 @@ ApplicationMaster.run
     sparkConf.set("spark.driver.host", driverHost)
     sparkConf.set("spark.driver.port", driverPort.toString)
 
+    //启动AMActor
     runAMActor(driverHost, driverPort.toString, isClusterMode = false)
 
 
