@@ -25,6 +25,7 @@
 
 ### Yarn-Cluster模式
 1: 提交Application
+
 Client.submitApplication
 
     // Get a new application from our RM
@@ -41,6 +42,7 @@ Client.submitApplication
 
 
 1.1: 创建environment, java options以及启动AM的命令
+
 Client.createContainerLaunchContext
 
     val launchEnv = setupLaunchEnv(appStagingDir)
@@ -74,6 +76,7 @@ Client.createContainerLaunchContext
 
 
 1.2: 创建提交AM的Context
+
 Client.createApplicationSubmissionContext
 
     val appContext = newApp.getApplicationSubmissionContext
@@ -93,6 +96,7 @@ Client.createApplicationSubmissionContext
 
 
 2: 启动ApplicationMaster
+
 ApplicationMaster.main
 
     val amArgs = new ApplicationMasterArguments(args)
@@ -110,6 +114,7 @@ ApplicationMaster.run
       }
 
 2.1: Cluster模式启动Driver
+
 ApplicationMaster.runDriver
 
     addAmIpFilter()
@@ -135,9 +140,10 @@ ApplicationMaster.runDriver
     }
 
 2.2 启动AMActor
+
 ApplicationMaster.runAMActor
 
-  actor = actorSystem.actorOf(Props(new AMActor(driverUrl, isClusterMode)), name = "YarnAM")
+    actor = actorSystem.actorOf(Props(new AMActor(driverUrl, isClusterMode)), name = "YarnAM")
 
 ApplicationMaster.AMActor
   
@@ -177,6 +183,7 @@ ApplicationMaster.AMActor
 
 
 2.3: registerAM
+
 ApplicationMaster.registerAM
 
     allocator = client.register(yarnConf,
@@ -191,6 +198,7 @@ ApplicationMaster.registerAM
 
 
 2.4: launchReporterThread
+
 ApplicationMaster.launchReporterThread
 
   if (allocator.getNumExecutorsFailed >= maxNumExecutorFailures) {
@@ -205,6 +213,7 @@ ApplicationMaster.launchReporterThread
 
 3: 申请并启动Container
 3.1: YarnAllocator
+
 API
 
   def getNumExecutorsRunning: Int = numExecutorsRunning

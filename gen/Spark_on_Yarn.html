@@ -29,8 +29,8 @@ val sc = new SparkContext(conf, locData)
 <li><a href="https://issues.apache.org/jira/browse/YARN-321">Timeline Store YARN-321</a></li>
 </ol>
 <h3>Yarn-Cluster模式</h3>
-<p>1: 提交Application
-Client.submitApplication</p>
+<p>1: 提交Application</p>
+<p>Client.submitApplication</p>
 <pre><code>// Get a new application from our RM
 val newApp = yarnClient.createApplication()
 val newAppResponse = newApp.getNewApplicationResponse()
@@ -43,8 +43,8 @@ val appContext = createApplicationSubmissionContext(newApp, containerContext)
 // Finally, submit and monitor the application
 yarnClient.submitApplication(appContext)
 </code></pre>
-<p>1.1: 创建environment, java options以及启动AM的命令
-Client.createContainerLaunchContext</p>
+<p>1.1: 创建environment, java options以及启动AM的命令</p>
+<p>Client.createContainerLaunchContext</p>
 <pre><code>val launchEnv = setupLaunchEnv(appStagingDir)
 val amContainer = Records.newRecord(classOf[ContainerLaunchContext])
 amContainer.setLocalResources(localResources)
@@ -74,8 +74,8 @@ amContainer.setApplicationACLs(YarnSparkHadoopUtil.getApplicationAclsForYarn(sec
 setupSecurityToken(amContainer)
 UserGroupInformation.getCurrentUser().addCredentials(credentials)
 </code></pre>
-<p>1.2: 创建提交AM的Context
-Client.createApplicationSubmissionContext</p>
+<p>1.2: 创建提交AM的Context</p>
+<p>Client.createApplicationSubmissionContext</p>
 <pre><code>val appContext = newApp.getApplicationSubmissionContext
 appContext.setApplicationName(args.appName)
 appContext.setQueue(args.amQueue)
@@ -91,8 +91,8 @@ capability.setMemory(args.amMemory + amMemoryOverhead)
 capability.setVirtualCores(args.amCores)
 appContext.setResource(capability)
 </code></pre>
-<p>2: 启动ApplicationMaster
-ApplicationMaster.main</p>
+<p>2: 启动ApplicationMaster</p>
+<p>ApplicationMaster.main</p>
 <pre><code>val amArgs = new ApplicationMasterArguments(args)
 SparkHadoopUtil.get.runAsSparkUser { () =&gt;
   master = new ApplicationMaster(amArgs, new YarnRMClient(amArgs))
@@ -106,8 +106,8 @@ SparkHadoopUtil.get.runAsSparkUser { () =&gt;
     runExecutorLauncher(securityMgr)
   }
 </code></pre>
-<p>2.1: Cluster模式启动Driver
-ApplicationMaster.runDriver</p>
+<p>2.1: Cluster模式启动Driver</p>
+<p>ApplicationMaster.runDriver</p>
 <pre><code>addAmIpFilter()
 userClassThread = startUserApplication()
 
@@ -130,9 +130,10 @@ if (sc == null) {
   userClassThread.join()
 }
 </code></pre>
-<p>2.2 启动AMActor
-ApplicationMaster.runAMActor</p>
-<p>actor = actorSystem.actorOf(Props(new AMActor(driverUrl, isClusterMode)), name = "YarnAM")</p>
+<p>2.2 启动AMActor</p>
+<p>ApplicationMaster.runAMActor</p>
+<pre><code>actor = actorSystem.actorOf(Props(new AMActor(driverUrl, isClusterMode)), name = "YarnAM")
+</code></pre>
 <p>ApplicationMaster.AMActor</p>
 <pre><code>override def preStart() = {
   driver = context.actorSelection(driverUrl)
@@ -168,8 +169,8 @@ override def receive = {
     sender ! true
 }
 </code></pre>
-<p>2.3: registerAM
-ApplicationMaster.registerAM</p>
+<p>2.3: registerAM</p>
+<p>ApplicationMaster.registerAM</p>
 <pre><code>allocator = client.register(yarnConf,
   if (sc != null) sc.getConf else sparkConf,
   if (sc != null) sc.preferredNodeLocationData else Map(),
@@ -180,8 +181,8 @@ ApplicationMaster.registerAM</p>
 allocator.allocateResources()
 reporterThread = launchReporterThread()
 </code></pre>
-<p>2.4: launchReporterThread
-ApplicationMaster.launchReporterThread</p>
+<p>2.4: launchReporterThread</p>
+<p>ApplicationMaster.launchReporterThread</p>
 <p>if (allocator.getNumExecutorsFailed &gt;= maxNumExecutorFailures) {
       finish(FinalApplicationStatus.FAILED,
         ApplicationMaster.EXIT_MAX_EXECUTOR_FAILURES,
@@ -191,8 +192,8 @@ ApplicationMaster.launchReporterThread</p>
       allocator.allocateResources()
     }</p>
 <p>3: 申请并启动Container
-3.1: YarnAllocator
-API</p>
+3.1: YarnAllocator</p>
+<p>API</p>
 <p>def getNumExecutorsRunning: Int = numExecutorsRunning
   def getNumExecutorsFailed: Int = numExecutorsFailed
   def getNumPendingAllocate: Int = getNumPendingAtLocation(ANY_HOST)</p>
