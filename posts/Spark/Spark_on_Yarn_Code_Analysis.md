@@ -1,11 +1,12 @@
 # Spark on Yarn源码分析
-阅读本篇需要Yarn的基础，强烈推荐Yarn入门文章: [YARN应用开发流程](http://my.oschina.net/u/1434348/blog/193374)
+阅读本篇需要Yarn的基础，强烈推荐Yarn入门文章: [YARN应用开发流程](http://my.oschina.net/u/1434348/blog/193374)。
 
 本篇代码基于Spark-1.3.0。
 
 
 ### Spark on Yarn调用流图
 Spark on Yarn支持两种部署模式：Cluster VS Client。
+两种模式最大的区别在于Spark Driver的运行位置，Cluster模式下Driver运行在Application Master中，而Client模式下Driver运行在本地。
 
 Yarn Cluster模式
 ![](http://blog.cloudera.com/wp-content/uploads/2014/05/spark-yarn-f31.png)
@@ -13,11 +14,9 @@ Yarn Cluster模式
 Yarn Client模式
 ![](http://blog.cloudera.com/wp-content/uploads/2014/05/spark-yarn-f22.png)
 
-两种模式最大的区别在于Spark Driver的运行位置，Cluster模式下Driver运行在Application Master中，而Client模式下Driver运行在本地。
-Spark利用AKKA位置透明的特性，使得这两种模式可以同用同一套代码。
 
 
-Spark on Yarn调用流图
+Spark利用AKKA位置透明的特性，使得这两种模式可以同用同一套代码。Spark on Yarn调用流图如下：
 ![](/images/spark_on_yarn_arch.png)
 
 
