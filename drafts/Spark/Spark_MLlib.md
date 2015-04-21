@@ -7,3 +7,6 @@
 - [part4](https://phdata.io/exploring-spark-mllib-part-4-exporting-the-model-for-use-outside-of-spark/)
 - [github](https://github.com/phdata/exploring-mllib-post)
 
+### 3rd party
+- [intel-machine-learning/DistML](https://github.com/intel-machine-learning/DistML)
+
