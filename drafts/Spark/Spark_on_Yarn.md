@@ -1,4 +1,5 @@
 # Spark on Yarn
+基于Spark-1.3.0
 
 ### Architecture
 
@@ -44,8 +45,9 @@ Client.submitApplication
     yarnClient.submitApplication(appContext)
 
 
-Client.createContainerLaunchContext 创建environment, java options以及启动AM的命令
+Client.createContainerLaunchContext 
 
+    //创建environment, java options以及启动AM的命令
     val launchEnv = setupLaunchEnv(appStagingDir)
     val amContainer = Records.newRecord(classOf[ContainerLaunchContext])
     amContainer.setLocalResources(localResources)
@@ -77,8 +79,9 @@ Client.createContainerLaunchContext 创建environment, java options以及启动A
 
 
 
-Client.createApplicationSubmissionContext 创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
+Client.createApplicationSubmissionContext 
 
+    //创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
     val appContext = newApp.getApplicationSubmissionContext
     appContext.setApplicationName(args.appName)
     appContext.setQueue(args.amQueue)
@@ -147,13 +150,11 @@ ApplicationMaster.run
     } else {
       actorSystem = sc.env.actorSystem
 
-      //2.2 启动AMActor
       runAMActor(
         sc.getConf.get("spark.driver.host"),
         sc.getConf.get("spark.driver.port"),
         isClusterMode = true)
 
-      //2.3: 向RM注册AM相关信息(UIAddress、HistoryAddress、SecurityManager、SecurityManager、preferredNodeLocation)，并启动线程申请资源
       registerAM(sc.ui.map(_.appUIAddress).getOrElse(""), securityMgr)
       userClassThread.join()
     }
@@ -177,8 +178,6 @@ ApplicationMaster.run
           val cons = clazz.getConstructor(classOf[SparkContext])
           cons.newInstance(sc).asInstanceOf[TaskSchedulerImpl]
         } catch {
-          // TODO: Enumerate the exact reasons why it can fail
-          // But irrespective of it, it means we cannot proceed !
           case e: Exception => {
             throw new SparkException("YARN mode not available ?", e)
           }
@@ -196,8 +195,40 @@ ApplicationMaster.run
         scheduler.initialize(backend)
         (backend, scheduler)
 
-2.4 YarnClusterSchedulerBackend 
-TODO
+2.4 YarnClusterSchedulerBackend -> YarnSchedulerBackend -> CoarseGrainedSchedulerBackend -> SchedulerBackend
+
+SchedulerBackend API
+
+    def start(): Unit
+    def stop(): Unit
+    def reviveOffers(): Unit
+    def defaultParallelism(): Int
+    def killTask(taskId: Long, executorId: String, interruptThread: Boolean): Unit
+    def isReady(): Boolean = true
+    def applicationId(): String = appId
+
+CoarseGrainedSchedulerBackend API
+
+    def doRequestTotalExecutors(requestedTotal: Int): Boolean
+    def doKillExecutors(executorIds: Seq[String]): Boolean
+    def sufficientResourcesRegistered(): Boolean
+
+YarnSchedulerBackend
+
+    private val yarnSchedulerActor: ActorRef =
+    actorSystem.actorOf(
+      Props(new YarnSchedulerActor),
+      name = YarnSchedulerBackend.ACTOR_NAME)
+
+    override def doRequestTotalExecutors(requestedTotal: Int): Boolean = {
+        AkkaUtils.askWithReply[Boolean](
+          RequestExecutors(requestedTotal), yarnSchedulerActor, askTimeout)
+      }
+
+    override def doKillExecutors(executorIds: Seq[String]): Boolean = {
+        AkkaUtils.askWithReply[Boolean](
+          KillExecutors(executorIds), yarnSchedulerActor, askTimeout)
+      }
 
 2.5 waitForSparkContextInitialized
 
@@ -250,8 +281,9 @@ ApplicationMaster.AMActor
 
 
 
-ApplicationMaster.registerAM 向RM注册AM相关信息(UIAddress、HistoryAddress、SecurityManager、SecurityManager、preferredNodeLocation)，并启动线程申请资源
+ApplicationMaster.registerAM 
 
+    //向RM注册AM相关信息(UIAddress、HistoryAddress、SecurityManager、SecurityManager、preferredNodeLocation)，并启动线程申请资源
     allocator = client.register(yarnConf,
       if (sc != null) sc.getConf else sparkConf,
       if (sc != null) sc.preferredNodeLocationData else Map(),
