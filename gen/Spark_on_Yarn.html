@@ -6,13 +6,16 @@
 </head>
 <body>
 <h1>Spark on Yarn</h1>
-<h3>Links</h3>
+<h3>Links for Yarn</h3>
+<ul>
+<li><a href="http://my.oschina.net/u/1434348/blog/193374">YARN应用开发流程</a></li>
+</ul>
+<h3>Links for Spark on Yarn</h3>
 <ul>
 <li><a href="http://dongxicheng.org/framework-on-yarn/spark-on-yarn-challenge/">spark on yarn的技术挑战</a> - 董的博客</li>
 <li><a href="http://www.chinastor.org/upload/2014-07/14070710043699.pdf">Spark on Yarn: a deep dive</a> - Sandy Ryza @Cloudera</li>
 <li><a href="http://blog.cloudera.com/blog/2014/05/apache-spark-resource-management-and-yarn-app-models/">Apache Spark Resource Management and YARN App Models</a></li>
 <li><a href="http://www.cnblogs.com/hseagle/p/3728713.html">Apache Spark源码走读之8 -- Spark on Yarn</a></li>
-<li><a href="http://my.oschina.net/u/1434348/blog/193374">YARN应用开发流程</a></li>
 </ul>
 <h3>Data Locality</h3>
 <p>使用preferredNodeLocationData</p>
@@ -23,7 +26,7 @@ val sc = new SparkContext(conf, locData)
 <h3>Problems</h3>
 <ol>
 <li>Spark无法动态增加/减少资源，Container-Resizing <a href="https://issues.apache.org/jira/browse/YARN-1197">YARN-1197</a></li>
-<li>Timeline Store, <a href="https://issues.apache.org/jira/browse/YARN-321">YARN-321</a></li>
+<li><a href="https://issues.apache.org/jira/browse/YARN-321">Timeline Store YARN-321</a></li>
 </ol>
 </body>
 </html>
