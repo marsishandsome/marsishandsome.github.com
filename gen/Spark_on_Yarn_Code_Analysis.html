@@ -302,6 +302,7 @@ if (allocator.getNumExecutorsFailed &gt;= maxNumExecutorFailures) {
 }
 </code></pre>
 <p>4: YarnAllocator</p>
+<p>用来向Yarn进行资源申请</p>
 <p>API</p>
 <pre><code>def getNumExecutorsRunning: Int = numExecutorsRunning
 def getNumExecutorsFailed: Int = numExecutorsFailed
@@ -459,6 +460,13 @@ waitForApplication()
 asyncMonitorApplication()
 </code></pre>
 <p>2: ApplicationMaster (和cluster模式稍有不同）</p>
+<p>ExecutorLauncher.main</p>
+<pre><code>//Yarn-Client模式下，ApplicationMaster的入口
+//为什么不直接用ApplicationMaster.main？因为jps可以通过类的名字区分Client和Cluster模式
+def main(args: Array[String]) = {
+  ApplicationMaster.main(args)
+}
+</code></pre>
 <p>ApplicationMaster.run</p>
 <pre><code>//这次选择runExecutorLauncher
 if (isClusterMode) {

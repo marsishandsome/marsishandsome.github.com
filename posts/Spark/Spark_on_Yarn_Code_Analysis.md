@@ -340,6 +340,8 @@ ApplicationMaster.launchReporterThread
 
 4: YarnAllocator
 
+用来向Yarn进行资源申请
+
 API
 
     def getNumExecutorsRunning: Int = numExecutorsRunning
@@ -516,6 +518,14 @@ YarnClientSchedulerBackend.start
 
 
 2: ApplicationMaster (和cluster模式稍有不同）
+
+ExecutorLauncher.main
+    
+    //Yarn-Client模式下，ApplicationMaster的入口
+    //为什么不直接用ApplicationMaster.main？因为jps可以通过类的名字区分Client和Cluster模式
+    def main(args: Array[String]) = {
+      ApplicationMaster.main(args)
+    }
 
 ApplicationMaster.run
 
