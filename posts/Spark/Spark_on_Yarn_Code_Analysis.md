@@ -16,26 +16,31 @@ Yarn Client模式
 两种模式最大的区别在于Spark Driver的运行位置，Cluster模式下Driver运行在Application Master中，而Client模式下Driver运行在本地。
 Spark利用AKKA位置透明的特性，使得这两种模式可以同用同一套代码。
 
+
+Spark on Yarn调用流图
 ![](/images/spark_on_yarn_arch.png)
 
 
 ### Yarn-Cluster模式代码分析
 1: Client
 
-SparkSubmit
+SparkSubmit是Spark程序的入口
 
     if (isYarnCluster) {
+        //启动Client类
         childMainClass = "org.apache.spark.deploy.yarn.Client"
         //...
     }
 
 Client.main
 
+    //读取参数
     val args = new ClientArguments(argStrings, sparkConf)
     new Client(args, sparkConf).run()
 
 Client.run
 
+    //submit & monitor application
     val (yarnApplicationState, finalApplicationStatus) = monitorApplication(submitApplication())
 
 
@@ -91,7 +96,6 @@ Client.createContainerLaunchContext
     UserGroupInformation.getCurrentUser().addCredentials(credentials)
 
 
-
 Client.createApplicationSubmissionContext 
 
     //创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
@@ -129,8 +133,9 @@ Client.createApplicationSubmissionContext
 
 2: 启动ApplicationMaster
 
-ApplicationMaster.main
+ApplicationMaster.main 是AM的入口函数
 
+    //读取参数并启动ApplicationMaster
     val amArgs = new ApplicationMasterArguments(args)
     SparkHadoopUtil.get.runAsSparkUser { () =>
       master = new ApplicationMaster(amArgs, new YarnRMClient(amArgs))
@@ -139,6 +144,7 @@ ApplicationMaster.main
 
 ApplicationMaster.run
 
+    //两种模式在这里分叉
     if (isClusterMode) {
         runDriver(securityMgr)
       } else {
@@ -163,17 +169,20 @@ ApplicationMaster.run
     } else {
       actorSystem = sc.env.actorSystem
 
+      //启动AMAcotr
       runAMActor(
         sc.getConf.get("spark.driver.host"),
         sc.getConf.get("spark.driver.port"),
         isClusterMode = true)
 
+      //向RM注册AM相关信息
       registerAM(sc.ui.map(_.appUIAddress).getOrElse(""), securityMgr)
       userClassThread.join()
     }
 
 2.2: startUserApplication
 
+    //启动用户的程序
     val mainArgs = new Array[String](args.userArgs.size)
     args.userArgs.copyToArray(mainArgs, 0, args.userArgs.size)
     mainMethod.invoke(null, mainArgs)
@@ -181,6 +190,8 @@ ApplicationMaster.run
 
 2.3: SparkContext
 
+    //用户的程序新建SparkContext
+    //启动YarnClusterScheduler和YarnClusterSchedulerBackend
     case "yarn-standalone" | "yarn-cluster" =>
         if (master == "yarn-standalone") {
           logWarning(
@@ -228,6 +239,7 @@ CoarseGrainedSchedulerBackend API
 
 YarnSchedulerBackend
 
+    //连接到ApplicationMaster中的AMActor，通过AMActor向Yarn进行资源申请
     private val yarnSchedulerActor: ActorRef =
     actorSystem.actorOf(
       Props(new YarnSchedulerActor),
@@ -314,6 +326,7 @@ launchReporterThread
 
 ApplicationMaster.launchReporterThread
 
+    //启动一个线程来向Yarn进行资源申请
     if (allocator.getNumExecutorsFailed >= maxNumExecutorFailures) {
       finish(FinalApplicationStatus.FAILED,
         ApplicationMaster.EXIT_MAX_EXECUTOR_FAILURES,
