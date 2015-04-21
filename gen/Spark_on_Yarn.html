@@ -245,9 +245,11 @@ if (missing &gt; 0) {
 <pre><code>amClient.allocate(progressIndicator)
 </code></pre>
 <p>updateResourceRequests<br />
-    val request = new ContainerRequest(resource, null, null, RM_REQUEST_PRIORITY)
-    amClient.addContainerRequest(request)</p>
-<pre><code>amClient.getMatchingRequests(RM_REQUEST_PRIORITY, ANY_HOST, resource)
+</p>
+<pre><code>val request = new ContainerRequest(resource, null, null, RM_REQUEST_PRIORITY)
+amClient.addContainerRequest(request)
+
+amClient.getMatchingRequests(RM_REQUEST_PRIORITY, ANY_HOST, resource)
 if (!matchingRequests.isEmpty) {
       matchingRequests.head.take(numToCancel).foreach(amClient.removeContainerRequest)
     } else {

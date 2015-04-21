@@ -272,6 +272,7 @@ allocateResources
     amClient.allocate(progressIndicator)
 
 updateResourceRequests  
+
     val request = new ContainerRequest(resource, null, null, RM_REQUEST_PRIORITY)
     amClient.addContainerRequest(request)
 
