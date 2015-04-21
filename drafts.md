@@ -2,7 +2,6 @@
 [rss](http://feeds.feedburner.com/marsishandsome)
 
 ### Spark
-- [Spark on Yarn](gen/Spark_on_Yarn.html)
 - [Spark MLlib](gen/Spark_MLlib.html)
 - [Spark Profiling](gen/Spark_Profiling.html)
 - [Spark Job Server](gen/Spark_Job_Server.html)
