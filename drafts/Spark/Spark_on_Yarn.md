@@ -6,7 +6,26 @@
 
 
 ### Yarn-Cluster模式
-1: 提交Application
+1: Client
+
+SparkSubmit
+
+    if (isYarnCluster) {
+        childMainClass = "org.apache.spark.deploy.yarn.Client"
+        //...
+    }
+
+Client.main
+
+    val args = new ClientArguments(argStrings, sparkConf)
+    new Client(args, sparkConf).run()
+
+Client.run
+
+    val (yarnApplicationState, finalApplicationStatus) = monitorApplication(submitApplication())
+
+
+1.1: SubmitApplication
 
 Client.submitApplication
 
@@ -15,19 +34,17 @@ Client.submitApplication
     val newAppResponse = newApp.getNewApplicationResponse()
     val appId = newAppResponse.getApplicationId()
 
-    //1.1: 创建environment, java options以及启动AM的命令
+    //创建environment, java options以及启动AM的命令
     val containerContext = createContainerLaunchContext(newAppResponse)
 
-    //1.2: 创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
+    //创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
     val appContext = createApplicationSubmissionContext(newApp, containerContext)
 
     //向Yarn提交Application
     yarnClient.submitApplication(appContext)
 
 
-1.1: 创建environment, java options以及启动AM的命令
-
-Client.createContainerLaunchContext
+Client.createContainerLaunchContext 创建environment, java options以及启动AM的命令
 
     val launchEnv = setupLaunchEnv(appStagingDir)
     val amContainer = Records.newRecord(classOf[ContainerLaunchContext])
@@ -59,9 +76,8 @@ Client.createContainerLaunchContext
     UserGroupInformation.getCurrentUser().addCredentials(credentials)
 
 
-1.2: 创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
 
-Client.createApplicationSubmissionContext
+Client.createApplicationSubmissionContext 创建提交AM的Context，包括名字、队列、类型、内存、CPU及参数
 
     val appContext = newApp.getApplicationSubmissionContext
     appContext.setApplicationName(args.appName)
@@ -77,6 +93,22 @@ Client.createApplicationSubmissionContext
     capability.setMemory(args.amMemory + amMemoryOverhead)
     capability.setVirtualCores(args.amCores)
     appContext.setResource(capability)
+
+1.2: monitorApplication
+
+    val report = getApplicationReport(appId)
+    val state = report.getYarnApplicationState
+    val details = Seq[(String, String)](
+          ("client token", getClientToken(report)),
+          ("diagnostics", report.getDiagnostics),
+          ("ApplicationMaster host", report.getHost),
+          ("ApplicationMaster RPC port", report.getRpcPort.toString),
+          ("queue", report.getQueue),
+          ("start time", report.getStartTime.toString),
+          ("final status", report.getFinalApplicationStatus.toString),
+          ("tracking URL", report.getTrackingUrl),
+          ("user", report.getUser)
+        )
 
 
 2: 启动ApplicationMaster
@@ -97,12 +129,12 @@ ApplicationMaster.run
         runExecutorLauncher(securityMgr)
       }
 
-ApplicationMaster.runDriver
+2.1: ApplicationMaster.runDriver
 
     //配置IP Filter
     addAmIpFilter()
 
-    //2.1 启动用户程序
+    //启动用户程序
     userClassThread = startUserApplication()
 
     //等待用户启动SC
@@ -126,16 +158,14 @@ ApplicationMaster.runDriver
       userClassThread.join()
     }
 
-2.1 启动用户程序
-
-startUserApplication
+2.2: startUserApplication
 
     val mainArgs = new Array[String](args.userArgs.size)
     args.userArgs.copyToArray(mainArgs, 0, args.userArgs.size)
     mainMethod.invoke(null, mainArgs)
     finish(FinalApplicationStatus.SUCCEEDED, ApplicationMaster.EXIT_SUCCESS)
 
-SparkContext
+2.3: SparkContext
 
     case "yarn-standalone" | "yarn-cluster" =>
         if (master == "yarn-standalone") {
@@ -165,8 +195,18 @@ SparkContext
         }
         scheduler.initialize(backend)
         (backend, scheduler)
+
+2.4 YarnClusterSchedulerBackend 
+TODO
+
+2.5 waitForSparkContextInitialized
+
+    while (sparkContextRef.get() == null && System.currentTimeMillis < deadline && !finished) {
+        logInfo("Waiting for spark context initialization ... ")
+        sparkContextRef.wait(10000L)
+      }
     
-2.2 启动AMActor
+3 AMActor
 
 ApplicationMaster.runAMActor
 
@@ -209,9 +249,8 @@ ApplicationMaster.AMActor
     }
 
 
-2.3: 向RM注册AM相关信息(UIAddress、HistoryAddress、SecurityManager、SecurityManager、preferredNodeLocation)，并启动线程申请资源
 
-ApplicationMaster.registerAM
+ApplicationMaster.registerAM 向RM注册AM相关信息(UIAddress、HistoryAddress、SecurityManager、SecurityManager、preferredNodeLocation)，并启动线程申请资源
 
     allocator = client.register(yarnConf,
       if (sc != null) sc.getConf else sparkConf,
@@ -222,11 +261,11 @@ ApplicationMaster.registerAM
 
     allocator.allocateResources()
 
-    //2.4: launchReporterThread
+    //launchReporterThread
     reporterThread = launchReporterThread()
 
 
-2.4: launchReporterThread
+launchReporterThread
 
 ApplicationMaster.launchReporterThread
 
@@ -240,8 +279,7 @@ ApplicationMaster.launchReporterThread
     }
 
 
-3: 申请并启动Container
-3.1: YarnAllocator
+4: YarnAllocator
 
 API
 
@@ -290,7 +328,7 @@ YarnAllocator.updateResourceRequests
     }
 
 
-3.2: AMRMClient[ContainerRequest]
+5: AMRMClient[ContainerRequest]
 
 getNumPendingAtLocation
 
@@ -317,7 +355,7 @@ internalReleaseContainer
     amClient.releaseAssignedContainer(container.getId())
 
 
-3.3: ExecutorRunnable
+6: ExecutorRunnable
 
 run
 
@@ -364,7 +402,7 @@ startContainer
 
 
 ### Yarn-Client模式
-4: 触发提交Application的过程
+7: 触发提交Application的过程
 
 SparkContext
 
@@ -405,13 +443,15 @@ YarnClientSchedulerBackend.start
     totalExpectedExecutors = args.numExecutors
     client = new Client(args, conf)
     
-    //同1: 提交Application
+    //7.1
     appId = client.submitApplication()
+    //7.2
     waitForApplication()
+    //7.3
     asyncMonitorApplication()
 
 
-5: ApplicationMaster (和2中cluster模式稍有不同）
+2: ApplicationMaster (和2中cluster模式稍有不同）
 
 ApplicationMaster.run
 
@@ -421,7 +461,7 @@ ApplicationMaster.run
       runExecutorLauncher(securityMgr)
     }
 
-ApplicationMaster.runExecutorLauncher
+2.6: ApplicationMaster.runExecutorLauncher
 
     actorSystem = AkkaUtils.createActorSystem("sparkYarnAM", Utils.localHostName, 0,
       conf = sparkConf, securityManager = securityMgr)._1
@@ -432,7 +472,7 @@ ApplicationMaster.runExecutorLauncher
     // In client mode the actor will stop the reporter thread.
     reporterThread.join()
 
-ApplicationMaster.waitForSparkDriver
+2.7: ApplicationMaster.waitForSparkDriver
 
     var driverUp = false
     val hostport = args.userArgs(0)
@@ -466,7 +506,7 @@ ApplicationMaster.waitForSparkDriver
 
 
 ### Data Locality
-使用preferredNodeLocationData
+使用preferredNodeLocationData，可以让Yarn分配距离数据较近的Container
 
     val locData = InputFormatInfo.computePreferredLocations(
       Seq(new InputFormatInfo(conf, classOf[TextInputFormat], new Path("hdfs:///myfile.txt")))
@@ -474,8 +514,8 @@ ApplicationMaster.waitForSparkDriver
 
 
 ### Problems
-1. Spark无法动态增加/减少资源，Container-Resizing [YARN-1197](https://issues.apache.org/jira/browse/YARN-1197)
-2. [Timeline Store YARN-321](https://issues.apache.org/jira/browse/YARN-321)
+1. Spark无法动态增加/减少资源 [YARN-1197](https://issues.apache.org/jira/browse/YARN-1197)
+2. Spark日志存储问题 [YARN-321](https://issues.apache.org/jira/browse/YARN-321)
 
 
 ### Links
