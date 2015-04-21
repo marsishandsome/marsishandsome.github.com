@@ -140,6 +140,36 @@ args.userArgs.copyToArray(mainArgs, 0, args.userArgs.size)
 mainMethod.invoke(null, mainArgs)
 finish(FinalApplicationStatus.SUCCEEDED, ApplicationMaster.EXIT_SUCCESS)
 </code></pre>
+<p>SparkContext</p>
+<pre><code>case "yarn-standalone" | "yarn-cluster" =&gt;
+    if (master == "yarn-standalone") {
+      logWarning(
+        "\"yarn-standalone\" is deprecated as of Spark 1.0. Use \"yarn-cluster\" instead.")
+    }
+    val scheduler = try {
+      val clazz = Class.forName("org.apache.spark.scheduler.cluster.YarnClusterScheduler")
+      val cons = clazz.getConstructor(classOf[SparkContext])
+      cons.newInstance(sc).asInstanceOf[TaskSchedulerImpl]
+    } catch {
+      // TODO: Enumerate the exact reasons why it can fail
+      // But irrespective of it, it means we cannot proceed !
+      case e: Exception =&gt; {
+        throw new SparkException("YARN mode not available ?", e)
+      }
+    }
+    val backend = try {
+      val clazz =
+        Class.forName("org.apache.spark.scheduler.cluster.YarnClusterSchedulerBackend")
+      val cons = clazz.getConstructor(classOf[TaskSchedulerImpl], classOf[SparkContext])
+      cons.newInstance(scheduler, sc).asInstanceOf[CoarseGrainedSchedulerBackend]
+    } catch {
+      case e: Exception =&gt; {
+        throw new SparkException("YARN mode not available ?", e)
+      }
+    }
+    scheduler.initialize(backend)
+    (backend, scheduler)
+</code></pre>
 <p>2.2 启动AMActor</p>
 <p>ApplicationMaster.runAMActor</p>
 <pre><code>actor = actorSystem.actorOf(Props(new AMActor(driverUrl, isClusterMode)), name = "YarnAM")
@@ -314,5 +344,103 @@ if (sparkConf.getBoolean("spark.shuffle.service.enabled", false)) {
 nmClient.startContainer(container, ctx)
 </code></pre>
 <h3>Yarn-Client模式</h3>
+<ol>
+<li>触发提交Application的过程</li>
+</ol>
+<p>SparkContext</p>
+<pre><code>case "yarn-client" =&gt;
+    val scheduler = try {
+      val clazz =
+        Class.forName("org.apache.spark.scheduler.cluster.YarnScheduler")
+      val cons = clazz.getConstructor(classOf[SparkContext])
+      cons.newInstance(sc).asInstanceOf[TaskSchedulerImpl]
+
+    } catch {
+      case e: Exception =&gt; {
+        throw new SparkException("YARN mode not available ?", e)
+      }
+    }
+
+    val backend = try {
+      val clazz =
+        Class.forName("org.apache.spark.scheduler.cluster.YarnClientSchedulerBackend")
+      val cons = clazz.getConstructor(classOf[TaskSchedulerImpl], classOf[SparkContext])
+      cons.newInstance(scheduler, sc).asInstanceOf[CoarseGrainedSchedulerBackend]
+    } catch {
+      case e: Exception =&gt; {
+        throw new SparkException("YARN mode not available ?", e)
+      }
+    }
+
+    scheduler.initialize(backend)
+    (backend, scheduler)
+</code></pre>
+<p>YarnClientSchedulerBackend.start</p>
+<pre><code>val argsArrayBuf = new ArrayBuffer[String]()
+argsArrayBuf += ("--arg", hostport)
+argsArrayBuf ++= getExtraClientArguments
+
+val args = new ClientArguments(argsArrayBuf.toArray, conf)
+totalExpectedExecutors = args.numExecutors
+client = new Client(args, conf)
+
+//同1: 提交Application
+appId = client.submitApplication()
+waitForApplication()
+asyncMonitorApplication()
+</code></pre>
+<ol>
+<li>ApplicationMaster (和2中cluster模式稍有不同）</li>
+</ol>
+<p>ApplicationMaster.run</p>
+<pre><code>if (isClusterMode) {
+  runDriver(securityMgr)
+} else {
+  runExecutorLauncher(securityMgr)
+}
+</code></pre>
+<p>ApplicationMaster.runExecutorLauncher</p>
+<pre><code>actorSystem = AkkaUtils.createActorSystem("sparkYarnAM", Utils.localHostName, 0,
+  conf = sparkConf, securityManager = securityMgr)._1
+waitForSparkDriver()
+addAmIpFilter()
+registerAM(sparkConf.get("spark.driver.appUIAddress", ""), securityMgr)
+
+// In client mode the actor will stop the reporter thread.
+reporterThread.join()
+</code></pre>
+<p>ApplicationMaster.waitForSparkDriver</p>
+<pre><code>var driverUp = false
+val hostport = args.userArgs(0)
+val (driverHost, driverPort) = Utils.parseHostPort(hostport)
+
+// Spark driver should already be up since it launched us, but we don't want to
+// wait forever, so wait 100 seconds max to match the cluster mode setting.
+val totalWaitTime = sparkConf.getLong("spark.yarn.am.waitTime", 100000L)
+val deadline = System.currentTimeMillis + totalWaitTime
+
+while (!driverUp &amp;&amp; !finished &amp;&amp; System.currentTimeMillis &lt; deadline) {
+  try {
+    val socket = new Socket(driverHost, driverPort)
+    socket.close()
+    logInfo("Driver now available: %s:%s".format(driverHost, driverPort))
+    driverUp = true
+  } catch {
+    case e: Exception =&gt;
+      logError("Failed to connect to driver at %s:%s, retrying ...".
+        format(driverHost, driverPort))
+      Thread.sleep(100L)
+  }
+}
+
+if (!driverUp) {
+  throw new SparkException("Failed to connect to driver!")
+}
+
+sparkConf.set("spark.driver.host", driverHost)
+sparkConf.set("spark.driver.port", driverPort.toString)
+
+runAMActor(driverHost, driverPort.toString, isClusterMode = false)
+</code></pre>
 </body>
 </html>
