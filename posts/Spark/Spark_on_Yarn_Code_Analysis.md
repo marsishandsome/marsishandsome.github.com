@@ -1,9 +1,14 @@
 # Spark on Yarn源码分析
+阅读本篇需要Yarn的基础，强烈推荐Yarn入门文章: [YARN应用开发流程](http://my.oschina.net/u/1434348/blog/193374)
+
 本篇代码基于Spark-1.3.0。
 
-### Architecture
+
+### Spark on Yarn调用流图
 
 ![](/images/spark_on_yarn_arch.png)
+
+
 
 
 ### Yarn-Cluster模式
