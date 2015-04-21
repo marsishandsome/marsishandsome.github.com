@@ -183,24 +183,27 @@ reporterThread = launchReporterThread()
 </code></pre>
 <p>2.4: launchReporterThread</p>
 <p>ApplicationMaster.launchReporterThread</p>
-<p>if (allocator.getNumExecutorsFailed &gt;= maxNumExecutorFailures) {
-      finish(FinalApplicationStatus.FAILED,
-        ApplicationMaster.EXIT_MAX_EXECUTOR_FAILURES,
-        "Max number of executor failures reached")
-    } else {
-      logDebug("Sending progress")
-      allocator.allocateResources()
-    }</p>
+<pre><code>if (allocator.getNumExecutorsFailed &gt;= maxNumExecutorFailures) {
+  finish(FinalApplicationStatus.FAILED,
+    ApplicationMaster.EXIT_MAX_EXECUTOR_FAILURES,
+    "Max number of executor failures reached")
+} else {
+  logDebug("Sending progress")
+  allocator.allocateResources()
+}
+</code></pre>
 <p>3: 申请并启动Container
 3.1: YarnAllocator</p>
 <p>API</p>
-<p>def getNumExecutorsRunning: Int = numExecutorsRunning
-  def getNumExecutorsFailed: Int = numExecutorsFailed
-  def getNumPendingAllocate: Int = getNumPendingAtLocation(ANY_HOST)</p>
-<p>def requestTotalExecutors(requestedTotal: Int)
-  def killExecutor(executorId: String)
-  def allocateResources(): Unit
-  def updateResourceRequests(): Unit</p>
+<pre><code>def getNumExecutorsRunning: Int = numExecutorsRunning
+def getNumExecutorsFailed: Int = numExecutorsFailed
+def getNumPendingAllocate: Int = getNumPendingAtLocation(ANY_HOST)
+
+def requestTotalExecutors(requestedTotal: Int)
+def killExecutor(executorId: String)
+def allocateResources(): Unit
+def updateResourceRequests(): Unit
+</code></pre>
 <p>YarnAllocator.allocateResources</p>
 <pre><code>updateResourceRequests()
 val allocateResponse = amClient.allocate(progressIndicator)
@@ -236,20 +239,24 @@ if (missing &gt; 0) {
 </code></pre>
 <p>3.2: AMRMClient[ContainerRequest]</p>
 <p>getNumPendingAtLocation</p>
-<p>amClient.getMatchingRequests(RM_REQUEST_PRIORITY, location, resource).map(_.size).sum</p>
+<pre><code>amClient.getMatchingRequests(RM_REQUEST_PRIORITY, location, resource).map(_.size).sum
+</code></pre>
 <p>allocateResources</p>
-<p>amClient.allocate(progressIndicator)</p>
+<pre><code>amClient.allocate(progressIndicator)
+</code></pre>
 <p>updateResourceRequests<br />
-  val request = new ContainerRequest(resource, null, null, RM_REQUEST_PRIORITY)
-  amClient.addContainerRequest(request)</p>
-<p>amClient.getMatchingRequests(RM_REQUEST_PRIORITY, ANY_HOST, resource)
-  if (!matchingRequests.isEmpty) {
-        matchingRequests.head.take(numToCancel).foreach(amClient.removeContainerRequest)
-      } else {
-        logWarning("Expected to find pending requests, but found none.")
-      }</p>
+    val request = new ContainerRequest(resource, null, null, RM_REQUEST_PRIORITY)
+    amClient.addContainerRequest(request)</p>
+<pre><code>amClient.getMatchingRequests(RM_REQUEST_PRIORITY, ANY_HOST, resource)
+if (!matchingRequests.isEmpty) {
+      matchingRequests.head.take(numToCancel).foreach(amClient.removeContainerRequest)
+    } else {
+      logWarning("Expected to find pending requests, but found none.")
+    }
+</code></pre>
 <p>internalReleaseContainer</p>
-<p>amClient.releaseAssignedContainer(container.getId())</p>
+<pre><code>amClient.releaseAssignedContainer(container.getId())
+</code></pre>
 <p>3.3: ExecutorRunnable</p>
 <p>run</p>
 <pre><code>nmClient = NMClient.createNMClient()
@@ -258,9 +265,10 @@ nmClient.start()
 startContainer
 </code></pre>
 <p>startContainer</p>
-<p>val ctx = Records.newRecord(classOf[ContainerLaunchContext])
-      .asInstanceOf[ContainerLaunchContext]</p>
-<pre><code>val localResources = prepareLocalResources
+<pre><code>val ctx = Records.newRecord(classOf[ContainerLaunchContext])
+  .asInstanceOf[ContainerLaunchContext]
+
+val localResources = prepareLocalResources
 ctx.setLocalResources(localResources)
 
 ctx.setEnvironment(env)

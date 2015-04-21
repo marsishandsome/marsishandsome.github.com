@@ -201,7 +201,7 @@ ApplicationMaster.registerAM
 
 ApplicationMaster.launchReporterThread
 
-  if (allocator.getNumExecutorsFailed >= maxNumExecutorFailures) {
+    if (allocator.getNumExecutorsFailed >= maxNumExecutorFailures) {
       finish(FinalApplicationStatus.FAILED,
         ApplicationMaster.EXIT_MAX_EXECUTOR_FAILURES,
         "Max number of executor failures reached")
@@ -216,14 +216,14 @@ ApplicationMaster.launchReporterThread
 
 API
 
-  def getNumExecutorsRunning: Int = numExecutorsRunning
-  def getNumExecutorsFailed: Int = numExecutorsFailed
-  def getNumPendingAllocate: Int = getNumPendingAtLocation(ANY_HOST)
+    def getNumExecutorsRunning: Int = numExecutorsRunning
+    def getNumExecutorsFailed: Int = numExecutorsFailed
+    def getNumPendingAllocate: Int = getNumPendingAtLocation(ANY_HOST)
 
-  def requestTotalExecutors(requestedTotal: Int)
-  def killExecutor(executorId: String)
-  def allocateResources(): Unit
-  def updateResourceRequests(): Unit
+    def requestTotalExecutors(requestedTotal: Int)
+    def killExecutor(executorId: String)
+    def allocateResources(): Unit
+    def updateResourceRequests(): Unit
 
 YarnAllocator.allocateResources
 
@@ -265,26 +265,26 @@ YarnAllocator.updateResourceRequests
 
 getNumPendingAtLocation
 
-  amClient.getMatchingRequests(RM_REQUEST_PRIORITY, location, resource).map(_.size).sum
+    amClient.getMatchingRequests(RM_REQUEST_PRIORITY, location, resource).map(_.size).sum
 
 allocateResources
 
-  amClient.allocate(progressIndicator)
+    amClient.allocate(progressIndicator)
 
 updateResourceRequests  
-  val request = new ContainerRequest(resource, null, null, RM_REQUEST_PRIORITY)
-  amClient.addContainerRequest(request)
+    val request = new ContainerRequest(resource, null, null, RM_REQUEST_PRIORITY)
+    amClient.addContainerRequest(request)
 
-  amClient.getMatchingRequests(RM_REQUEST_PRIORITY, ANY_HOST, resource)
-  if (!matchingRequests.isEmpty) {
-        matchingRequests.head.take(numToCancel).foreach(amClient.removeContainerRequest)
-      } else {
-        logWarning("Expected to find pending requests, but found none.")
-      }
+    amClient.getMatchingRequests(RM_REQUEST_PRIORITY, ANY_HOST, resource)
+    if (!matchingRequests.isEmpty) {
+          matchingRequests.head.take(numToCancel).foreach(amClient.removeContainerRequest)
+        } else {
+          logWarning("Expected to find pending requests, but found none.")
+        }
 
 internalReleaseContainer
 
-  amClient.releaseAssignedContainer(container.getId())
+    amClient.releaseAssignedContainer(container.getId())
 
 
 3.3: ExecutorRunnable
@@ -298,7 +298,7 @@ run
 
 startContainer
 
-  val ctx = Records.newRecord(classOf[ContainerLaunchContext])
+    val ctx = Records.newRecord(classOf[ContainerLaunchContext])
       .asInstanceOf[ContainerLaunchContext]
 
     val localResources = prepareLocalResources
