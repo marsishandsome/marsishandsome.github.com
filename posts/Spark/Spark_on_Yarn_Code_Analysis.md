@@ -263,6 +263,7 @@ YarnSchedulerBackend
       }
     
 3 AMActor
+
 AMActor负责接收YarnSchedulerBackend的消息，来对Yarn进行资源申请。
 
 ApplicationMaster.runAMActor
@@ -387,6 +388,7 @@ YarnAllocator.updateResourceRequests
 
 
 5: AMRMClient[ContainerRequest]
+
 Yarn提供的API，用于向Yarn申请资源。
 
 getNumPendingAtLocation
@@ -415,6 +417,7 @@ internalReleaseContainer
 
 
 6: ExecutorRunnable
+
 用来在Yarn的Container上启动程序
 
 run

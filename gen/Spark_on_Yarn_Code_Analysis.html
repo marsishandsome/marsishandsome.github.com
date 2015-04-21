@@ -235,8 +235,8 @@ while (sparkContextRef.get() == null &amp;&amp; System.currentTimeMillis &lt; de
     sparkContextRef.wait(10000L)
   }
 </code></pre>
-<p>3 AMActor
-AMActor负责接收YarnSchedulerBackend的消息，来对Yarn进行资源申请。</p>
+<p>3 AMActor</p>
+<p>AMActor负责接收YarnSchedulerBackend的消息，来对Yarn进行资源申请。</p>
 <p>ApplicationMaster.runAMActor</p>
 <pre><code>actor = actorSystem.actorOf(Props(new AMActor(driverUrl, isClusterMode)), name = "YarnAM")
 </code></pre>
@@ -345,8 +345,8 @@ if (missing &gt; 0) {
   }
 }
 </code></pre>
-<p>5: AMRMClient[ContainerRequest]
-Yarn提供的API，用于向Yarn申请资源。</p>
+<p>5: AMRMClient[ContainerRequest]</p>
+<p>Yarn提供的API，用于向Yarn申请资源。</p>
 <p>getNumPendingAtLocation</p>
 <pre><code>amClient.getMatchingRequests(RM_REQUEST_PRIORITY, location, resource).map(_.size).sum
 </code></pre>
@@ -368,8 +368,8 @@ if (!matchingRequests.isEmpty) {
 <p>internalReleaseContainer</p>
 <pre><code>amClient.releaseAssignedContainer(container.getId())
 </code></pre>
-<p>6: ExecutorRunnable
-用来在Yarn的Container上启动程序</p>
+<p>6: ExecutorRunnable</p>
+<p>用来在Yarn的Container上启动程序</p>
 <p>run</p>
 <pre><code>nmClient = NMClient.createNMClient()
 nmClient.init(yarnConf)
