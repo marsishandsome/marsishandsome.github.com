@@ -218,7 +218,7 @@ ApplicationMaster.run
         scheduler.initialize(backend)
         (backend, scheduler)
 
-2.4 YarnClusterSchedulerBackend -> YarnSchedulerBackend -> CoarseGrainedSchedulerBackend -> SchedulerBackend
+2.4: YarnClusterSchedulerBackend -> YarnSchedulerBackend -> CoarseGrainedSchedulerBackend -> SchedulerBackend
 
 SchedulerBackend API
 
@@ -254,7 +254,7 @@ YarnSchedulerBackend
           KillExecutors(executorIds), yarnSchedulerActor, askTimeout)
       }
 
-2.5 waitForSparkContextInitialized
+2.5: waitForSparkContextInitialized
 
     //等待SC初始化完成
     while (sparkContextRef.get() == null && System.currentTimeMillis < deadline && !finished) {
@@ -262,7 +262,7 @@ YarnSchedulerBackend
         sparkContextRef.wait(10000L)
       }
     
-3 AMActor
+3: AMActor
 
 AMActor负责接收YarnSchedulerBackend的消息，来对Yarn进行资源申请。
 
