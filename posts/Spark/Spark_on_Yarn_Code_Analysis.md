@@ -393,15 +393,15 @@ YarnAllocator.updateResourceRequests
 
 Yarn提供的API，用于向Yarn申请资源。
 
-getNumPendingAtLocation
+YarnAllocator.getNumPendingAtLocation
 
     amClient.getMatchingRequests(RM_REQUEST_PRIORITY, location, resource).map(_.size).sum
 
-allocateResources
+YarnAllocator.allocateResources
 
     amClient.allocate(progressIndicator)
 
-updateResourceRequests  
+YarnAllocator.updateResourceRequests  
 
     val request = new ContainerRequest(resource, null, null, RM_REQUEST_PRIORITY)
     amClient.addContainerRequest(request)
@@ -413,7 +413,7 @@ updateResourceRequests
           logWarning("Expected to find pending requests, but found none.")
         }
 
-internalReleaseContainer
+YarnAllocator.internalReleaseContainer
 
     amClient.releaseAssignedContainer(container.getId())
 

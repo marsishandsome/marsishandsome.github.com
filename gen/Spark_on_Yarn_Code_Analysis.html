@@ -196,7 +196,7 @@ case "yarn-standalone" | "yarn-cluster" =&gt;
     scheduler.initialize(backend)
     (backend, scheduler)
 </code></pre>
-<p>2.4 YarnClusterSchedulerBackend -&gt; YarnSchedulerBackend -&gt; CoarseGrainedSchedulerBackend -&gt; SchedulerBackend</p>
+<p>2.4: YarnClusterSchedulerBackend -&gt; YarnSchedulerBackend -&gt; CoarseGrainedSchedulerBackend -&gt; SchedulerBackend</p>
 <p>SchedulerBackend API</p>
 <pre><code>def start(): Unit
 def stop(): Unit
@@ -228,14 +228,14 @@ override def doKillExecutors(executorIds: Seq[String]): Boolean = {
       KillExecutors(executorIds), yarnSchedulerActor, askTimeout)
   }
 </code></pre>
-<p>2.5 waitForSparkContextInitialized</p>
+<p>2.5: waitForSparkContextInitialized</p>
 <pre><code>//等待SC初始化完成
 while (sparkContextRef.get() == null &amp;&amp; System.currentTimeMillis &lt; deadline &amp;&amp; !finished) {
     logInfo("Waiting for spark context initialization ... ")
     sparkContextRef.wait(10000L)
   }
 </code></pre>
-<p>3 AMActor</p>
+<p>3: AMActor</p>
 <p>AMActor负责接收YarnSchedulerBackend的消息，来对Yarn进行资源申请。</p>
 <p>ApplicationMaster.runAMActor</p>
 <pre><code>actor = actorSystem.actorOf(Props(new AMActor(driverUrl, isClusterMode)), name = "YarnAM")
@@ -348,13 +348,13 @@ if (missing &gt; 0) {
 </code></pre>
 <p>5: AMRMClient[ContainerRequest]</p>
 <p>Yarn提供的API，用于向Yarn申请资源。</p>
-<p>getNumPendingAtLocation</p>
+<p>YarnAllocator.getNumPendingAtLocation</p>
 <pre><code>amClient.getMatchingRequests(RM_REQUEST_PRIORITY, location, resource).map(_.size).sum
 </code></pre>
-<p>allocateResources</p>
+<p>YarnAllocator.allocateResources</p>
 <pre><code>amClient.allocate(progressIndicator)
 </code></pre>
-<p>updateResourceRequests<br />
+<p>YarnAllocator.updateResourceRequests<br />
 </p>
 <pre><code>val request = new ContainerRequest(resource, null, null, RM_REQUEST_PRIORITY)
 amClient.addContainerRequest(request)
@@ -366,7 +366,7 @@ if (!matchingRequests.isEmpty) {
       logWarning("Expected to find pending requests, but found none.")
     }
 </code></pre>
-<p>internalReleaseContainer</p>
+<p>YarnAllocator.internalReleaseContainer</p>
 <pre><code>amClient.releaseAssignedContainer(container.getId())
 </code></pre>
 <p>6: ExecutorRunnable</p>
