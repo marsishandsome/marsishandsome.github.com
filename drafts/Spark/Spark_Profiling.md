@@ -75,9 +75,13 @@ CPU Profiling 的主要目的是统计函数的调用情况及执行时间，或
 
 
 ### Profiler4j 
-- java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
-- 开源软件
+java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
+
 - [官网](http://profiler4j.sourceforge.net/)
+
+![](http://profiler4j.sourceforge.net/callgraph.png)
+
+![](http://profiler4j.sourceforge.net/calltree.png)
 
 
 # Distributed JVM Profiling
