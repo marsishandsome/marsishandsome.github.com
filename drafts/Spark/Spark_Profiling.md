@@ -62,10 +62,17 @@ CPU Profiling 的主要目的是统计函数的调用情况及执行时间，或
 
 
 ### YourKit 
-- 增加 -agentpath:<full agent library path> VM 选项到java 命令行启动参数
-- 商业软件
+增加 -agentpath:<full agent library path> VM 选项到java 命令行启动参数
+
 - [官网](https://www.yourkit.com/overview/)
 - [yourkit性能监控工具，远程监控](http://zhwj184.iteye.com/blog/764575)
+
+![](http://dl2.iteye.com/upload/attachment/0031/1361/e47a5383-6b24-38e3-8555-1e21224598fc.jpg)
+
+![](https://www.yourkit.com/docs/java/help/cpu_call_tree_all_threads.png)
+
+![](https://www.yourkit.com/docs/java/help/cpu_hot_spots.png)
+
 
 ### Profiler4j 
 - java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
