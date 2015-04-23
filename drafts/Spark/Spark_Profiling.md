@@ -56,7 +56,7 @@ CPU Profiling 的主要目的是统计函数的调用情况及执行时间，或
 - [使用 VisualVM 进行性能分析及调优](http://www.ibm.com/developerworks/cn/java/j-lo-visualvm/)
 - [visualvm监控jvm及远程jvm监控方法](http://www.blogjava.net/titanaly/archive/2012/03/20/372318.html)
 
-![](http://www.blogjava.net/images/blogjava_net/titanaly/%E6%A6%82%E5%86%B5.png)
+![](http://images.blogjava.net/blogjava_net/titanaly/概况.png)
 
 ![](http://www.ibm.com/developerworks/cn/java/j-lo-visualvm/nEO_IMG_image026.jpg)
 
