@@ -86,6 +86,7 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 ### JProfiler
 
 - [官网](https://www.ej-technologies.com/products/jprofiler/overview.html)
+- [JProfiler入门笔记](http://blog.csdn.net/chendc201/article/details/22897999)
 
 ![](http://images.cnitblog.com/blog/467292/201307/12091547-b4d908300a3c4275abcecf49cfc6181b.png)
 
@@ -93,10 +94,10 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 # Distributed JVM Profiling
 
 ### 论文
-- [JaViz: A client/server Java profiling tool](http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5387066&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5387066)
+- [JaViz: A client/server Java profiling tool](http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5387066&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5387066) 收费论文，无法下载
 
 
-### statsd-jvm-profiler
+### statsd-jvm-profiler (A JVM Profiler for Hadoop)
 - [Github](https://github.com/etsy/statsd-jvm-profiler)
 - [Introducing statsd-jvm-profiler: A JVM Profiler for Hadoop](https://codeascraft.com/2015/01/14/introducing-statsd-jvm-profiler-a-jvm-profiler-for-hadoop/)
 
