@@ -104,8 +104,6 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 <img src="https://codeascraft.com/wp-content/uploads/2015/01/ds-6vthx31g08wko.png" width="1000px" />
 
 ### Time Series Database
-- [comparison](http://prometheus.io/docs/introduction/comparison/)
-
 
 | TSDB       | Storage    | Scalability           | Storage Format    | Query    |
 |------------|------------|-----------------------|-------------------|----------|
@@ -115,9 +113,10 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 
 ##### OpenSDB (The Scalable Time Series Database)
 - [官网](http://opentsdb.net/)
+- [OpenTSDB监控系统的研究和介绍](http://www.ttlsa.com/opentsdb/opentsdb-research-and-monitoring-system-introduced/)
 
 优点：可以利用现有的Hadoop，HBase作为分布式存储，TSD Server之间没有依赖关系，可以很方便的增加TSD Server
-缺点：不支持SQL Like的Query Language
+缺点：不支持SQL Like的Query Language，内置的API比较弱
 
 ![](http://opentsdb.net/img/tsdb-architecture.png)
 
