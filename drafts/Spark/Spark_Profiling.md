@@ -116,6 +116,7 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 - [OpenTSDB监控系统的研究和介绍](http://www.ttlsa.com/opentsdb/opentsdb-research-and-monitoring-system-introduced/)
 
 优点：可以利用现有的Hadoop，HBase作为分布式存储，TSD Server之间没有依赖关系，可以很方便的增加TSD Server
+
 缺点：不支持SQL Like的Query Language，内置的API比较弱
 
 ![](http://opentsdb.net/img/tsdb-architecture.png)
@@ -125,6 +126,7 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 - [官网](http://influxdb.com/)
 
 优点：适合存储Schema不定的数据
+
 缺点：存储Schema固定的数据会占用比较多的空间，因为不会对相同Schema的数据进行Aggregrate；需要自己维护集群
 
 
