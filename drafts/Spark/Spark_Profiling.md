@@ -106,24 +106,20 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 ### Influxdb (Distributed Time Series database)
 - [官网](http://influxdb.com/)
 
-
-
 ### StatsD
 - [Github](https://github.com/etsy/statsd)
 - [Understanding StatsD and Graphite](https://blog.pkhamre.com/understanding-statsd-and-graphite/)
 - [How To Configure StatsD to Collect Arbitrary Stats for Graphite](https://www.digitalocean.com/community/tutorials/how-to-configure-statsd-to-collect-arbitrary-stats-for-graphite-on-ubuntu-14-04)
 
-### Flame
-- [Github](https://github.com/brendangregg/FlameGraph)
-- [Flame Graphs](http://www.brendangregg.com/flamegraphs.html)
-- [Node.js in Flames](http://techblog.netflix.com/2014/11/nodejs-in-flames.html)
 
 ### Graphite
 - [HTTP API](https://github.com/brutasse/graphite-api/blob/master/docs/api.rst)
 
 
-### Others
-[Simz](http://www.autoletics.com/)
+### Flame Graph
+- [Github](https://github.com/brendangregg/FlameGraph)
+- [Flame Graphs](http://www.brendangregg.com/flamegraphs.html)
+- [Node.js in Flames](http://techblog.netflix.com/2014/11/nodejs-in-flames.html)
 
 
 ### Java调优
@@ -133,7 +129,7 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 - [java profiling jvmgcprof](https://github.com/twitter/jvmgcprof) - A simple utility for profile allocation and garbage collection activity in the JVM
 
 
-### Spark
+### Spark Profiling
 - spark.python.profile
 - spark.python.profile.dump
 - [Profiling Spark Applications Using YourKit](https://cwiki.apache.org/confluence/display/SPARK/Profiling+Spark+Applications+Using+YourKit)
