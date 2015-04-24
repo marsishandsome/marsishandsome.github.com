@@ -103,8 +103,32 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 
 <img src="https://codeascraft.com/wp-content/uploads/2015/01/ds-6vthx31g08wko.png" width="1000px" />
 
-### Influxdb (Distributed Time Series database)
+### Time Series Database
+- [comparison](http://prometheus.io/docs/introduction/comparison/)
+
+
+| TSDB       | Storage    | Scalability           | Storage Format    | Query    |
+|------------|------------|-----------------------|-------------------|----------|
+| OpenSDB    | HBase      | Base On HBase         | Aggregrate Series | API      |
+| Influxdb   | Local File | Cluster + Replication | Rows of Events    | SQL Like |
+
+
+##### OpenSDB (The Scalable Time Series Database)
+- [官网](http://opentsdb.net/)
+
+优点：可以利用现有的Hadoop，HBase作为分布式存储，TSD Server之间没有依赖关系，可以很方便的增加TSD Server
+缺点：不支持SQL Like的Query Language
+
+![](http://opentsdb.net/img/tsdb-architecture.png)
+
+
+##### Influxdb (Distributed Time Series database)
 - [官网](http://influxdb.com/)
+
+优点：适合存储Schema不定的数据
+缺点：存储Schema固定的数据会占用比较多的空间，因为不会对相同Schema的数据进行Aggregrate；需要自己维护集群
+
+
 
 ### StatsD
 - [Github](https://github.com/etsy/statsd)
