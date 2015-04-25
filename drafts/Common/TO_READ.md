@@ -4,4 +4,5 @@
 - [Rust](http://doc.rust-lang.org/)
 - [Just a bunch of useful links](https://github.com/velvia/links)
 - [深入浅出之正则表达式](http://dataunion.org/15655.html)
+- [Kotlin](http://kotlinlang.org/)
 
