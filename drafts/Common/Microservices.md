@@ -17,8 +17,13 @@
 
 ##### [THE HIDDEN COSTS OF MICROSERVICES](http://www.stackbuilders.com/news/the-hidden-costs-of-microservices)
 
+##### [Microservices at Netflix](http://www.slideshare.net/stonse/microservices-at-netflix)
+
+##### [A Microscope on Microservices](http://techblog.netflix.com/2015/02/a-microscope-on-microservices.html)
 
 ### Links
+
+##### [Microservice architecture patterns and best practices](http://microservices.io/)
 
 ##### Nginx
 - [WIKI](http://en.wikipedia.org/wiki/Nginx)
