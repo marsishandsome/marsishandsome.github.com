@@ -10,22 +10,12 @@
 - 部署到容器
 - 让微服务做到无状态，这样可以做到auto scaling
 
+##### [Fast Delivery nginx.conf2014, October 2014](https://youtu.be/5qJ_BibbMLw)
 
 ##### [Adopting Microservices at Netflix: Lessons for Team and Process Design](http://nginx.com/blog/adopting-microservices-at-netflix-lessons-for-team-and-process-design/)
 
 
 ##### [THE HIDDEN COSTS OF MICROSERVICES](http://www.stackbuilders.com/news/the-hidden-costs-of-microservices)
-
-
-### 参考视频
-
-##### [Fast Delivery nginx.conf2014, October 2014](https://youtu.be/5qJ_BibbMLw)
-- 速度快可以赢得市场
-
-
-##### [Migrating to Microservices, Part 1 Silicon Valley Microservices Meetup, August 2014](https://youtu.be/1wiMLkXz26M)
-
-##### [Migrating to Microservices, Part 2 Silicon Valley Microservices Meetup, August 2014](https://youtu.be/ebCtNmTVIJY)
 
 
 ### Links
