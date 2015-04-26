@@ -66,5 +66,5 @@ function pSubFolder(){
 
 rm -rf gen
 pall "posts" "gen" "index" "Mars的笔记"
-#pall "drafts" "gen" "drafts" "Mars的草稿"
+pall "drafts" "gen" "drafts" "Mars的草稿"
 

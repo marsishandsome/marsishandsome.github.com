@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <meta name="author" content="Mars Gu" />
+   <link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+</head>
+<body>
+<h1>SPARK SUMMIT EAST 2015</h1>
+<h3>New Directions for Spark in 2015</h3>
+<ul>
+<li>Matei Zaharia (CTO, Databricks)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-1-Matei-Zaharia.pdf">slide</a></li>
+</ul>
+<h5>2014</h5>
+<ul>
+<li>DataFrame API</li>
+<li>Machine Learning Piplines</li>
+<li>SparkR 1.4</li>
+</ul>
+<h5>2015</h5>
+<ul>
+<li>Data Science -- High-level interfaces similar to single-machine tools</li>
+<li>Platform Interfaces -- Plug in data sources and algorithms </li>
+</ul>
+<h5>Goal</h5>
+<p>unified engine across data sources, workloads and environments </p>
+<h3>Embracing Spark as the Scalable Data Analytics Platform for the Enterprise</h3>
+<ul>
+<li>Matthew Glickman (Managing Director, Goldman Sachs)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-4-Matthew-Glickman.pdf">slide</a></li>
+<li>Don’t wrap Spark</li>
+<li>Think of Spark Client API like ODBC/JDBC</li>
+<li>using existing JVM IDE environment instead of spark-submit for easier debugging</li>
+<li>Dynamically deploy code to cluster at run-time with lambda closures </li>
+</ul>
+<p><code>val sc = new SparkContext(conf)
+sc.addJar(JarCreator.createJarFile(JarCreator.getClassesFromClassPath(getClass.getPackage.getName)))</code></p>
+<h3>Spark User Concurrency and Context/RDD Sharing at Production Scale</h3>
+<ul>
+<li>Farzad Aref (Zoomdata), Justin Langseth (Zoomdata)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-14-Zoomdata-Alarcon.pdf">slide</a></li>
+<li>类似于Spark Job Server, Hive Thrift Server</li>
+</ul>
+<h3>Power Hive with Spark</h3>
+<ul>
+<li>Chao Sun (Cloudera), Marcelo Vanzin (Cloudera)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-17-Marcelo-Vanzin-Chao-Sun.pdf">slide</a></li>
+</ul>
+<h5>Dynamic Executor Allocation</h5>
+<h5>Remote Spark Context</h5>
+<ul>
+<li>SparkContext uses non-trivial amount of memory</li>
+<li>Spark doesn’t support multiple SparkContexts</li>
+<li><code>new SparkContext()</code> doesn’t support cluster mode</li>
+<li>Need to isolate user’s sessions</li>
+<li>
+<p>Need to account for user’s resource usage </p>
+</li>
+<li>
+<p>Solution: allow HS2 to start Spark apps out-of-process and interact with them.</p>
+</li>
+</ul>
+<h3>Developer Using Spark and Elasticsearch for real-time data analysis</h3>
+<ul>
+<li>Costin Leau (Elasticsearch)<br />
+</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-35-Leau.pdf">slide</a></li>
+</ul>
+<h3>Towards Modularizing Spark Machine Learning Jobs</h3>
+<ul>
+<li>Lance Co Ting Keh (Box) </li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-29-Lance-Co-Ting-Keh.pdf">slide</a></li>
+</ul>
+<h5>Sparkle</h5>
+<ul>
+<li>Type Save</li>
+</ul>
+</body>
+</html>
