@@ -135,6 +135,7 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 - [Github](https://github.com/etsy/statsd)
 - [Understanding StatsD and Graphite](https://blog.pkhamre.com/understanding-statsd-and-graphite/)
 - [How To Configure StatsD to Collect Arbitrary Stats for Graphite](https://www.digitalocean.com/community/tutorials/how-to-configure-statsd-to-collect-arbitrary-stats-for-graphite-on-ubuntu-14-04)
+- [Measure Anything, Measure Everything](https://codeascraft.com/2011/02/15/measure-anything-measure-everything/)
 
 
 ### Graphite
