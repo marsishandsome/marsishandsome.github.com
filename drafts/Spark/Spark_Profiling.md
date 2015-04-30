@@ -111,7 +111,7 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 | Influxdb   | Local File | Cluster + Replication | Rows of Events    | SQL Like |
 
 
-##### OpenSDB (The Scalable Time Series Database)
+##### OpenTSDB (The Scalable Time Series Database)
 - [官网](http://opentsdb.net/)
 - [OpenTSDB监控系统的研究和介绍](http://www.ttlsa.com/opentsdb/opentsdb-research-and-monitoring-system-introduced/)
 
