@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cat template/head.html
-markdown $1
+#markdown $1
+python -m markdown $1
 echo ""
 cat template/foot.html
