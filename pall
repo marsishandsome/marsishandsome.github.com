@@ -11,7 +11,7 @@ function pall(){
   mkdir -p $gen_dir
   echo "# $title
 [rss](http://feeds.feedburner.com/marsishandsome)" > "$index.md"
-  
+
   echo "<rss version='2.0'>
   <channel>
     <title>Mars的笔记</title>
@@ -29,8 +29,8 @@ function pall(){
 }
 
 function pFolder(){
-  for post in `ls -t $post_dir`
-  do 
+  for post in `ls $post_dir`
+  do
     if [ -d "$post_dir/$post" ]; then
       echo "  $post"
       pSubFolder "$post_dir/$post" $post
@@ -44,8 +44,8 @@ function pSubFolder(){
 
   echo -e "\n### $category" >> "$index.md"
 
-  for post in `ls -t $sub_post_dir`
-  do 
+  for post in `ls $sub_post_dir`
+  do
     if [ -f "$sub_post_dir/$post" ]; then
       post_without_md=${post%.md}
       post_with_space=${post_without_md//_/ }
@@ -67,4 +67,3 @@ function pSubFolder(){
 rm -rf gen
 pall "posts" "gen" "index" "Mars的笔记"
 pall "drafts" "gen" "drafts" "Mars的草稿"
-
