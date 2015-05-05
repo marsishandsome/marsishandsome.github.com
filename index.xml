@@ -6,6 +6,20 @@
   
 
       <item>
+        <title>Gitbook Toturial</title>
+        <link>http://marsishandsome.github.io/gen/Gitbook_Toturial.html</link>
+        <description>Gitbook Toturial</description>
+      </item>
+      
+
+      <item>
+        <title>Quotes</title>
+        <link>http://marsishandsome.github.io/gen/Quotes.html</link>
+        <description>Quotes</description>
+      </item>
+      
+
+      <item>
         <title>Big Data Links</title>
         <link>http://marsishandsome.github.io/gen/Big_Data_Links.html</link>
         <description>Big Data Links</description>
@@ -20,23 +34,9 @@
       
 
       <item>
-        <title>Gitbook Toturial</title>
-        <link>http://marsishandsome.github.io/gen/Gitbook_Toturial.html</link>
-        <description>Gitbook Toturial</description>
-      </item>
-      
-
-      <item>
         <title>Machine Learning Links</title>
         <link>http://marsishandsome.github.io/gen/Machine_Learning_Links.html</link>
         <description>Machine Learning Links</description>
-      </item>
-      
-
-      <item>
-        <title>Quotes</title>
-        <link>http://marsishandsome.github.io/gen/Quotes.html</link>
-        <description>Quotes</description>
       </item>
       
 
