@@ -8,3 +8,6 @@
 
 # Courses
 - [Data Science Lectures](https://sites.google.com/site/datascience15/lectures)
+
+# Books
+- [Probability and Statistics for Programmers](http://greenteapress.com/thinkstats2/)
