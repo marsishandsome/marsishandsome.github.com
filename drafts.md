@@ -19,7 +19,6 @@
 - [TO READ](gen/TO_READ.html)
 
 ### Paper
-- [Google Cluster Management](gen/Google_Cluster_Management.html)
 - [Paper TO READ](gen/Paper_TO_READ.html)
 
 ### Spark
@@ -31,5 +30,6 @@
 - [Spark Summit East 2015](gen/Spark_Summit_East_2015.html)
 
 ### Working
+- [Google Cluster Management](gen/Google_Cluster_Management.html)
 - [Netflix Culture](gen/Netflix_Culture.html)
 - [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
