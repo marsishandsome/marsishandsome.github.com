@@ -8,7 +8,6 @@
 - [Atom](gen/Atom.html)
 - [Book TO READ](gen/Book_TO_READ.html)
 - [Chromelogger4j](gen/Chromelogger4j.html)
-- [Data Scientist Tools](gen/Data_Scientist_Tools.html)
 - [Flink](gen/Flink.html)
 - [Git Usage](gen/Git_Usage.html)
 - [Ignite](gen/Ignite.html)
