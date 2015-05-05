@@ -18,6 +18,7 @@
 - [Spark Hands-on Exercises](http://ampcamp.berkeley.edu/big-data-mini-course/index.html) - Spark交互式练习
 - [AMPLab Hands-on Exercises](http://ampcamp.berkeley.edu/5/exercises/index.html) [Video](http://pan.baidu.com/s/1kTIdlMv#path=%252F) - Spark Tachyon交互式练习
 - [Apache Spark API By Example](http://homepage.cs.latrobe.edu.au/zhe/files/SparkAPIMaster.pdf) - Spark API
+- [Spark Summit 2014 Trainning](https://spark-summit.org/2014/training)
 
 
 # Spark深入研究
@@ -27,11 +28,21 @@
 
 
 # Spark博客
+- [Databricks Blog](http://databricks.com/blog)
 - [mmicky的hadoop、Spark世界](http://blog.csdn.net/book_mmicky) - SparkCore, SparkSQL分析
 - [徽沪一郎](http://www.cnblogs.com/hseagle/) - Spark Common使用
 - [OopsOutOfMemory](http://blog.csdn.net/oopsoom) - Spark分析
 - [赛赛的网络日志 Jerry Shao](http://jerryshao.me/) - Spark内部实现
 - [baishuo491](http://baishuo491.iteye.com/blog) - Spark源码
+- [CSDN专栏](http://spark.csdn.net/)
+
+
+# Spark文章
+- [有什么关于 Spark 的书推荐？](http://www.zhihu.com/question/23655827/answer/29611595) -- 知乎
+- [Spark核心开发者：性能超Hadoop百倍，算法实现仅有其1/10或1/100](http://www.csdn.net/article/2013-04-26/2815057-Spark-Reynold)
+- [浅谈Apache Spark的6个发光点](http://www.csdn.net/article/2014-08-07/2821098-6-sparkling-feat)
+- [Spark: Open Source Superstar Rewrites Future of Big Data](http://www.wired.com/2013/06/yahoo-amazon-amplab-spark/all/)
+- [Spark is a really big deal for big data, and Cloudera gets it](https://gigaom.com/2013/10/28/spark-is-a-really-big-deal-for-big-data-and-cloudera-gets-it/)
 
 
 # Spark调优
@@ -53,22 +64,26 @@
 - [杭州 Spark Meetup](http://www.meetup.com/Hangzhou-Apache-Spark-Meetup/)
 
 
-# Spark参与者 
-#### Matei Zaharia
+# Spark参与者
+### Ion Stoica
+Berkeley教授，AMPLab 领军
+- [Home Page](http://www.cs.berkeley.edu/~istoica/)
+
+### Matei Zaharia
 Co-founder and CTO of Databricks
 
 - [Wikipedia](http://en.wikipedia.org/wiki/Matei_Zaharia)
 - [Home Page](http://people.csail.mit.edu/matei/)
 - [Github](https://github.com/mateiz)
 
-#### Reynold Xin (hashjoin)
-Databricks大数据公司联合创始人, Apache Spark PMC member
+### Reynold Xin (hashjoin)
+Apache Spark开源社区的主导人物之一。他在UC Berkeley AMPLab进行博士学业期间参与了Spark的开发，并在Spark之上编写了Shark和GraphX两个开源框架。他和AMPLab同僚共同创建了Databricks公司。
 
 - [Github](https://github.com/rxin)
 - [新浪微博 @hashjoin](http://www.weibo.com/hashjoin)
 - [伯克利主页](http://www.cs.berkeley.edu/~rxin/)
 
-#### Holden Karau
+### Holden Karau
 Senior Software Development Engineer @ Databricks
 
 - [Resume](http://www.holdenkarau.com/resume.pdf?q=github)
@@ -76,18 +91,18 @@ Senior Software Development Engineer @ Databricks
 - [Book: Fast Data Processing with spark](http://it-ebooks.info/book/3185/)
 - [Book: Learning Spark](http://shop.oreilly.com/product/0636920028512.do)
 
-#### 连城404
+### 连城404
 Databricks software engineer, Apache Spark contributor
 
 - [新浪微博 @连城404](http://www.weibo.com/lianchengzju)
 - [个人主页](http://blog.liancheng.info/)
 
-#### 陈超
+### 陈超
 Apache Spark Contributor, Spark meetup(Hangzhou) 发起人
 
 - [新浪微博 @CrazyJvm](http://www.weibo.com/476691290)
 
-#### JerryLead (Lijie Xu)
+### JerryLead (Lijie Xu)
 A Ph.D student in ISCAS 中国科学院软件学院
 
 - [新浪微博 @JerryLead](http://www.weibo.com/jerrylead)
@@ -96,19 +111,17 @@ A Ph.D student in ISCAS 中国科学院软件学院
 - [JerryLead博客园](http://www.cnblogs.com/jerrylead/default.html?page=1)
 - [Spark Internals by JerryLead](https://github.com/JerryLead/SparkInternals/blob/master/markdown/0-Introduction.md)
 
-#### JasonDai
+### JasonDai
 英特尔大数据首席架构师，Apache Spark项目Committer及PMC成员
 
 - [新浪微博 @JasonDai英特尔](http://www.weibo.com/u/3816918426)
 
-#### 张包峰
+### 张包峰
 - [新浪微博 @张包峰](http://www.weibo.com/pelickzhang)
 - [张包峰的博客](http://blog.csdn.net/pelick)
 
-#### 王家林
+### 王家林
 Spark亚太研究院院长和首席专家
 
 - [Spark亚太研究院决胜大数据时代100期公益大讲堂](http://edu.51cto.com/course/course_id-1659.html)
 - [百度云资料](http://pan.baidu.com/share/home?uk=4013289088#category/type=0)
-
-
