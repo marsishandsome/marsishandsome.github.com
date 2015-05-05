@@ -11,7 +11,6 @@
 - [Flink](gen/Flink.html)
 - [Git Usage](gen/Git_Usage.html)
 - [Ignite](gen/Ignite.html)
-- [Machine Learning](gen/Machine_Learning.html)
 - [Markdown](gen/Markdown.html)
 - [Microservices](gen/Microservices.html)
 - [Operation and Maintenance](gen/Operation_and_Maintenance.html)
