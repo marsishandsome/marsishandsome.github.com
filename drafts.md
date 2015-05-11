@@ -23,7 +23,6 @@
 - [Paper TO READ](gen/Paper_TO_READ.html)
 
 ### Spark
-- [Hadoop Strata 2015](gen/Hadoop_Strata_2015.html)
 - [Spark Detail](gen/Spark_Detail.html)
 - [Spark Job Server](gen/Spark_Job_Server.html)
 - [Spark MLlib](gen/Spark_MLlib.html)
