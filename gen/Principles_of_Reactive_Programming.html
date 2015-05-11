@@ -8,7 +8,120 @@
 <h1>Principles of Reactive Programming</h1>
 <ul>
 <li>by Martin Odersky, Erik Meijer, Roland Kuhn</li>
-<li><a href="https://class.coursera.org/reactive-002/auth">Coursera Link</a> </li>
+<li><a href="https://class.coursera.org/reactive-002/auth">Coursera Link</a></li>
 </ul>
+<h1>Week 1</h1>
+<h3>Collections</h3>
+<p>Translation of For:
+1. map
+<code>for (x &lt;- e1) yield e2
+==&gt;
+e1.map(x =&gt; e2)</code>
+2. withFilter
+<code>for (x &lt;- e1 if f; s) yield e2
+==&gt;
+for (x &lt;- e1.withFilter(x =&gt; f); s) yield e2</code>
+3. flatMap
+<code>for (x &lt;- e1; y &lt;- e2; s) yield e3
+==&gt;
+e1.flatMap(x =&gt; for(y &lt;- e2; s) yield e3)</code></p>
+<h3>Functional Random Generators</h3>
+<p>Generator
+```
+trait Generator[+T] {
+  def generate: T
+}</p>
+<p>val integers = new Generator[Int] {
+  val rand = new java.util.Random
+  def generate = rand.nextInt()
+}</p>
+<p>val booleans = new Generator[Boolean] {
+  def generate = integers.generate &gt; 0
+}</p>
+<p>val pairs = new Generator[(Int, Int)] {
+  def generate = (integers.generate, integers.generate)
+}
+```</p>
+<p>Streamlining
+<code>val booleans = for (x &lt;- integers) yield x &gt; 0
+def pairs[T, U](t: Generator[T], u: Generator[U]) = for {
+  x &lt;- t
+  y &lt;- u
+} yield (x, y)</code></p>
+<p>Generator with map and flatMap
+<code>trait Generator[+T] {
+  self =&gt;
+  def generate: T
+  def map[S](f: T =&gt; S): Generator[S] = new Generator[S] {
+    def generate = f(self.generate)
+  }
+  def flatMap[S](f: T =&gt; Generator[S]): Generator[S] = new Generator[S] {
+    def generate = f(self.generate).generate
+  }
+}</code></p>
+<h3>Monads</h3>
+<p>Monads定义:
+<code>trait M[T] {
+def flatMap[U](f: T =&gt; M[U]): M[U]
+}
+def unit[T](x: T): M[T]</code></p>
+<p>map定义:
+<code>m map f == m flatMap (x =&gt; unit(f(x)))
+== m flatMap (f andThen unit)</code></p>
+<p>Monads三大定律:
+1. 结合律
+<code>m flatMap f flatMap g == m flatMap (x =&gt; f(x) flatMap g)</code>
+2. Left Unit
+<code>unit(x) flatMap f == f(x)</code>
+3. Right Unit
+<code>m flatMap unit == m</code></p>
+<h1>Week 2</h1>
+<h3>Functions and State</h3>
+<h3>Identity and Change</h3>
+<h3>Loops</h3>
+<h3>Imperative Event Handling: The Observer Pattern</h3>
+<h3>Functional Reactive Programming</h3>
+<h3>A Simple FRP Implementation</h3>
+<h1>Week 3</h1>
+<h3>Monads and Effects</h3>
+<p>Try
+<code>abstract class Try[T] {
+  def flatMap[S](f: T=&gt;Try[S]): Try[S]
+  def flatten[U &lt;: Try[T]]: Try[U]
+  def map[S](f: T=&gt;S): Try[T]
+  def filter(p: T=&gt;Boolean): Try[T]
+  def recoverWith(f: PartialFunction[Throwable,Try[T]]): Try[T]
+}
+case class Success[T](elem: T) extends Try[T]
+case class Failure(t: Throwable) extends Try[Nothing]</code></p>
+<p>Adventure
+<code>trait Adventure {
+  def collectCoins(): Try[List[Coin]]
+  def buyTreasure(coins: List[Coin]): Try[Treasure]
+}</code></p>
+<p>Dealing with failure explicitly
+<code>val adventure = Adventure()
+val coins: Try[List[Coin]] = adventure.collectCoins()
+val treasure: Try[Treasure] = coins match {
+  case Success(cs) =&gt; adventure.buyTreasure(cs)
+  case failure@Failure(e) =&gt; failure
+}</code></p>
+<p>Noise reduction: Flatmap
+<code>val adventure = Adventure()
+val treasure: Try[Treasure] =
+  adventure.collectCoins().flatMap { coins =&gt;
+  adventure.buyTreasure(coins)
+}</code></p>
+<p>Using comprehension syntax</p>
+<h3>Latency as an Effect 1</h3>
+<h3>Latency as an Effect 2</h3>
+<h3>Combinator on Futures 1</h3>
+<h3>Combinator on Futures 2</h3>
+<h3>Composing Futures 1</h3>
+<h3>Composing Futures 2</h3>
+<h3>Async Await</h3>
+<h3>Promise, promises</h3>
+<h1>Week 4</h1>
+<h1>Week 5</h1>
 </body>
 </html>
