@@ -5,137 +5,161 @@
    <link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
 </head>
 <body>
-<h1>JVM Profiling原理</h1>
+<h1 id="jvm-profiling">JVM Profiling原理</h1>
 <p><a href="http://www.ibm.com/developerworks/cn/java/j-lo-profiling/">常用 Java Profiling 工具的分析与比较</a></p>
 <h3>收集程序运行时信息的方法</h3>
 <h5>事件方法</h5>
 <p>对于 Java，可以采用 JVMTI（JVM Tools Interface）API 来捕捉诸如方法调用、类载入、类卸载、进入 / 离开线程等事件，然后基于这些事件进行程序行为的分析。</p>
-<h5>统计抽样方法（sampling）</h5>
+<h5 id="sampling">统计抽样方法（sampling）</h5>
 <p>该方法每隔一段时间调用系统中断，然后收集当前的调用栈（call stack）信息，记录调用栈中出现的函数及这些函数的调用结构，基于这些信息得到函数的调用关系图及每个函数的 CPU 使用信息。由于调用栈的信息是每隔一段时间来获取的，因此不是非常精确的，但由于该方法对目标程序的干涉比较少，目标程序的运行速度几乎不受影响。</p>
-<h5>植入附加指令方法（BCI）</h5>
+<h5 id="bci">植入附加指令方法（BCI）</h5>
 <p>该方法在目标程序中插入指令代码，这些指令代码将记录 profiling 所需的信息，包括运行时间、计数器的值等，从而给出一个较为精确的内存使用情况、函数调用关系及函数的 CPU 使用信息。该方法对程序执行速度会有一定的影响，因此给出的程序执行时间有可能不准确。但是该方法在统计程序的运行轨迹方面有一定的优势。</p>
-<h3>Profiler工具功能简介</h3>
-<h5>遥测（Telemetry）</h5>
+<h3 id="profiler">Profiler工具功能简介</h3>
+<h5 id="telemetry">遥测（Telemetry）</h5>
 <p>遥测是一种用来查看应用程序运行行为的最简单的方法。通常会有多个视图（View）分别实时地显示 CPU 使用情况、内存使用情况、线程状态以及其他一些有用的信息，以便用户能很快地发现问题的关键所在。</p>
 <ul>
-<li>CPU Telemetry 视图一般用于显示整个应用程序的 CPU 使用情况，有些工具还能显示应用程序中每个线程的 CPU 使用情况。</li>
-<li>Memory Telemetry 视图一般用于显示堆内存和非堆内存的分配和使用情况。</li>
-<li>Garbage Collection Telemetry 视图显示了 JVM 中垃圾收集器的详细信息。</li>
-<li>Threads Telemetry 视图一般用于显示当前运行线程的个数、守护进程的个数等信息。</li>
+<li>CPU Telemetry 视图一般用于显示整个应用程序的 CPU 使用情况，有些工具还能显示应用程序中每个线程的 CPU 使用情况。<br /></li>
+<li>Memory Telemetry 视图一般用于显示堆内存和非堆内存的分配和使用情况。<br /></li>
+<li>Garbage Collection Telemetry 视图显示了 JVM 中垃圾收集器的详细信息。<br /></li>
+<li>Threads Telemetry 视图一般用于显示当前运行线程的个数、守护进程的个数等信息。<br /></li>
 <li>Classes Telemetry 视图一般用于显示已经载入和还没有载入的类的数量。</li>
 </ul>
-<h5>快照（snapshot）</h5>
+<h5 id="snapshot">快照（snapshot）</h5>
 <p>应用程序启动后，profiler 工具开始收集各种执行数据，其中一些数据直接显示在遥测视图中，而另外大部分数据被保存在内部，直到用户要求获取快照，基于这些保存的数据的统计信息才被显示出来。快照包含了应用程序在一段时间内的执行信息，通常有两种类型的快照：CPU 快照和内存快照。</p>
 <ul>
-<li>CPU 快照主要包含了应用程序中函数的调用关系及运行时间，这些信息通常可以在 CPU 快照视图中进行查看。</li>
+<li>CPU 快照主要包含了应用程序中函数的调用关系及运行时间，这些信息通常可以在 CPU 快照视图中进行查看。<br /></li>
 <li>内存快照则主要包含了内存的分配和使用情况、载入的所有类、存在的对象信息及对象间的引用关系。这些信息通常可以在内存快照视图中进行查看。</li>
 </ul>
-<h5>CPU Profiling</h5>
+<h5 id="cpu-profiling">CPU Profiling</h5>
 <p>CPU Profiling 的主要目的是统计函数的调用情况及执行时间，或者更简单的情况就是统计应用程序的 CPU 使用情况。通常有两种方式来显示 CPU Profiling 结果：CPU 遥测和 CPU 快照。</p>
-<h5>内存 Profiling</h5>
+<h5 id="-profiling">内存 Profiling</h5>
 <p>内存 Profiling 的主要目的是通过统计内存使用情况检测可能存在的内存泄露问题及确定优化内存使用的方向。通常有两种方式来显示内存 Profiling 结果：内存遥测和内存快照</p>
-<h5>线程 Profiling</h5>
+<h5 id="-profiling">线程 Profiling</h5>
 <p>线程 Profiling 主要用于在多线程应用程序中确定内存的问题所在。 一般包括三个方面的信息：</p>
 <ul>
-<li>某个线程的状态变化情况</li>
-<li>死锁情况</li>
+<li>某个线程的状态变化情况<br /></li>
+<li>死锁情况<br /></li>
 <li>某个线程在线程生命期内状态的分布情况</li>
 </ul>
-<h5>Profiling 的启动设置</h5>
+<h5 id="profiling-">Profiling 的启动设置</h5>
 <p>类似于 eclipse 中 Run 和 Debug 的启动设置，进行 Profiling 之前也需要进行启动设置，包括：profiling 的模式 (CPU profiling 或内存 profiling)，信息获取类型（遥测 , 抽样统计或者 BCI ) 等等。</p>
-<h5>Profiler Preference 设置</h5>
+<h5 id="profiler-preference-">Profiler Preference 设置</h5>
 <p>主要用于 Profiler 过滤器（选择需要关注的包、类）、取样间隔时间的设置等。</p>
-<h1>JVM Profiling工具</h1>
+<h1 id="jvm-profiling">JVM Profiling工具</h1>
 <p><a href="http://www.open-open.com/news/view/1ec20f6">9 个帮助你进行Java性能调优的工具</a></p>
-<h3>VisualVM</h3>
+<h3 id="visualvm">VisualVM</h3>
 <ul>
-<li><a href="http://visualvm.java.net/">官网</a></li>
-<li><a href="http://www.ibm.com/developerworks/cn/java/j-lo-visualvm/">使用 VisualVM 进行性能分析及调优</a></li>
+<li><a href="http://visualvm.java.net/">官网</a><br /></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-lo-visualvm/">使用 VisualVM 进行性能分析及调优</a><br /></li>
 <li><a href="http://www.blogjava.net/titanaly/archive/2012/03/20/372318.html">visualvm监控jvm及远程jvm监控方法</a></li>
 </ul>
-<p><img alt="" src="http://images.blogjava.net/blogjava_net/titanaly/概况.png" /></p>
-<p><img alt="" src="http://www.ibm.com/developerworks/cn/java/j-lo-visualvm/nEO_IMG_image026.jpg" /></p>
-<h3>YourKit</h3>
+<p><img src="http://images.blogjava.net/blogjava_net/titanaly/概况.png" /></p>
+<p><img src="http://www.ibm.com/developerworks/cn/java/j-lo-visualvm/nEO_IMG_image026.jpg" /></p>
+<h3 id="yourkit">YourKit</h3>
 <p>增加 -agentpath:<full agent library path> VM 选项到java 命令行启动参数</p>
 <ul>
-<li><a href="https://www.yourkit.com/overview/">官网</a></li>
+<li><a href="https://www.yourkit.com/overview/">官网</a><br /></li>
 <li><a href="http://zhwj184.iteye.com/blog/764575">yourkit性能监控工具，远程监控</a></li>
 </ul>
 <p><img src="http://dl2.iteye.com/upload/attachment/0031/1361/e47a5383-6b24-38e3-8555-1e21224598fc.jpg" width="1000px" /></p>
-<p><img alt="" src="https://www.yourkit.com/docs/java/help/cpu_call_tree_all_threads.png" /></p>
-<p><img alt="" src="https://www.yourkit.com/docs/java/help/cpu_hot_spots.png" /></p>
-<h3>Profiler4j</h3>
+<p><img src="https://www.yourkit.com/docs/java/help/cpu_call_tree_all_threads.png" /></p>
+<p><img src="https://www.yourkit.com/docs/java/help/cpu_hot_spots.png" /></p>
+<h3 id="profiler4j">Profiler4j</h3>
 <p>java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main</p>
 <ul>
 <li><a href="http://profiler4j.sourceforge.net/">官网</a></li>
 </ul>
-<p><img alt="" src="http://profiler4j.sourceforge.net/callgraph.png" /></p>
-<p><img alt="" src="http://profiler4j.sourceforge.net/calltree.png" /></p>
-<h3>JProfiler</h3>
+<p><img src="http://profiler4j.sourceforge.net/callgraph.png" /></p>
+<p><img src="http://profiler4j.sourceforge.net/calltree.png" /></p>
+<h3 id="jprofiler">JProfiler</h3>
 <ul>
-<li><a href="https://www.ej-technologies.com/products/jprofiler/overview.html">官网</a></li>
+<li><a href="https://www.ej-technologies.com/products/jprofiler/overview.html">官网</a><br /></li>
 <li><a href="http://blog.csdn.net/chendc201/article/details/22897999">JProfiler入门笔记</a></li>
 </ul>
-<p><img alt="" src="http://images.cnitblog.com/blog/467292/201307/12091547-b4d908300a3c4275abcecf49cfc6181b.png" /></p>
-<h1>Distributed JVM Profiling</h1>
+<p><img src="http://images.cnitblog.com/blog/467292/201307/12091547-b4d908300a3c4275abcecf49cfc6181b.png" /></p>
+<h1 id="distributed-jvm-profiling">Distributed JVM Profiling</h1>
 <h3>论文</h3>
 <ul>
 <li><a href="http://ieeexplore.ieee.org/xpl/login.jsp?tp=&amp;arnumber=5387066&amp;url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5387066">JaViz: A client/server Java profiling tool</a> 收费论文，无法下载</li>
 </ul>
-<h3>statsd-jvm-profiler (A JVM Profiler for Hadoop)</h3>
+<h3 id="statsd-jvm-profiler-a-jvm-profiler-for-hadoop">statsd-jvm-profiler (A JVM Profiler for Hadoop)</h3>
 <ul>
-<li><a href="https://github.com/etsy/statsd-jvm-profiler">Github</a></li>
+<li><a href="https://github.com/etsy/statsd-jvm-profiler">Github</a><br /></li>
 <li><a href="https://codeascraft.com/2015/01/14/introducing-statsd-jvm-profiler-a-jvm-profiler-for-hadoop/">Introducing statsd-jvm-profiler: A JVM Profiler for Hadoop</a></li>
 </ul>
 <p><img src="https://codeascraft.com/wp-content/uploads/2015/01/ds-6vthx31g08wko.png" width="1000px" /></p>
-<h3>Time Series Database</h3>
-<p>| TSDB       | Storage    | Scalability           | Storage Format    | Query    |
-|------------|------------|-----------------------|-------------------|----------|
-| OpenSDB    | HBase      | Base On HBase         | Aggregrate Series | API      |
-| Influxdb   | Local File | Cluster + Replication | Rows of Events    | SQL Like |</p>
-<h5>OpenTSDB (The Scalable Time Series Database)</h5>
+<h3 id="time-series-database">Time Series Database</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TSDB</th>
+<th align="left">Storage</th>
+<th align="left">Scalability</th>
+<th align="left">Storage Format</th>
+<th align="left">Query</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">OpenSDB</td>
+<td align="left">HBase</td>
+<td align="left">Base On HBase</td>
+<td align="left">Aggregrate Series</td>
+<td align="left">API</td>
+</tr>
+<tr class="even">
+<td align="left">Influxdb</td>
+<td align="left">Local File</td>
+<td align="left">Cluster + Replication</td>
+<td align="left">Rows of Events</td>
+<td align="left">SQL Like</td>
+</tr>
+</tbody>
+</table>
+<h5 id="opentsdb-the-scalable-time-series-database">OpenTSDB (The Scalable Time Series Database)</h5>
 <ul>
-<li><a href="http://opentsdb.net/">官网</a></li>
+<li><a href="http://opentsdb.net/">官网</a><br /></li>
 <li><a href="http://www.ttlsa.com/opentsdb/opentsdb-research-and-monitoring-system-introduced/">OpenTSDB监控系统的研究和介绍</a></li>
 </ul>
 <p>优点：可以利用现有的Hadoop，HBase作为分布式存储，TSD Server之间没有依赖关系，可以很方便的增加TSD Server</p>
 <p>缺点：不支持SQL Like的Query Language，内置的API比较弱</p>
-<p><img alt="" src="http://opentsdb.net/img/tsdb-architecture.png" /></p>
-<h5>Influxdb (Distributed Time Series database)</h5>
+<p><img src="http://opentsdb.net/img/tsdb-architecture.png" /></p>
+<h5 id="influxdb-distributed-time-series-database">Influxdb (Distributed Time Series database)</h5>
 <ul>
 <li><a href="http://influxdb.com/">官网</a></li>
 </ul>
 <p>优点：适合存储Schema不定的数据</p>
 <p>缺点：存储Schema固定的数据会占用比较多的空间，因为不会对相同Schema的数据进行Aggregrate；需要自己维护集群</p>
-<h3>StatsD</h3>
+<h3 id="statsd">StatsD</h3>
 <ul>
-<li><a href="https://github.com/etsy/statsd">Github</a></li>
-<li><a href="https://blog.pkhamre.com/understanding-statsd-and-graphite/">Understanding StatsD and Graphite</a></li>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-statsd-to-collect-arbitrary-stats-for-graphite-on-ubuntu-14-04">How To Configure StatsD to Collect Arbitrary Stats for Graphite</a></li>
+<li><a href="https://github.com/etsy/statsd">Github</a><br /></li>
+<li><a href="https://blog.pkhamre.com/understanding-statsd-and-graphite/">Understanding StatsD and Graphite</a><br /></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-statsd-to-collect-arbitrary-stats-for-graphite-on-ubuntu-14-04">How To Configure StatsD to Collect Arbitrary Stats for Graphite</a><br /></li>
 <li><a href="https://codeascraft.com/2011/02/15/measure-anything-measure-everything/">Measure Anything, Measure Everything</a></li>
 </ul>
-<h3>Graphite</h3>
+<h3 id="graphite">Graphite</h3>
 <ul>
 <li><a href="https://github.com/brutasse/graphite-api/blob/master/docs/api.rst">HTTP API</a></li>
 </ul>
-<h3>Flame Graph</h3>
+<h3 id="flame-graph">Flame Graph</h3>
 <ul>
-<li><a href="https://github.com/brendangregg/FlameGraph">Github</a></li>
-<li><a href="http://www.brendangregg.com/flamegraphs.html">Flame Graphs</a></li>
+<li><a href="https://github.com/brendangregg/FlameGraph">Github</a><br /></li>
+<li><a href="http://www.brendangregg.com/flamegraphs.html">Flame Graphs</a><br /></li>
 <li><a href="http://techblog.netflix.com/2014/11/nodejs-in-flames.html">Node.js in Flames</a></li>
 </ul>
-<h3>Java调优</h3>
+<h3 id="java">Java调优</h3>
 <ul>
-<li><a href="http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html">Java SE 6 HotSpot[tm] Virtual Machine Garbage Collection Tuning</a></li>
-<li><a href="http://www.infoq.com/presentations/JVM-Performance-Tuning-twitter">Everything I Ever Learned about JVM Performance Tuning</a></li>
-<li><a href="https://github.com/mariusae/heapster">java profiling heapster</a> - Production heap profiling for the JVM</li>
+<li><a href="http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html">Java SE 6 HotSpot[tm] Virtual Machine Garbage Collection Tuning</a><br /></li>
+<li><a href="http://www.infoq.com/presentations/JVM-Performance-Tuning-twitter">Everything I Ever Learned about JVM Performance Tuning</a><br /></li>
+<li><a href="https://github.com/mariusae/heapster">java profiling heapster</a> - Production heap profiling for the JVM<br /></li>
 <li><a href="https://github.com/twitter/jvmgcprof">java profiling jvmgcprof</a> - A simple utility for profile allocation and garbage collection activity in the JVM</li>
 </ul>
-<h3>Spark Profiling</h3>
+<h3 id="spark-profiling">Spark Profiling</h3>
 <ul>
-<li>spark.python.profile</li>
-<li>spark.python.profile.dump</li>
+<li>spark.python.profile<br /></li>
+<li>spark.python.profile.dump<br /></li>
 <li><a href="https://cwiki.apache.org/confluence/display/SPARK/Profiling+Spark+Applications+Using+YourKit">Profiling Spark Applications Using YourKit</a></li>
 </ul>
+
 </body>
 </html>

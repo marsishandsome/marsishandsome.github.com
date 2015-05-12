@@ -5,47 +5,48 @@
    <link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
 </head>
 <body>
-<h1>Gitbook Toturial</h1>
+<h1 id="gitbook-toturial">Gitbook Toturial</h1>
 <p>GitBook是一款开源的电子书制作软件，基于Node.js，让你能够使用GitHub/Git和Marsdwon构建出美丽的pdf文档。</p>
 <p><a href="http://www.gitbook.io">GitBook官网</a></p>
 <p><a href="https://github.com/GitbookIO/gitbook">GitBook Github地址</a></p>
-<h1>Windows安装步骤</h1>
-<h3>1.安装Node.js</h3>
+<h1 id="windows">Windows安装步骤</h1>
+<h3 id="node.js">1.安装Node.js</h3>
 <p><a href="http://nodejs.org/download/">下载Node.js</a></p>
-<h3>2. 安装Gitbook</h3>
-<p><code>npm install gitbook -g</code></p>
+<h3 id="gitbook">2. 安装Gitbook</h3>
+<pre><code>npm install gitbook -g</code></pre>
 <p>把<code>C:\Users\username\AppData\Roaming\npm</code>加入到系统环境变量中</p>
-<h3>3. 安装Calibre</h3>
+<h3 id="calibre">3. 安装Calibre</h3>
 <p><a href="http://www.calibre-ebook.com/">下载Calibre</a></p>
-<h3>4. 安装Gitbook Editor</h3>
+<h3 id="gitbook-editor">4. 安装Gitbook Editor</h3>
 <p><a href="https://github.com/GitbookIO/editor/releases">下载Gitbook Editor</a></p>
 <p><a href="https://github.com/GitbookIO/editor/releases">Gitbook Editor Github</a></p>
-<h1>使用GitBook</h1>
+<h1 id="gitbook">使用GitBook</h1>
 <h3>1.编辑</h3>
 <p>使用Gitbook Editor新建Book，用Markdown编辑</p>
 <h3>2. 预览</h3>
 <p>1: Gitbook Editor提供实时预览功能</p>
-<p><img alt="" src="/images/gitbook-preview.png" /></p>
+<p><img src="/images/gitbook-preview.png" /></p>
 <p>2: 启动Preview Server，通过浏览器访问http://localhost:8004</p>
-<p><img alt="" src="/images/gitbook-start-server.png" /></p>
+<p><img src="/images/gitbook-start-server.png" /></p>
 <h3>3. 导出</h3>
 <ol>
-<li>site
-<code>gitbook build ./repository -f site --output=./outputFolder</code></li>
-<li>page
-<code>gitbook build ./repository -f page --output=./outputFolder</code></li>
-<li>json
-<code>gitbook build ./repository -f json --output=./outputFolder</code></li>
-<li>ebook
-<code>gitbook build ./repository -f ebook --output=./outputFolder</code></li>
-<li>pdf
-<code>gitbook pdf ./repository -o file.pdf</code></li>
+<li><p>site</p>
+<pre><code>gitbook build ./repository -f site --output=./outputFolder</code></pre></li>
+<li><p>page</p>
+<pre><code>gitbook build ./repository -f page --output=./outputFolder</code></pre></li>
+<li><p>json</p>
+<pre><code>gitbook build ./repository -f json --output=./outputFolder</code></pre></li>
+<li><p>ebook</p>
+<pre><code>gitbook build ./repository -f ebook --output=./outputFolder</code></pre></li>
+<li><p>pdf</p>
+<pre><code>gitbook pdf ./repository -o file.pdf</code></pre></li>
 </ol>
 <h1>参考</h1>
 <ol>
-<li><a href="http://blog.liyibo.org/books-installation-authoring-tool-gitbook/">书籍制作工具GITBOOK的安装</a></li>
-<li><a href="http://www.csdn.net/article/2014-04-09/2819217-gitbook-using-git-markdown-book">GitBook：使用Git+Markdown快速制作电子书</a></li>
+<li><a href="http://blog.liyibo.org/books-installation-authoring-tool-gitbook/">书籍制作工具GITBOOK的安装</a><br /></li>
+<li><a href="http://www.csdn.net/article/2014-04-09/2819217-gitbook-using-git-markdown-book">GitBook：使用Git+Markdown快速制作电子书</a><br /></li>
 <li><a href="http://blog.caesarchi.com/2014/05/gitbook.html">使用 Gitbook 寫一本書</a></li>
 </ol>
+
 </body>
 </html>
