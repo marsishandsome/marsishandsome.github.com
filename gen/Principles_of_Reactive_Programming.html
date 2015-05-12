@@ -112,13 +112,79 @@ val treasure: Try[Treasure] =
   adventure.collectCoins().flatMap { coins =&gt;
   adventure.buyTreasure(coins)
 }</code></p>
-<p>Using comprehension syntax</p>
-<h3>Latency as an Effect 1</h3>
-<h3>Latency as an Effect 2</h3>
-<h3>Combinator on Futures 1</h3>
-<h3>Combinator on Futures 2</h3>
-<h3>Composing Futures 1</h3>
-<h3>Composing Futures 2</h3>
+<p>Using comprehension syntax
+<code>val adventure = Adventure()
+val treasure: Try[Treasure] = for {
+  coins &lt;- adventure.collectCoins()
+  treasure &lt;- buyTreasure(coins)
+} yield treasure</code></p>
+<h3>Latency as an Effect</h3>
+<p>Future
+```
+import scala.concurrent._
+import scala.concurrent.ExecutionContext.Implicits.global
+trait Future[T] {
+def onComplete(callback: Try[T] ⇒ Unit)
+    (implicit executor: ExecutionContext): Unit
+}</p>
+<p>object Future {
+  def apply(body: =&gt;T)
+      (implicit context: ExecutionContext): Future[T]
+}
+```</p>
+<h3>Combinator on Futures</h3>
+<p>Future
+<code>trait Awaitable[T] extends AnyRef {
+  abstract def ready(atMost: Duration): Unit
+  abstract def result(atMost: Duration): T
+}
+trait Future[T] extends Awaitable[T] {
+  def filter(p: T=&gt;Boolean): Future[T]
+  def flatMap[S](f: T=&gt;Future[S]): Future[U]
+  def map[S](f: T=&gt;S): Future[S]
+  def recoverWith(f: PartialFunction[Throwable, Future[T]]): Future[T]
+}
+object Future {
+  def apply[T](body : =&gt;T): Future[T]
+}</code></p>
+<h3>Composing Futures</h3>
+<p>Comprehension
+<code>val socket = Socket()
+val confirmation: Future[Array[Byte]] = for{
+  packet &lt;- socket.readFromMemory()
+  confirmation &lt;- socket.sendToSafe(packet)
+} yield confirmation</code></p>
+<p>Retry
+<code>def retry(noTimes: Int)(block: ⇒Future[T]): Future[T] = {
+  if (noTimes == 0) {
+    Future.failed(new Exception(“Sorry”))
+  } else {
+    block fallbackTo {
+      retry(noTimes–1){ block }
+    }
+  }
+}</code></p>
+<p>foldRight &amp; folderLeft
+<code>List(a,b,c).foldRight(e)(f) = f(a, f(b, f(c, e)))
+List(a,b,c).foldLeft(e)(f)  = f(f(f(e, a), b), c)</code></p>
+<p>Retrying to send using foldLeft
+<code>def retry(noTimes: Int)(block: =&gt;Future[T]): Future[T] = {
+  val ns = (1 to noTimes).toList
+  val attempts = ns.map(_ =&gt; ()=&gt;block)
+  val failed = Future.failed(new Exception(“boom”))
+  val result = attempts.foldLeft(failed)
+  ((a,block) =&gt; a recoverWith { block() })
+  result
+}</code></p>
+<p>Retrying to send using foldRight
+<code>def retry(noTimes: Int)(block: =&gt;Future[T])= {
+  val ns = (1 to noTimes).toList
+  val attempts: = ns.map(_ =&gt; () =&gt; block)
+  val failed = Future.failed(new Exception)
+  val result = attempts.foldRight(() =&gt;failed)
+  ((block, a) =&gt; () =&gt; { block() fallbackTo { a() } })
+  result ()
+}</code></p>
 <h3>Async Await</h3>
 <h3>Promise, promises</h3>
 <h1>Week 4</h1>
