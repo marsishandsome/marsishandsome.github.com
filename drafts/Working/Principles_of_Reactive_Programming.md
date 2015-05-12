@@ -98,12 +98,14 @@ m flatMap unit == m
 ```
 
 # Week 2
-### Functions and State
-### Identity and Change
-### Loops
 ### Imperative Event Handling: The Observer Pattern
+TODO
+
 ### Functional Reactive Programming
+TODO
+
 ### A Simple FRP Implementation
+TODO
 
 # Week 3
 ### Monads and Effects
@@ -244,8 +246,171 @@ def retry(noTimes: Int)(block: =>Future[T])= {
 ```
 
 ### Async Await
+```
+import scala.async.Async._
+def async[T](body: =>T) (implicit context: ExecutionContext): Future[T]
+def await[T](future: Future[T]): T
+```
+
+Reimplementing filter using await
+```
+def filter(p: T => Boolean): Future[T] = async {
+  val x = await { this }
+  if (!p(x)) {
+    throw new NoSuchElementException()
+  } else {
+    x
+  }
+}
+```
+
+Reimplementing filter without await
+```
+def filter(pred: T => Boolean): Future[T] = {
+  val p = Promise[T]()
+  this onComplete {
+    case Failure(e) => p.failure(e)
+    case Success(x) =>
+      if (!pred(x)) p.failure(new NoSuchElementException)
+      else p.success(x)
+  }
+  p.future
+}
+```
+
 ### Promise, promises
+Promises
+```
+trait Promise[T] {
+  def future: Future[T]
+  def complete(result: Try[T]): Unit
+  def tryComplete(result: Try[T]): Boolean
+}
+
+trait Future[T] {
+  def onCompleted(f: Try[T] => Unit): Unit
+}
+
+def success(value: T): Unit = this.complete(Success(value))
+
+def failure(t: Throwable): Unit = this.complete(Failure(t))
+```
+
+Reimplementing zip using Promises
+```
+def zip[S, R](p: Future[S], f: (T, S) => R): Future[R] = {
+  val p = Promise[R]()
+  this onComplete {
+    case Failure(e) ⇒ p.failure(e)
+    case Success(x) ⇒ that onComplete {
+      case Failure(e) ⇒ p.failure(e)
+      case Success(y) ⇒ p.success(f(x, y))
+    }
+  }
+  p.future
+}
+```
+
+Reimplementing zip with await
+```
+def zip[S, R](p: Future[S], f: (T, S) => R): Future[R] = async {
+  f(await { this }, await { that })
+}
+```
+
+Implementing sequence
+```
+def sequence[T](fts: List[Future[T]]): Future[List[T]] = {
+  fts match {
+  case Nil => Future(Nil)
+  case (ft::fts) => ft.flatMap(t =>
+    sequence(fts).flatMap(ts => Future(t::ts)))
+  }
+}
+```
+
+Implementing sequence with await
+```
+def sequence[T](fs: List[Future[T]]): Future[List[T]] = async {
+  var _fs = fs
+  val r = ListBuffer[T]()
+  while (_fs != Nil) {
+    r += await { _fs.head }
+    _fs = _fs.tail
+  }
+  r.toList
+}
+```
+
+Implement sequence with Promise
+```
+def sequence[T](fs: List[Future[T]]): Future[List[T]] = {
+  val p = Promise[List[T]]()
+  ???
+  p.future
+}
+```
 
 # Week 4
+### From Try to Future
+TODO
+
+### From Iterables to Observables
+TODO
+
+### Hello World Observables
+TODO
+
+### RX Operations
+TODO
+
+### Subscriptions
+TODO
+
+### Promises and Subjects
+TODO
+
+### RX potpourri
+TODO
+
+### Observable Contract
+TODO
 
 # Week 5
+### Why Actors?
+- blocking synchronization introduces dead-locks
+- blocking is bad for CPU utilization
+- synchronous communication couples sender and receiver
+
+### The Actor Model
+```
+type Receive = PartialFunction[Any, Unit]
+
+trait Actor {
+  implicit val self: ActorRef
+  def sender: ActorRef
+  implicit val context: ActorContext
+
+  def receive: Receive
+}
+
+abstract class ActorRef {
+  def !(msg: Any)(implicit sender: ActorRef = Actor.noSender): Unit
+  def tell(msg: Any, sender: ActorRef) = this.!(msg)(sender)
+}
+
+trait ActorContext {
+  def become(behavior: Receive, discardOld: Boolean = true): Unit
+  def unbecome(): Unit
+  def actorOf(p: Props, name: String): ActorRef
+  def stop(a: ActorRef): Unit
+}
+```
+
+### Message Passing Semantics
+An actor is effectively single-threaded:
+- messages are received sequentially
+- behavior change is effective before processing the next message
+- processing one message is the atomic unit of execution
+
+# Week 6
