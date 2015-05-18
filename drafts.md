@@ -29,6 +29,7 @@
 - [Spark Summit East 2015](gen/Spark_Summit_East_2015.html)
 
 ### Working
+- [AKKA](gen/AKKA.html)
 - [Cluster Management](gen/Cluster_Management.html)
 - [Flink](gen/Flink.html)
 - [Ignite](gen/Ignite.html)
