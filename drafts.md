@@ -11,7 +11,6 @@
 - [Druid](gen/Druid.html)
 - [Flink](gen/Flink.html)
 - [Git Usage](gen/Git_Usage.html)
-- [Ignite](gen/Ignite.html)
 - [Markdown](gen/Markdown.html)
 - [Microservices](gen/Microservices.html)
 - [Operation and Maintenance](gen/Operation_and_Maintenance.html)
@@ -32,5 +31,6 @@
 
 ### Working
 - [Cluster Management](gen/Cluster_Management.html)
+- [Ignite](gen/Ignite.html)
 - [Netflix Culture](gen/Netflix_Culture.html)
 - [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
