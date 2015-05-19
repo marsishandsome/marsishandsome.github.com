@@ -16,3 +16,4 @@ In theoretical computer science, the CAP theorem, also known as Brewer's theorem
 - [官网](http://petuum.github.io/)
 - [Github](https://github.com/petuum/public)
 - [Wiki](https://github.com/petuum/public/wiki)
+- [Petuum: A New Platform for Distributed Machine Learning on Big Data](http://arxiv.org/pdf/1312.7651v2.pdf)

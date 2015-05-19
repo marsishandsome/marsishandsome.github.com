@@ -82,6 +82,7 @@ Apache Spark开源社区的主导人物之一。他在UC Berkeley AMPLab进行�
 - [Github](https://github.com/rxin)
 - [新浪微博 @hashjoin](http://www.weibo.com/hashjoin)
 - [伯克利主页](http://www.cs.berkeley.edu/~rxin/)
+- [Github IO 资料](https://rxin.github.io/)
 
 ### Holden Karau
 Senior Software Development Engineer @ Databricks
