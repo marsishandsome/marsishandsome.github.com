@@ -1,5 +1,8 @@
 # Cluster Management
 
+### Common
+- [数据中心成本与利用率现状分析](http://www.ccf.org.cn/resources/1190201776262/2015/05/12/8.pdf)
+
 ### Google: Borg
 - [Large-scale cluster management at Google with Borg](http://static.googleusercontent.com/media/research.google.com/en/us/pubs/archive/43438.pdf) -- 论文
 - [Cluster Management at Google](http://www.infoq.com/presentations/cluster-management-google) -- 演讲
