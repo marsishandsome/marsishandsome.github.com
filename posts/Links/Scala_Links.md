@@ -21,8 +21,9 @@
 - [Scala Collections: Part 2 - A few basic operations](http://www.deadcoderising.com/scala-collections-part-2-operations/)
 - [Scala Collections: Part 3 - Exploring more operations](http://www.deadcoderising.com/scala-collections-part-3-exploring-more-operations/)
 - [Scala Performance Characteristics](http://www.scala-lang.org/docu/files/collections-api/collections_40.html) - Scala集合库的复杂度和性能
-- [Scala Collections Performance](http://downloads.typesafe.com/website/presentations/ScalaDaysSF2015/T1_Motlin_Scala_Collections_Performance.pdf?_ga=1.159893949.1442272491.1426723766) - Craig Motlin 
+- [Scala Collections Performance](http://downloads.typesafe.com/website/presentations/ScalaDaysSF2015/T1_Motlin_Scala_Collections_Performance.pdf?_ga=1.159893949.1442272491.1426723766) - Craig Motlin
 - [Scala Collections Tips and Tricks](https://pavelfatin.com/scala-collections-tips-and-tricks/)
+- [A Generic Parallel Collection Framework](http://infoscience.epfl.ch/record/150220/files/pc.pdf)
 
 
 # Scala 特性
@@ -54,4 +55,3 @@
 
 # 讨论
 - [Scala 的语言设计有哪些缺陷？](http://www.zhihu.com/question/28573046) - 知乎
-
