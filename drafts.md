@@ -33,6 +33,7 @@
 - [AKKA](gen/AKKA.html)
 - [Cluster Management](gen/Cluster_Management.html)
 - [Flink](gen/Flink.html)
+- [Hive on Spark](gen/Hive_on_Spark.html)
 - [Ignite](gen/Ignite.html)
 - [Netflix Culture](gen/Netflix_Culture.html)
 - [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
