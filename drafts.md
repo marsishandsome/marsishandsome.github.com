@@ -25,6 +25,9 @@
 ### Private
 - [Honey Moon](gen/Honey_Moon.html)
 
+### Scala
+- [Access Private Method](gen/Access_Private_Method.html)
+
 ### Spark
 - [Spark Detail](gen/Spark_Detail.html)
 - [Spark Job Server](gen/Spark_Job_Server.html)

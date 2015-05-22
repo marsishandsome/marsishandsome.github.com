@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <meta name="author" content="Mars Gu" />
+   <link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+</head>
+<body>
+<h1 id="access-private-method">Access Private Method</h1>
+<pre><code>import org.apache.spark.{SparkConf, SparkContext}
+
+object SimpleApp {
+  def main(args: Array[String]) {
+    val conf = new SparkConf().setAppName(&quot;name&quot;).setMaster(&quot;local&quot;)
+    new SparkContext(conf)
+    getActiveSparkContext.foreach { sc =&gt;
+      sc.parallelize(1 to 3).collect().foreach(println)
+      sc.stop()
+    }
+  }
+
+  def getActiveSparkContext: Option[SparkContext] = {
+    val ru = scala.reflect.runtime.universe
+    val mirror = ru.runtimeMirror(SparkContext.getClass.getClassLoader)
+    val moduleSymbol = ru.typeOf[SparkContext.type].termSymbol.asModule
+    val moduleMirror = mirror.reflectModule(moduleSymbol)
+    val instanceMirror = mirror.reflect(moduleMirror.instance)
+    val scMethod = ru.typeOf[SparkContext.type].declaration(ru.newTermName(&quot;activeContext&quot;)).asMethod
+    val scMethodMirror = instanceMirror.reflectMethod(scMethod)
+    val sc = scMethodMirror.apply().asInstanceOf[Option[SparkContext]]
+    sc
+  }
+}</code></pre>
+
+</body>
+</html>
