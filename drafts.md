@@ -17,6 +17,7 @@
 - [Parameter Server](gen/Parameter_Server.html)
 - [Scala Days San Francisco 2015](gen/Scala_Days_San_Francisco_2015.html)
 - [TO READ](gen/TO_READ.html)
+- [Useful Shell Commond](gen/Useful_Shell_Commond.html)
 
 ### Paper
 - [Paper TO READ](gen/Paper_TO_READ.html)
