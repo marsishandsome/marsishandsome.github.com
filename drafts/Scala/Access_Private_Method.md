@@ -1,5 +1,6 @@
 # Access Private Method
 - [Scala reflection basics – accessing an object’s private field explained](http://www.blog.project13.pl/index.php/lang/en/1864/scala-reflection-accessing-an-objects-private-field-explained)
+- [scalap.java](https://gist.github.com/ktoso/7994649)
 
 ```
 import org.apache.spark.{SparkConf, SparkContext}
