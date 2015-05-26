@@ -353,10 +353,33 @@ def sequence[T](fs: List[Future[T]]): Future[List[T]] = {
 
 # Week 4
 ### From Try to Future
-TODO
+Future[T] and Try[T] are dual
+```
+trait Future[T] {
+  def onComplete(func: Try[T] => Unit)
+  (implicit ex: ExecutionContext): Unit
+}
+
+Future[T]:    (Try[T] => Unit) => Unit
+
+reverse:      Unit => (Unit => Try[T])
+              () => (() => Try[T])
+              Try[T]
+```
 
 ### From Iterables to Observables
-TODO
+```
+def Iteratable[T] { def iterator(): Iterator[T] }
+
+def Iterator[T] { def hasNext: Boolean; def next(): T }
+```
+
+```
+type Iteratable[T] = () => ( ()=>Try[Option[T]] )
+
+type Observable[T] = (Try[Option[T]] => Unit) => Unit
+
+```
 
 ### Hello World Observables
 TODO
@@ -413,4 +436,16 @@ An actor is effectively single-threaded:
 - behavior change is effective before processing the next message
 - processing one message is the atomic unit of execution
 
+
 # Week 6
+### Failure Handling with Acots
+### Lifecycle Monitoring and the Error Kernel
+### Persistent Actor State
+
+
+# Week 7
+### Actors are Distributed
+### Eventual Consistency
+### Actor Composition
+### Scalability
+### Responsiveness
