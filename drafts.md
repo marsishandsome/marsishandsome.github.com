@@ -27,6 +27,7 @@
 
 ### Scala
 - [Access Private Method](gen/Access_Private_Method.html)
+- [Metascala](gen/Metascala.html)
 
 ### Spark
 - [Spark Detail](gen/Spark_Detail.html)
@@ -44,3 +45,5 @@
 - [Ignite](gen/Ignite.html)
 - [Netflix Culture](gen/Netflix_Culture.html)
 - [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
+- [Spark Notebook](gen/Spark_Notebook.html)
+- [Spark Zeepelin](gen/Spark_Zeepelin.html)
