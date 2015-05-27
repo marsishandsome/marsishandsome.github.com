@@ -270,21 +270,25 @@ def failure(t: Throwable): Unit = this.complete(Failure(t))</code></pre>
 }</code></pre>
 <h1 id="week-4">Week 4</h1>
 <h3 id="from-try-to-future">From Try to Future</h3>
-<p>TODO</p>
+<p>Future[T] and Try[T] are dual</p>
+<pre><code>trait Future[T] {
+  def onComplete(func: Try[T] =&gt; Unit)
+  (implicit ex: ExecutionContext): Unit
+}
+
+Future[T]:    (Try[T] =&gt; Unit) =&gt; Unit
+
+reverse:      Unit =&gt; (Unit =&gt; Try[T])
+              () =&gt; (() =&gt; Try[T])
+              Try[T]</code></pre>
 <h3 id="from-iterables-to-observables">From Iterables to Observables</h3>
-<p>TODO</p>
-<h3 id="hello-world-observables">Hello World Observables</h3>
-<p>TODO</p>
-<h3 id="rx-operations">RX Operations</h3>
-<p>TODO</p>
-<h3 id="subscriptions">Subscriptions</h3>
-<p>TODO</p>
-<h3 id="promises-and-subjects">Promises and Subjects</h3>
-<p>TODO</p>
-<h3 id="rx-potpourri">RX potpourri</h3>
-<p>TODO</p>
-<h3 id="observable-contract">Observable Contract</h3>
-<p>TODO</p>
+<pre><code>def Iteratable[T] { def iterator(): Iterator[T] }
+
+def Iterator[T] { def hasNext: Boolean; def next(): T }</code></pre>
+<pre><code>type Iteratable[T] = () =&gt; ( ()=&gt;Try[Option[T]] )
+
+type Observable[T] = (Try[Option[T]] =&gt; Unit) =&gt; Unit
+</code></pre>
 <h1 id="week-5">Week 5</h1>
 <h3 id="why-actors">Why Actors?</h3>
 <ul>
@@ -322,6 +326,15 @@ trait ActorContext {
 <li>processing one message is the atomic unit of execution</li>
 </ul>
 <h1 id="week-6">Week 6</h1>
+<h3 id="failure-handling-with-acots">Failure Handling with Acots</h3>
+<h3 id="lifecycle-monitoring-and-the-error-kernel">Lifecycle Monitoring and the Error Kernel</h3>
+<h3 id="persistent-actor-state">Persistent Actor State</h3>
+<h1 id="week-7">Week 7</h1>
+<h3 id="actors-are-distributed">Actors are Distributed</h3>
+<h3 id="eventual-consistency">Eventual Consistency</h3>
+<h3 id="actor-composition">Actor Composition</h3>
+<h3 id="scalability">Scalability</h3>
+<h3 id="responsiveness">Responsiveness</h3>
 
 </body>
 </html>

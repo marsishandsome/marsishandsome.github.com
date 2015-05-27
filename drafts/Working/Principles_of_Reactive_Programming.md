@@ -381,24 +381,6 @@ type Observable[T] = (Try[Option[T]] => Unit) => Unit
 
 ```
 
-### Hello World Observables
-TODO
-
-### RX Operations
-TODO
-
-### Subscriptions
-TODO
-
-### Promises and Subjects
-TODO
-
-### RX potpourri
-TODO
-
-### Observable Contract
-TODO
-
 # Week 5
 ### Why Actors?
 - blocking synchronization introduces dead-locks
