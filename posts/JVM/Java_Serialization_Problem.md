@@ -70,9 +70,8 @@ val obj1 = new Function1[RDD[Int], Int]() {
 
 根据错误的stack信息，可以推测出Java在序列化Functoin1这个类的时候加载了RDD的类。原因如下：
 
-1. 如果用户在类里面定义了writeObject方法，Java会优先选择这个方法来序列化该类。
-
-2. 所以Java会首先通过反射的机制检查类中有没有writeObject方法
+如果用户在类里面定义了writeObject方法，Java会优先选择这个方法来序列化该类。
+所以Java会首先通过反射的机制检查类中有没有writeObject方法
 ```
 ObjectStreamClass.java
 
@@ -81,7 +80,7 @@ getPrivateMethod(cl, "writeObject",
                   Void.TYPE);
 ```
 
-3. 在检查有没有writeObject方法的时候，调用了getDeclaredMethod获取所以的方法
+在检查有没有writeObject方法的时候，调用了getDeclaredMethod获取所以的方法
 ```
 private static Method getPrivateMethod(Class<?> cl, String name,
                                            Class<?>[] argTypes,
@@ -100,7 +99,7 @@ private static Method getPrivateMethod(Class<?> cl, String name,
     }
 ```
 
-4. getDeclaredMethod中调用了privateGetDeclaredMethods
+getDeclaredMethod中调用了privateGetDeclaredMethods
 ```
 public Method getDeclaredMethod(String name, Class<?>... parameterTypes)
         throws NoSuchMethodException, SecurityException {
@@ -116,7 +115,7 @@ public Method getDeclaredMethod(String name, Class<?>... parameterTypes)
     }
 ```
 
-5.privateGetDeclaredMethods中调用了getDeclaredMethods0，该方法是一个native方法，
+privateGetDeclaredMethods中调用了getDeclaredMethods0，该方法是一个native方法，
 getDeclaredMethods0会寻找所有方法中涉及到的类的定义，所以会出现RDD类找不到的错误。
 ```
 private Method[] privateGetDeclaredMethods(boolean publicOnly) {
