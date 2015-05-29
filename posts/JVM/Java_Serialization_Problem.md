@@ -146,7 +146,7 @@ private Method[] privateGetDeclaredMethods(boolean publicOnly) {
 ```
 
 ### 解决
-因为所以出现在Function1方法中的类型都需要存在在运行时环境中，所以我们可以定义一个Wrapper类来包装RDD。
+因为所有出现在Function1方法中的类型都需要存在在运行时环境中，所以我们可以定义一个Wrapper类来包装RDD。这样Java只会查找Wrapper类，而不需要RDD类。
 
 ```
 import java.io.{FileOutputStream, ObjectOutputStream}
