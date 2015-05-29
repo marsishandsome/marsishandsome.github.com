@@ -5,6 +5,9 @@
 - [Gitbook Toturial](gen/Gitbook_Toturial.html)
 - [Quotes](gen/Quotes.html)
 
+### JVM
+- [Java Serialization Problem](gen/Java_Serialization_Problem.html)
+
 ### Links
 - [Big Data Links](gen/Big_Data_Links.html)
 - [Data Scientist Links](gen/Data_Scientist_Links.html)
