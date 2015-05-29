@@ -1,6 +1,6 @@
 # Java Serialization Problem
 
-### 问题
+### 问题： 序列化Scala函数的时候，为什么需要参数的类的定义？
 今天在序列化一个Scala的函数的时候，碰到一个java序列化的问题，程序如下：
 ```
 import java.io.{FileOutputStream, ObjectOutputStream}
