@@ -59,11 +59,11 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.rdd.RDD
 ```  
 
 ### 分析
-Scala的函数```val obj: RDD[Int] => Int = rdd => 1```会被翻译为Function类
+Scala的函数```val obj: RDD[Int] => Int = rdd => rdd.first()```会被翻译为Function类
 ```
 val obj1 = new Function1[RDD[Int], Int]() {
   override def apply(v1: RDD[Int]): Int = {
-    1
+    rdd.first()
   }
 }
 ```

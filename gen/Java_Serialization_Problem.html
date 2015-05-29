@@ -56,10 +56,10 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.rdd.RDD
     at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
     ... 19 more</code></pre>
 <h3>分析</h3>
-<p>Scala的函数<code>val obj: RDD[Int] =&gt; Int = rdd =&gt; 1</code>会被翻译为Function类</p>
+<p>Scala的函数<code>val obj: RDD[Int] =&gt; Int = rdd =&gt; rdd.first()</code>会被翻译为Function类</p>
 <pre><code>val obj1 = new Function1[RDD[Int], Int]() {
   override def apply(v1: RDD[Int]): Int = {
-    1
+    rdd.first()
   }
 }</code></pre>
 <p>根据错误的stack信息，可以推测出Java在序列化Functoin1这个类的时候加载了RDD的类。原因如下：</p>
