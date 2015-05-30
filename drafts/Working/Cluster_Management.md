@@ -2,6 +2,7 @@
 
 ### 对比
 - [mesos, omega, borg: a survey](http://www.umbrant.com/blog/2015/mesos_omega_borg_survey.html)
+- [Docker, Mesos, Marathon, and the End of Pets](http://blog.factual.com/docker-mesos-marathon-and-the-end-of-pets)
 
 ### mesos
 - [Mesos: A Platform for Fine-Grained Resource Sharing in the Data Center](https://www.cs.berkeley.edu/~alig/papers/mesos.pdf)
@@ -9,7 +10,7 @@
 ### Omega
 - [Omega: flexible, scalable schedulers for large compute clusters](http://research.google.com/pubs/pub41684.html)
 
-### Google: Borg
+### Borg
 - [Large-scale cluster management at Google with Borg](http://static.googleusercontent.com/media/research.google.com/en/us/pubs/archive/43438.pdf) -- 论文
 - [Cluster Management at Google](http://www.infoq.com/presentations/cluster-management-google) -- 演讲
 - [Borg论文读后感](http://mp.weixin.qq.com/s?__biz=MjM5MzYzMzkyMQ==&mid=204283418&idx=1&sn=658fcdff9eafddfd1542cdb77f81828f#rd)
