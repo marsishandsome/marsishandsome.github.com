@@ -1,5 +1,18 @@
 # Microservices
 
+### Links
+- [Microservice architecture patterns and best practices](http://microservices.io/)
+- [Introduction to Microservices](http://www.oschina.net/translate/introduction-to-microservices) --Chris Richardson
+
+### Nginx
+- [WIKI](http://en.wikipedia.org/wiki/Nginx)
+
+### Netflix
+- [WIKI](http://en.wikipedia.org/wiki/Netflix)
+- [Netflix Open Source Software Center](http://netflix.github.io/#repo)
+- [The Netflix Tech Blog](http://techblog.netflix.com/)
+
+
 ### 参考文章
 
 ##### [Adopting Microservices at Netflix: Lessons for Architectural Design](http://nginx.com/blog/microservices-at-netflix-architectural-best-practices/)
@@ -20,16 +33,3 @@
 ##### [Microservices at Netflix](http://www.slideshare.net/stonse/microservices-at-netflix)
 
 ##### [A Microscope on Microservices](http://techblog.netflix.com/2015/02/a-microscope-on-microservices.html)
-
-### Links
-
-##### [Microservice architecture patterns and best practices](http://microservices.io/)
-
-##### Nginx
-- [WIKI](http://en.wikipedia.org/wiki/Nginx)
-
-##### Netflix
-- [WIKI](http://en.wikipedia.org/wiki/Netflix)
-- [Netflix Open Source Software Center](http://netflix.github.io/#repo)
-- [The Netflix Tech Blog](http://techblog.netflix.com/)
-

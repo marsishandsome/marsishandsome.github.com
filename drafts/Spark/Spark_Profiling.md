@@ -51,7 +51,7 @@ CPU Profiling 的主要目的是统计函数的调用情况及执行时间，或
 # JVM Profiling工具
 [9 个帮助你进行Java性能调优的工具](http://www.open-open.com/news/view/1ec20f6)
 
-### VisualVM 
+### VisualVM
 - [官网](http://visualvm.java.net/)
 - [使用 VisualVM 进行性能分析及调优](http://www.ibm.com/developerworks/cn/java/j-lo-visualvm/)
 - [visualvm监控jvm及远程jvm监控方法](http://www.blogjava.net/titanaly/archive/2012/03/20/372318.html)
@@ -61,7 +61,7 @@ CPU Profiling 的主要目的是统计函数的调用情况及执行时间，或
 ![](http://www.ibm.com/developerworks/cn/java/j-lo-visualvm/nEO_IMG_image026.jpg)
 
 
-### YourKit 
+### YourKit
 增加 -agentpath:<full agent library path> VM 选项到java 命令行启动参数
 
 - [官网](https://www.yourkit.com/overview/)
@@ -74,7 +74,7 @@ CPU Profiling 的主要目的是统计函数的调用情况及执行时间，或
 ![](https://www.yourkit.com/docs/java/help/cpu_hot_spots.png)
 
 
-### Profiler4j 
+### Profiler4j
 java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 
 - [官网](http://profiler4j.sourceforge.net/)
@@ -139,7 +139,12 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 
 
 ### Graphite
+- [Graphite vs. Grafana: Build the Best Monitoring Architecture for Your Application](http://blog.takipi.com/graphite-vs-grafana-build-the-best-monitoring-architecture-for-your-application/)
 - [HTTP API](https://github.com/brutasse/graphite-api/blob/master/docs/api.rst)
+
+
+### Takipi (code level metrics)
+- [官网](https://www.takipi.com)
 
 
 ### Flame Graph
@@ -159,4 +164,3 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 - spark.python.profile
 - spark.python.profile.dump
 - [Profiling Spark Applications Using YourKit](https://cwiki.apache.org/confluence/display/SPARK/Profiling+Spark+Applications+Using+YourKit)
-
