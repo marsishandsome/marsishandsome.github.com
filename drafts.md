@@ -42,6 +42,7 @@
 - [Cluster Management](gen/Cluster_Management.html)
 - [Flink](gen/Flink.html)
 - [Hive on Spark](gen/Hive_on_Spark.html)
+- [How Wanqu Works](gen/How_Wanqu_Works.html)
 - [Ignite](gen/Ignite.html)
 - [Netflix Culture](gen/Netflix_Culture.html)
 - [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)

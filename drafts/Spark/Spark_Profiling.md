@@ -139,12 +139,7 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 
 
 ### Graphite
-- [Graphite vs. Grafana: Build the Best Monitoring Architecture for Your Application](http://blog.takipi.com/graphite-vs-grafana-build-the-best-monitoring-architecture-for-your-application/)
 - [HTTP API](https://github.com/brutasse/graphite-api/blob/master/docs/api.rst)
-
-
-### Takipi (code level metrics)
-- [官网](https://www.takipi.com)
 
 
 ### Flame Graph
@@ -164,3 +159,13 @@ java -javaagent:c:\profiler4j-1.0-beta2\agent.jar com.foo.Main
 - spark.python.profile
 - spark.python.profile.dump
 - [Profiling Spark Applications Using YourKit](https://cwiki.apache.org/confluence/display/SPARK/Profiling+Spark+Applications+Using+YourKit)
+
+
+### Picutres
+![](https://databricks.com/wp-content/uploads/2015/05/Screen-Shot-2015-05-26-at-3.20.31-PM.png)
+
+![](https://databricks.com/wp-content/uploads/2015/05/Screen-Shot-2015-05-26-at-3.21.36-PM.png)
+
+![](https://databricks.com/wp-content/uploads/2015/05/Screen-Shot-2015-05-26-at-3.22.13-PM.png)
+
+![](https://databricks.com/wp-content/uploads/2015/05/Screen-Shot-2015-05-26-at-3.22.45-PM.png)
