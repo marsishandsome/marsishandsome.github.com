@@ -1,5 +1,3 @@
-#!/bin/bash
-
 ./pall
 git add .
 git commit -a -m "update"
