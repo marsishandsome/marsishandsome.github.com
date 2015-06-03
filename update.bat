@@ -1,2 +1,2 @@
-sh update
+sh.exe --login -i update
 set /p DUMMY=Hit ENTER to continue...
