@@ -1,4 +1,5 @@
 # Zeepelin
+- [Introduction to Zeppelin](http://events.linuxfoundation.org/sites/events/files/slides/Zeppelin_ApacheCon2015_0.pdf)
 - [Apache Zeppelin安装及介绍](http://blog.csdn.net/pelick/article/details/45934993)
 - [Github](https://github.com/apache/incubator-zeppelin)
 - [User Guide](http://zeppelin.incubator.apache.org/docs/index.html)
@@ -18,9 +19,10 @@ ln -s `pwd`/bin/npm /usr/bin/npm
 config npm
 ```
 npm config set registry=http://registry.npmjs.org/
+npm set strict-ssl false
 # npm config set proxy=http://...
 # npm config set http-proxy=http://...
-# npm config set https-proxy=https://
+# npm config set https-proxy=http://...
 ```
 
 ### 1. Download Source
@@ -36,6 +38,15 @@ cd zeppelin-web
 npm install
 ```
 
+config bower
+```
+npm install -g bower-canary
+git config --global url."https://".insteadOf git://
+
+http-proxy=http://...
+https-proxy=http://...
+```
+
 build zeepelin
 ```
 mvn clean package \
@@ -47,5 +58,13 @@ mvn clean package \
 ```
 
 ### 3. Configure
+edit conf/zeepelin-evn.sh
+```
+export HADOOP_CONF_DIR=/etc/hadoop/conf
+```
 
 ### 4. Run
+```
+./bin/zeepelin-daemon.sh
+./bin/zeepelin.sh
+```

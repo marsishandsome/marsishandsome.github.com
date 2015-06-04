@@ -8,6 +8,7 @@
 <body>
 <h1 id="zeepelin">Zeepelin</h1>
 <ul>
+<li><a href="http://events.linuxfoundation.org/sites/events/files/slides/Zeppelin_ApacheCon2015_0.pdf">Introduction to Zeppelin</a><br /></li>
 <li><a href="http://blog.csdn.net/pelick/article/details/45934993">Apache Zeppelin安装及介绍</a><br /></li>
 <li><a href="https://github.com/apache/incubator-zeppelin">Github</a><br /></li>
 <li><a href="http://zeppelin.incubator.apache.org/docs/index.html">User Guide</a><br /></li>
@@ -23,9 +24,10 @@ ln -s `pwd`/bin/node /usr/bin/
 ln -s `pwd`/bin/npm /usr/bin/npm</code></pre>
 <p>config npm</p>
 <pre><code>npm config set registry=http://registry.npmjs.org/
+npm set strict-ssl false
 # npm config set proxy=http://...
 # npm config set http-proxy=http://...
-# npm config set https-proxy=https://</code></pre>
+# npm config set https-proxy=http://...</code></pre>
 <h3 id="download-source">1. Download Source</h3>
 <pre><code>git clone https://github.com/apache/incubator-zeppelin.git
 cd incubator-zeppelin</code></pre>
@@ -33,6 +35,12 @@ cd incubator-zeppelin</code></pre>
 <p>install dependency for zeppelin-web</p>
 <pre><code>cd zeppelin-web
 npm install</code></pre>
+<p>config bower</p>
+<pre><code>npm install -g bower-canary
+git config --global url.&quot;https://&quot;.insteadOf git://
+
+http-proxy=http://...
+https-proxy=http://...</code></pre>
 <p>build zeepelin</p>
 <pre><code>mvn clean package \
 -Pspark-1.3.0 \
@@ -41,7 +49,11 @@ npm install</code></pre>
 -Pyarn \
 -DskipTests</code></pre>
 <h3 id="configure">3. Configure</h3>
+<p>edit conf/zeepelin-evn.sh</p>
+<pre><code>export HADOOP_CONF_DIR=/etc/hadoop/conf</code></pre>
 <h3 id="run">4. Run</h3>
+<pre><code>./bin/zeepelin-daemon.sh
+./bin/zeepelin.sh</code></pre>
 
 </body>
 </html>
