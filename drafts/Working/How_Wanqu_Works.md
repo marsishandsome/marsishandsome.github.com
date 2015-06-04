@@ -1,5 +1,6 @@
 # How Wanqu Works?
 - [湾区日报是如何运作的？](http://weibo.com/p/1001593846350310617958)
+- [Deploying branches to GitHub.com](http://githubengineering.com/deploying-branches-to-github-com/)
 
 ### Slack
 - 在Slack上跟机器人wanqu-ops说话，发给它一个链接。然后它就自动提取标题、提取图片、构建slug、关联某一期（issue），最后创建新文章
