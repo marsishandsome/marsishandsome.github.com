@@ -4,3 +4,6 @@
 - [Evaluation of performance and productivity metrics of potential programming languages in the HPC environment]http://octarineparrot.com/assets/mrfloya-thesis-ba.pdf
 - [The Evolution of Popular Music: USA 1960-2010](http://arxiv.org/abs/1502.05417)
 - [Why Functional Programming Matters](http://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf)
+
+# 会议
+- [SIGMOD '15](http://www.sigmod2015.org/toc_sigmod.shtml)
