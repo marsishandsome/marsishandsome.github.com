@@ -1,4 +1,4 @@
-# Zeepelin
+# Zeppelin
 - [Introduction to Zeppelin](http://events.linuxfoundation.org/sites/events/files/slides/Zeppelin_ApacheCon2015_0.pdf)
 - [Apache Zeppelin安装及介绍](http://blog.csdn.net/pelick/article/details/45934993)
 - [Github](https://github.com/apache/incubator-zeppelin)
@@ -47,7 +47,7 @@ http-proxy=http://...
 https-proxy=http://...
 ```
 
-build zeepelin
+build zeppelin
 ```
 mvn clean package \
 -Pspark-1.3.0 \
@@ -58,13 +58,13 @@ mvn clean package \
 ```
 
 ### 3. Configure
-edit conf/zeepelin-evn.sh
+edit conf/zeppelin-evn.sh
 ```
 export HADOOP_CONF_DIR=/etc/hadoop/conf
 ```
 
 ### 4. Run
 ```
-./bin/zeepelin-daemon.sh
-./bin/zeepelin.sh
+./bin/zeppelin-daemon.sh
+./bin/zeppelin.sh
 ```

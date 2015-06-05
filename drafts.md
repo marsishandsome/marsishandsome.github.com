@@ -49,5 +49,5 @@
 - [Netflix Culture](gen/Netflix_Culture.html)
 - [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
 - [Spark Notebook](gen/Spark_Notebook.html)
-- [Spark Zeepelin](gen/Spark_Zeepelin.html)
+- [Spark Zeppelin](gen/Spark_Zeppelin.html)
 - [Twitter Heron](gen/Twitter_Heron.html)
