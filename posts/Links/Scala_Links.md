@@ -50,6 +50,7 @@
 
 # 工具
 - [Scala Diagrams](https://github.com/mikeyhu/scaladiagrams) - 画类图
+- [config-annotation](https://github.com/wacai/config-annotation) - 配置
 
 
 # 项目

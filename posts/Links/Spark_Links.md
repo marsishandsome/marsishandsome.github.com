@@ -51,6 +51,7 @@
 - [Everyday I am Shuffling - Tips for Writing Better Spark Programs](https://www.youtube.com/watch?v=Wg2boMqLjCg) - Holen Karau @ Strata San Jose 2015
 - [How-to: Tune Your Apache Spark Jobs (Part 1)](http://blog.cloudera.com/blog/2015/03/how-to-tune-your-apache-spark-jobs-part-1/) - Cloudera
 - [How-to: Tune Your Apache Spark Jobs (Part 2)](http://blog.cloudera.com/blog/2015/03/how-to-tune-your-apache-spark-jobs-part-2/) - Cloudera
+- [Tuning Spark Streaming for Throughput](http://www.virdata.com/tuning-spark/)
 - [Tuning Java Garbage Collection for Spark Applications](https://databricks.com/blog/2015/05/28/tuning-java-garbage-collection-for-spark-applications.html)
 - [executor-cores vs. num-executors](http://apache-spark-user-list.1001560.n3.nabble.com/executor-cores-vs-num-executors-td9878.html)
 
