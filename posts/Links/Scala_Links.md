@@ -30,6 +30,9 @@
 - [Quasiquotes](http://docs.scala-lang.org/overviews/quasiquotes/intro.html)
 - [Quasiquotes For Scala](http://infoscience.epfl.ch/record/185242/files/QuasiquotesForScala.pdf)
 
+# Scala Meetup
+- [Scala Shanghai Meetup 2015-06-06](https://github.com/CSUG/csug/tree/master/shanghai-2015-06-06)
+
 
 # 视频
 - [PNWS 2014 - Towards a Safer Scala](https://www.youtube.com/watch?v=HEeB_eH326c)
