@@ -49,6 +49,7 @@
 - [How Wanqu Works](gen/How_Wanqu_Works.html)
 - [Ignite](gen/Ignite.html)
 - [KeystoneML](gen/KeystoneML.html)
+- [Monitoring](gen/Monitoring.html)
 - [Netflix Culture](gen/Netflix_Culture.html)
 - [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
 - [Spark Notebook](gen/Spark_Notebook.html)
