@@ -43,12 +43,16 @@
 
 ### Working
 - [AKKA](gen/AKKA.html)
+- [Big Data Links](gen/Big_Data_Links.html)
 - [Cluster Management](gen/Cluster_Management.html)
+- [Data Scientist Links](gen/Data_Scientist_Links.html)
 - [Flink](gen/Flink.html)
 - [Hive on Spark](gen/Hive_on_Spark.html)
 - [How Wanqu Works](gen/How_Wanqu_Works.html)
 - [Ignite](gen/Ignite.html)
+- [Java Links](gen/Java_Links.html)
 - [KeystoneML](gen/KeystoneML.html)
+- [Machine Learning Links](gen/Machine_Learning_Links.html)
 - [Monitoring](gen/Monitoring.html)
 - [Netflix Culture](gen/Netflix_Culture.html)
 - [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)

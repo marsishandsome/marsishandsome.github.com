@@ -9,10 +9,6 @@
 - [Java Serialization Problem](gen/Java_Serialization_Problem.html)
 
 ### Links
-- [Big Data Links](gen/Big_Data_Links.html)
-- [Data Scientist Links](gen/Data_Scientist_Links.html)
-- [Java Links](gen/Java_Links.html)
-- [Machine Learning Links](gen/Machine_Learning_Links.html)
 - [Scala Links](gen/Scala_Links.html)
 - [Spark Links](gen/Spark_Links.html)
 
