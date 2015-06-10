@@ -3,7 +3,7 @@
 - [Gitbook Toturial](gen/Gitbook_Toturial.html)
 - [Quotes](gen/Quotes.html)
 
-### JVM
+### Java
 - [Java Serialization Problem](gen/Java_Serialization_Problem.html)
 
 ### Links

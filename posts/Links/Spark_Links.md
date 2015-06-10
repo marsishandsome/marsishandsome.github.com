@@ -9,7 +9,6 @@
 - [Shark: SQL and Rich Analytics at Scale](http://www.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-214.pdf)
 - [Spark SQL: Relational Data Processing in Spark](http://people.csail.mit.edu/matei/papers/2015/sigmod_spark_sql.pdf)
 
-
 ### Spark Streaming
 - [Discretized Streams: An Efficient and Fault-Tolerant Model for Stream Processing on Large Clusters](http://www.cs.berkeley.edu/~matei/papers/2012/hotcloud_spark_streaming.pdf)
 
@@ -43,6 +42,30 @@
 - [浅谈Apache Spark的6个发光点](http://www.csdn.net/article/2014-08-07/2821098-6-sparkling-feat)
 - [Spark: Open Source Superstar Rewrites Future of Big Data](http://www.wired.com/2013/06/yahoo-amazon-amplab-spark/all/)
 - [Spark is a really big deal for big data, and Cloudera gets it](https://gigaom.com/2013/10/28/spark-is-a-really-big-deal-for-big-data-and-cloudera-gets-it/)
+- [盘点SQL on Hadoop中用到的主要技术](http://sunyi514.github.io/2014/11/15/%E7%9B%98%E7%82%B9sql-on-hadoop%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84%E4%B8%BB%E8%A6%81%E6%8A%80%E6%9C%AF/)
+- [梳理对Spark Standalone的理解](http://blog.csdn.net/pelick/article/details/43762375)
+- [Improving Sort Performance in Apache Spark: It’s a Double](http://blog.cloudera.com/blog/2015/01/improving-sort-performance-in-apache-spark-its-a-double/)
+- [Tutorial: Spark-GPU Cluster Dev in a Notebook](http://iamtrask.github.io/2014/11/22/spark-gpu/)
+- [Databricks Spark Knowledge Base](https://www.gitbook.com/book/databricks/databricks-spark-knowledge-base/details)
+- [连城：大数据场景下的“搔到痒处”和“戳到痛处”（图灵访谈）](http://www.ituring.com.cn/article/179495)
+- [Spark技术解析及在百度开放云BMR应用实践](http://mp.weixin.qq.com/s?__biz=MjM5OTY0ODg1Mw==&mid=203928894&idx=1&sn=f6e6e3ffb72d7ab51372f43904ec1c1c&scene=1&from=groupmessage&isappinstalled=0#rd)
+- [一个KCore算法引发的StackOverflow奇案](http://rdc.taobao.org/?p=2417&amp;amp;from=groupmessage&amp;amp;isappinstalled=0)
+
+# Spark MLlib
+### Exploring Spark MLlib
+- [part1](https://phdata.io/exploring-spark-mllib-part-1-setup-and-ingest/)
+- [part2](https://phdata.io/exploring-spark-mllib-part-2-exploring-the-data/)
+- [part3](https://phdata.io/exploring-spark-mllib-part-3-transformation-and-model-creation/)
+- [part4](https://phdata.io/exploring-spark-mllib-part-4-exporting-the-model-for-use-outside-of-spark/)
+- [github](https://github.com/phdata/exploring-mllib-post)
+
+### 3rd party
+- [intel-machine-learning/DistML](https://github.com/intel-machine-learning/DistML)
+
+
+# Spark相关项目
+- [jaws-spark-sql-rest](https://github.com/Atigeo/jaws-spark-sql-rest) - Restful service for running Spark SQL/Shark queries
+- [sparknotebook](https://github.com/hohonuuli/sparknotebook)
 
 
 # Spark调优

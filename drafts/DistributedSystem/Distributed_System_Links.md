@@ -1,4 +1,7 @@
-# Distributed System
+# Distributed System Links
+- [“分布式机器学习的故事”系列分享](http://cxwangyi.github.io/notes/2014-01-20-distributed-machine-learning.html)
+- [后Hadoop时代的大数据架构](http://zhuanlan.zhihu.com/donglaoshi/19962491?from=timeline&isappinstalled=0) -- 董飞
+
 
 ### CAP定理 (Eric Brewer)
 - [Wikipedia](CAP theorem)
