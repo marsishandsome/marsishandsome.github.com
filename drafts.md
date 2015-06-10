@@ -116,3 +116,62 @@
 - [Spark Notebook](gen/Spark_Notebook.html)
 - [Spark Zeppelin](gen/Spark_Zeppelin.html)
 - [Twitter Heron](gen/Twitter_Heron.html)
+
+### Common
+- [API Design](gen/API_Design.html)
+- [Amazon Machine Learning](gen/Amazon_Machine_Learning.html)
+- [Asscidoc](gen/Asscidoc.html)
+- [Atom](gen/Atom.html)
+- [Book TO READ](gen/Book_TO_READ.html)
+- [Chromelogger4j](gen/Chromelogger4j.html)
+- [Distributed System](gen/Distributed_System.html)
+- [Druid](gen/Druid.html)
+- [Git Usage](gen/Git_Usage.html)
+- [Markdown](gen/Markdown.html)
+- [Microservices](gen/Microservices.html)
+- [Operation and Maintenance](gen/Operation_and_Maintenance.html)
+- [Parameter Server](gen/Parameter_Server.html)
+- [RESTful API](gen/RESTful_API.html)
+- [Scala Days San Francisco 2015](gen/Scala_Days_San_Francisco_2015.html)
+- [TO READ](gen/TO_READ.html)
+- [Useful Shell Commond](gen/Useful_Shell_Commond.html)
+
+### DistributedSystem
+- [Distributed Machine Learning Story](gen/Distributed_Machine_Learning_Story.html)
+
+### Paper
+- [Paper TO READ](gen/Paper_TO_READ.html)
+
+### Private
+- [Honey Moon](gen/Honey_Moon.html)
+
+### Scala
+- [Access Private Method](gen/Access_Private_Method.html)
+- [Metascala](gen/Metascala.html)
+
+### Spark
+- [Spark Detail](gen/Spark_Detail.html)
+- [Spark Job Server](gen/Spark_Job_Server.html)
+- [Spark MLlib](gen/Spark_MLlib.html)
+- [Spark Profiling](gen/Spark_Profiling.html)
+- [Spark Summit China 2015](gen/Spark_Summit_China_2015.html)
+- [Spark Summit East 2015](gen/Spark_Summit_East_2015.html)
+
+### Working
+- [AKKA](gen/AKKA.html)
+- [Big Data Links](gen/Big_Data_Links.html)
+- [Cluster Management](gen/Cluster_Management.html)
+- [Data Scientist Links](gen/Data_Scientist_Links.html)
+- [Flink](gen/Flink.html)
+- [Hive on Spark](gen/Hive_on_Spark.html)
+- [How Wanqu Works](gen/How_Wanqu_Works.html)
+- [Ignite](gen/Ignite.html)
+- [Java Links](gen/Java_Links.html)
+- [KeystoneML](gen/KeystoneML.html)
+- [Machine Learning Links](gen/Machine_Learning_Links.html)
+- [Monitoring](gen/Monitoring.html)
+- [Netflix Culture](gen/Netflix_Culture.html)
+- [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
+- [Spark Notebook](gen/Spark_Notebook.html)
+- [Spark Zeppelin](gen/Spark_Zeppelin.html)
+- [Twitter Heron](gen/Twitter_Heron.html)
