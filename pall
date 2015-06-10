@@ -9,6 +9,7 @@ function pall(){
   rm -f "$index.md"
   rm -f "$index.xml"
   rm -f "$index.html"
+  cp AboutMe.md "$index.md"
 
   echo $post_dir
   mkdir -p $gen_dir
