@@ -9,8 +9,6 @@ function pall(){
   echo $post_dir
 
   mkdir -p $gen_dir
-  echo "# $title
-[rss](http://feeds.feedburner.com/marsishandsome)" > "$index.md"
 
   echo "<rss version='2.0'>
   <channel>
