@@ -6,8 +6,11 @@ function pall(){
   index=$3
   title=$4
 
-  echo $post_dir
+  rm -f "$index.md"
+  rm -f "$index.xml"
+  rm -f "$index.html"
 
+  echo $post_dir
   mkdir -p $gen_dir
 
   echo "<rss version='2.0'>
