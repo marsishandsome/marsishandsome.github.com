@@ -4,8 +4,9 @@ body {
   line-height: 1.6;
   padding-top: 10px;
   padding-bottom: 10px;
+  padding-left: 200px;
   background-color: white;
-  padding: 200px; }
+  }
 
 body > *:first-child {
   margin-top: 0 !important; }
