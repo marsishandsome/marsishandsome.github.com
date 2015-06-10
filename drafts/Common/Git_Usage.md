@@ -5,6 +5,7 @@
 - [How to install the latest GIT version on CentOS](https://www.howtoforge.com/how-to-install-the-latest-git-version-on-centos)
 - [Caching your GitHub password in Git](https://help.github.com/articles/caching-your-github-password-in-git/)
 - [Pre Commit](http://pre-commit.com/) -- Managing and maintaining multi-language pre-commit hooks
+- [How to undo (almost) anything with Git](https://github.com/blog/2019-how-to-undo-almost-anything-with-git)
 
 
 # Github的使用
