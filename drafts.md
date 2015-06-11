@@ -22,7 +22,6 @@
 
 ### DistributedSystem
 - [AKKA](gen/AKKA.html)
-- [Cluster Management](gen/Cluster_Management.html)
 - [Distributed System Links](gen/Distributed_System_Links.html)
 - [Druid](gen/Druid.html)
 - [Flink](gen/Flink.html)
