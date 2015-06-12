@@ -25,8 +25,10 @@
 - [Distributed System Links](gen/Distributed_System_Links.html)
 - [Druid](gen/Druid.html)
 - [Flink](gen/Flink.html)
+- [Giraph](gen/Giraph.html)
 - [Ignite](gen/Ignite.html)
 - [Parameter Server](gen/Parameter_Server.html)
+- [Pinot](gen/Pinot.html)
 - [Twitter Heron](gen/Twitter_Heron.html)
 
 ### Java
