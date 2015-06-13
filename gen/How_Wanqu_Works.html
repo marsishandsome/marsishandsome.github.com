@@ -28,8 +28,19 @@
 <h3 id="hubot">Hubot</h3>
 <ul>
 <li>这个机器人除了分担发文章的部分工作外，还承担了重大的运维职责，比如部署新代码、tail log、查看关键指标（新增微博粉丝数、网站访问量等）、重启服务器等<br /></li>
-<li><a href="https://hubot.github.com/">官网</a></li>
+<li><a href="https://hubot.github.com/">官网</a><br /></li>
+<li><a href="https://github.com/github/hubot">Github</a><br /></li>
+<li><a href="https://hubot.github.com/docs/">Getting Started With Hubot</a></li>
 </ul>
+<pre><code>git clone https://github.com/github/hubot.git
+yum install -y nodejs npm --enablerepo=epel
+npm install -g yo generator-hubot --allow-root
+yo hubot \
+--owner=&quot;Mars &lt;mars@example.com&gt;&quot; \
+--name=&quot;Mars&quot; \
+--description=&quot;Mars Test Robot&quot; \
+--adapter=campfire \
+--defaults</code></pre>
 <h3 id="django">Django</h3>
 <ul>
 <li>网站是Python/Django写的，数据库用的是Postgres<br /></li>

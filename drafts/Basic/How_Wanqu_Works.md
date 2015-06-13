@@ -9,7 +9,20 @@
 ### Hubot
 - 这个机器人除了分担发文章的部分工作外，还承担了重大的运维职责，比如部署新代码、tail log、查看关键指标（新增微博粉丝数、网站访问量等）、重启服务器等
 - [官网](https://hubot.github.com/)
+- [Github](https://github.com/github/hubot)
+- [Getting Started With Hubot](https://hubot.github.com/docs/)
 
+```
+git clone https://github.com/github/hubot.git
+yum install -y nodejs npm --enablerepo=epel
+npm install -g yo generator-hubot --allow-root
+yo hubot \
+--owner="Mars <mars@example.com>" \
+--name="Mars" \
+--description="Mars Test Robot" \
+--adapter=campfire \
+--defaults
+```
 ### Django
 - 网站是Python/Django写的，数据库用的是Postgres
 - [官网](https://www.djangoproject.com/)
