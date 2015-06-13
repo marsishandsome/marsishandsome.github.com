@@ -22,6 +22,7 @@
 
 ### DistributedSystem
 - [AKKA](gen/AKKA.html)
+- [Cluster Management](gen/Cluster_Management.html)
 - [Distributed System Links](gen/Distributed_System_Links.html)
 - [Druid](gen/Druid.html)
 - [Flink](gen/Flink.html)
@@ -58,6 +59,7 @@
 ### Spark
 - [Hive on Spark](gen/Hive_on_Spark.html)
 - [KeystoneML](gen/KeystoneML.html)
+- [Spark1.4](gen/Spark1.4.html)
 - [Spark Job Server](gen/Spark_Job_Server.html)
 - [Spark Notebook](gen/Spark_Notebook.html)
 - [Spark Profiling](gen/Spark_Profiling.html)
