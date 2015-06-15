@@ -23,11 +23,11 @@
 
 ### DistributedSystem
 - [AKKA](gen/AKKA.html)
-- [Cluster Management](gen/Cluster_Management.html)
 - [Distributed System Links](gen/Distributed_System_Links.html)
 - [Druid](gen/Druid.html)
 - [Flink](gen/Flink.html)
 - [Giraph](gen/Giraph.html)
+- [HBase](gen/HBase.html)
 - [Ignite](gen/Ignite.html)
 - [Parameter Server](gen/Parameter_Server.html)
 - [Pinot](gen/Pinot.html)
@@ -59,6 +59,7 @@
 - [Chromelogger4j](gen/Chromelogger4j.html)
 
 ### Spark
+- [Distributed Data Frame](gen/Distributed_Data_Frame.html)
 - [Hive on Spark](gen/Hive_on_Spark.html)
 - [KeystoneML](gen/KeystoneML.html)
 - [Spark1.4](gen/Spark1.4.html)
