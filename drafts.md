@@ -18,6 +18,7 @@
 - [Book TO READ](gen/Book_TO_READ.html)
 
 ### Course
+- [Distributed Algorithms and Optimization](gen/Distributed_Algorithms_and_Optimization.html)
 - [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
 
 ### DistributedSystem
