@@ -20,7 +20,6 @@
 
 ### Course
 - [Distributed Algorithms and Optimization](gen/Distributed_Algorithms_and_Optimization.html)
-- [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
 
 ### DistributedSystem
 - [AKKA](gen/AKKA.html)
@@ -52,7 +51,9 @@
 ### Scala
 - [Access Private Method](gen/Access_Private_Method.html)
 - [Metascala](gen/Metascala.html)
+- [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
 - [Scala Days San Francisco 2015](gen/Scala_Days_San_Francisco_2015.html)
+- [Scala The Industrial Parts](gen/Scala_The_Industrial_Parts.html)
 
 ### Software
 - [Asscidoc](gen/Asscidoc.html)
