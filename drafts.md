@@ -61,17 +61,19 @@
 - [Chromelogger4j](gen/Chromelogger4j.html)
 
 ### Spark
-- [Databricks Cloud](gen/Databricks_Cloud.html)
 - [Distributed Data Frame](gen/Distributed_Data_Frame.html)
 - [Hive on Spark](gen/Hive_on_Spark.html)
-- [IPython Notebook](gen/IPython_Notebook.html)
 - [KeystoneML](gen/KeystoneML.html)
 - [Spark1.4](gen/Spark1.4.html)
 - [Spark Job Server](gen/Spark_Job_Server.html)
-- [Spark Notebook](gen/Spark_Notebook.html)
 - [Spark Profiling](gen/Spark_Profiling.html)
 - [Spark Summit China 2015](gen/Spark_Summit_China_2015.html)
 - [Spark Summit East 2015](gen/Spark_Summit_East_2015.html)
+
+### WebShellNotebook
+- [Databricks Cloud](gen/Databricks_Cloud.html)
+- [IPython Notebook](gen/IPython_Notebook.html)
+- [Spark Notebook](gen/Spark_Notebook.html)
 - [Zeppelin](gen/Zeppelin.html)
 
 ### Working
