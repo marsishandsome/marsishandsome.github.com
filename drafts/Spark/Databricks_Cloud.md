@@ -7,21 +7,25 @@
 ### Cluster
 ![](/images/databricks_cloud/cluster.PNG)
 
+##### create a cluster
 ![](/images/databricks_cloud/cluster_new.PNG)
 
 ### Notebook
 ![](/images/databricks_cloud/notebook1.PNG)
 
+### Run Scala with SparkContext & SparkSQL
 ![](/images/databricks_cloud/notebook2.PNG)
 
 ##### Notebook Graph
 ![](/images/databricks_cloud/notebook_graph.PNG)
 
+##### Edit Graph
 ![](/images/databricks_cloud/notebook_plot.PNG)
 
 ### Job
 ![](/images/databricks_cloud/job.PNG)
 
+##### Create a Job
 ![](/images/databricks_cloud/job_edit.PNG)
 
 ###### Jar Job
@@ -43,11 +47,14 @@
 ![](/images/databricks_cloud/job_schedule.PNG)
 
 ### Table
+![](/images/databricks_cloud/table.PNG)
+
+##### Import Table
 ![](/images/databricks_cloud/table_import1.PNG)
 
+### Import Table from File
 ![](/images/databricks_cloud/table_import2.PNG)
 
-![](/images/databricks_cloud/table.PNG)
 
 ### Account
 ![](/images/databricks_cloud/account.PNG)
