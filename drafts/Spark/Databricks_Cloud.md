@@ -28,10 +28,10 @@
 ##### Create a Job
 ![](/images/databricks_cloud/job_edit.PNG)
 
-###### Jar Job
+##### Jar Job
 ![](/images/databricks_cloud/job_jar.PNG)
 
-###### Notebook Job
+##### Notebook Job
 ![](/images/databricks_cloud/job_notebook.PNG)
 
 ##### Alerts
