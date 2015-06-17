@@ -61,6 +61,7 @@
 - [Chromelogger4j](gen/Chromelogger4j.html)
 
 ### Spark
+- [Databricks Cloud](gen/Databricks_Cloud.html)
 - [Distributed Data Frame](gen/Distributed_Data_Frame.html)
 - [Hive on Spark](gen/Hive_on_Spark.html)
 - [KeystoneML](gen/KeystoneML.html)
