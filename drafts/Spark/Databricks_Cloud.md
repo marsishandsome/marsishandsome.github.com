@@ -50,7 +50,7 @@
 ![](/images/databricks_cloud/table.PNG)
 
 ##### Import Table
-![](/images/databricks_cloud/table_import1.PNG)
+![](/images/databricks_cloud/table_import.PNG)
 
 ### Import Table from File
 ![](/images/databricks_cloud/table_import2.PNG)
