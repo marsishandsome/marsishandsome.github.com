@@ -20,6 +20,8 @@
 
 ### Course
 - [Distributed Algorithms and Optimization](gen/Distributed_Algorithms_and_Optimization.html)
+- [Introduction to Big Data with Apache Spark](gen/Introduction_to_Big_Data_with_Apache_Spark.html)
+- [Scalable Machine Learning](gen/Scalable_Machine_Learning.html)
 
 ### DistributedSystem
 - [AKKA](gen/AKKA.html)
