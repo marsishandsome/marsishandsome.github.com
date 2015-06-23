@@ -69,6 +69,7 @@
 - [Spark1.4](gen/Spark1.4.html)
 - [Spark Job Server](gen/Spark_Job_Server.html)
 - [Spark Profiling](gen/Spark_Profiling.html)
+- [Spark Summit 2015](gen/Spark_Summit_2015.html)
 - [Spark Summit China 2015](gen/Spark_Summit_China_2015.html)
 - [Spark Summit East 2015](gen/Spark_Summit_East_2015.html)
 
