@@ -6,6 +6,7 @@
 - [Caching your GitHub password in Git](https://help.github.com/articles/caching-your-github-password-in-git/)
 - [Pre Commit](http://pre-commit.com/) -- Managing and maintaining multi-language pre-commit hooks
 - [How to undo (almost) anything with Git](https://github.com/blog/2019-how-to-undo-almost-anything-with-git)
+- [Git Workflow Toturial](https://github.com/xirong/my-git/blob/master/git-workflow-tutorial.md)
 
 
 # Github的使用
