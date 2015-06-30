@@ -49,6 +49,7 @@
 
 ### Private
 - [Honey Moon](gen/Honey_Moon.html)
+- [Honey Moon2](gen/Honey_Moon2.html)
 
 ### Scala
 - [Access Private Method](gen/Access_Private_Method.html)
