@@ -24,7 +24,6 @@
 - [Scalable Machine Learning](gen/Scalable_Machine_Learning.html)
 
 ### DistributedSystem
-- [AKKA](gen/AKKA.html)
 - [Distributed System Links](gen/Distributed_System_Links.html)
 - [Druid](gen/Druid.html)
 - [Flink](gen/Flink.html)
@@ -51,6 +50,10 @@
 - [Honey Moon](gen/Honey_Moon.html)
 - [Honey Moon2](gen/Honey_Moon2.html)
 
+### Reactive
+- [AKKA](gen/AKKA.html)
+- [Reactive](gen/Reactive.html)
+
 ### Scala
 - [Access Private Method](gen/Access_Private_Method.html)
 - [Metascala](gen/Metascala.html)
@@ -65,10 +68,12 @@
 
 ### Spark
 - [Distributed Data Frame](gen/Distributed_Data_Frame.html)
+- [Hadoop Summit 2015](gen/Hadoop_Summit_2015.html)
 - [Hive on Spark](gen/Hive_on_Spark.html)
 - [KeystoneML](gen/KeystoneML.html)
 - [Spark1.4](gen/Spark1.4.html)
 - [Spark Job Server](gen/Spark_Job_Server.html)
+- [Spark Meetup Beijing 7](gen/Spark_Meetup_Beijing_7.html)
 - [Spark Profiling](gen/Spark_Profiling.html)
 - [Spark Summit 2015](gen/Spark_Summit_2015.html)
 - [Spark Summit China 2015](gen/Spark_Summit_China_2015.html)
