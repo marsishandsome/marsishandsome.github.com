@@ -71,6 +71,7 @@
 - [Hadoop Summit 2015](gen/Hadoop_Summit_2015.html)
 - [Hive on Spark](gen/Hive_on_Spark.html)
 - [KeystoneML](gen/KeystoneML.html)
+- [Petuum](gen/Petuum.html)
 - [Spark1.4](gen/Spark1.4.html)
 - [Spark Job Server](gen/Spark_Job_Server.html)
 - [Spark Meetup Beijing 7](gen/Spark_Meetup_Beijing_7.html)
