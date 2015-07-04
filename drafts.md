@@ -73,6 +73,7 @@
 - [KeystoneML](gen/KeystoneML.html)
 - [Petuum](gen/Petuum.html)
 - [Spark1.4](gen/Spark1.4.html)
+- [Spark A Li Cloud](gen/Spark_A_Li_Cloud.html)
 - [Spark Job Server](gen/Spark_Job_Server.html)
 - [Spark Meetup Beijing 7](gen/Spark_Meetup_Beijing_7.html)
 - [Spark Profiling](gen/Spark_Profiling.html)
@@ -87,6 +88,4 @@
 - [Zeppelin](gen/Zeppelin.html)
 
 ### Working
-- [Spark1.4](gen/Spark1.4.html)
-- [Spark A Li Cloud](gen/Spark_A_Li_Cloud.html)
 - [TO READ](gen/TO_READ.html)
