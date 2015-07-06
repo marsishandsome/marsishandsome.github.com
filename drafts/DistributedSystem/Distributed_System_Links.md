@@ -25,10 +25,12 @@ In theoretical computer science, the CAP theorem, also known as Brewer's theorem
 
 
 # Cluster Management
+- [Why the data center needs an operating system](http://radar.oreilly.com/2014/12/why-the-data-center-needs-an-operating-system.html)
 
 ### 对比
 - [mesos, omega, borg: a survey](http://www.umbrant.com/blog/2015/mesos_omega_borg_survey.html)
 - [Docker, Mesos, Marathon, and the End of Pets](http://blog.factual.com/docker-mesos-marathon-and-the-end-of-pets)
+- [全方位对比Mesos、Omega和Borg](http://www.infoq.com/cn/articles/comparison-of-mesos-omega-and-borg)
 
 ### mesos
 - [Mesos: A Platform for Fine-Grained Resource Sharing in the Data Center](https://www.cs.berkeley.edu/~alig/papers/mesos.pdf)
