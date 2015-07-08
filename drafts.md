@@ -14,11 +14,9 @@
 - [Useful Links](gen/Useful_Links.html)
 - [Useful Shell Commond](gen/Useful_Shell_Commond.html)
 
-### BigData100
-- [Big Data](gen/Big_Data.html)
-
 ### BigData100Paper
 - [Big Data](gen/Big_Data.html)
+- [Data Center as a Computer](gen/Data_Center_as_a_Computer.html)
 - [Lambda Architecture](gen/Lambda_Architecture.html)
 
 ### Book
