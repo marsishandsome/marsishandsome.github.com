@@ -14,8 +14,12 @@
 - [Useful Links](gen/Useful_Links.html)
 - [Useful Shell Commond](gen/Useful_Shell_Commond.html)
 
+### BigData100
+- [Big Data](gen/Big_Data.html)
+
 ### BigData100Paper
 - [Big Data](gen/Big_Data.html)
+- [Lambda Architecture](gen/Lambda_Architecture.html)
 
 ### Book
 - [API Design](gen/API_Design.html)
