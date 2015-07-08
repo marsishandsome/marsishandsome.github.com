@@ -51,18 +51,14 @@
 ### Paper
 - [Paper TO READ](gen/Paper_TO_READ.html)
 
-### Private
-- [Honey Moon](gen/Honey_Moon.html)
-- [Honey Moon2](gen/Honey_Moon2.html)
-
 ### Reactive
 - [AKKA](gen/AKKA.html)
+- [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
 - [Reactive](gen/Reactive.html)
 
 ### Scala
 - [Access Private Method](gen/Access_Private_Method.html)
 - [Metascala](gen/Metascala.html)
-- [Principles of Reactive Programming](gen/Principles_of_Reactive_Programming.html)
 - [Scala Days San Francisco 2015](gen/Scala_Days_San_Francisco_2015.html)
 - [Scala The Industrial Parts](gen/Scala_The_Industrial_Parts.html)
 
