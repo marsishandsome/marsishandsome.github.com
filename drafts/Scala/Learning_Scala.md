@@ -11,7 +11,7 @@
 
 ### Monads
 A monad M is a parametric type M[T] with two operations, flatMap and unit, that have to satisfy some laws.
-```
+```scala
 trait M[T] {
   def flatMap[U](f: T => M[U]): M[U]
 }
@@ -116,3 +116,5 @@ trait Iterator[T] {
   def next(): T
 }
 ```
+
+### Observable

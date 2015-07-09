@@ -44,11 +44,11 @@
 </table>
 <h3 id="monads">Monads</h3>
 <p>A monad M is a parametric type M[T] with two operations, flatMap and unit, that have to satisfy some laws.</p>
-<pre><code>trait M[T] {
-  def flatMap[U](f: T =&gt; M[U]): M[U]
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> M[T] {
+  <span class="kw">def</span> flatMap[U](f: T =&gt; M[U]): M[U]
 }
 
-def unit[T](x: T): M[T]</code></pre>
+<span class="kw">def</span> <span class="dt">unit</span>[T](x: T): M[T]</code></pre>
 <p>To qualify as a monad, a type has to satisfy three laws:</p>
 <p>Associativity</p>
 <pre><code>m flatMap f flatMap g == m flatMap (x =&gt; f(x) flatMap g)</code></pre>
@@ -125,6 +125,7 @@ trait Iterator[T] {
   def hasNext(): Boolean
   def next(): T
 }</code></pre>
+<h3 id="observable">Observable</h3>
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">
