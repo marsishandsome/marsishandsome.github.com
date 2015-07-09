@@ -55,79 +55,79 @@
 <span class="kw">def</span> <span class="dt">unit</span>[T](x: T): M[T]</code></pre>
 <p>To qualify as a monad, a type has to satisfy three laws:</p>
 <p>Associativity</p>
-<pre><code>m flatMap f flatMap g == m flatMap (x =&gt; f(x) flatMap g)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala">m flatMap f flatMap g == m <span class="fu">flatMap</span> (x =&gt; <span class="fu">f</span>(x) flatMap g)</code></pre>
 <p>Left unit</p>
-<pre><code>unit(x) flatMap f == f(x)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="dt">unit</span>(x) flatMap f == <span class="fu">f</span>(x)</code></pre>
 <p>Right unit</p>
-<pre><code>m flatMap unit == m</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala">m flatMap <span class="dt">unit</span> == m</code></pre>
 <h3 id="try">Try</h3>
-<pre><code>abstract class Try[+T] {
-  def flatMap[U](f: T =&gt; Try[U]): Try[U] = this match {
-    case Success(x) =&gt; try f(x) catch { case NonFatal(ex) =&gt; Failure(ex) }
-    case fail: Failure =&gt; fail
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Try[+T] {
+  <span class="kw">def</span> flatMap[U](f: T =&gt; Try[U]): Try[U] = <span class="kw">this</span> <span class="kw">match</span> {
+    <span class="kw">case</span> <span class="fu">Success</span>(x) =&gt; <span class="kw">try</span> <span class="fu">f</span>(x) <span class="kw">catch</span> { <span class="kw">case</span> <span class="fu">NonFatal</span>(ex) =&gt; <span class="fu">Failure</span>(ex) }
+    <span class="kw">case</span> fail: Failure =&gt; fail
   }
 
-  def map[U](f: T =&gt; U): Try[U] = this match {
-    case Success(x) =&gt; Try(f(x))
-    case fail: Failure =&gt; fail
+  <span class="kw">def</span> map[U](f: T =&gt; U): Try[U] = <span class="kw">this</span> <span class="kw">match</span> {
+    <span class="kw">case</span> <span class="fu">Success</span>(x) =&gt; <span class="fu">Try</span>(<span class="fu">f</span>(x))
+    <span class="kw">case</span> fail: Failure =&gt; fail
   }
 
-  def flatten[U &lt;: Try[T]]: Try[U]
-  def filter(p: T=&gt;Boolean): Try[T]
-  def recoverWith(f: PartialFunction[Throwable,Try[T]]): Try[T]
+  <span class="kw">def</span> flatten[U &lt;: Try[T]]: Try[U]
+  <span class="kw">def</span> <span class="fu">filter</span>(p: T=&gt;Boolean): Try[T]
+  <span class="kw">def</span> <span class="fu">recoverWith</span>(f: PartialFunction[Throwable,Try[T]]): Try[T]
 }
 
-case class Success[T](x: T) extends Try[T]
+<span class="kw">case</span> <span class="kw">class</span> Success[T](x: T) <span class="kw">extends</span> Try[T]
 
-case class Failure(ex: Exception) extends Try[Nothing]
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Failure</span>(ex: Exception) <span class="kw">extends</span> Try[Nothing]
 
-object Try {
-  def apply[T](expr: =&gt; T) {
-    try {
-      Success(expr)
-    } catch {
-      case NonFatal(ex) =&gt; Failure(ex)
+<span class="kw">object</span> Try {
+  <span class="kw">def</span> apply[T](expr: =&gt; T) {
+    <span class="kw">try</span> {
+      <span class="fu">Success</span>(expr)
+    } <span class="kw">catch</span> {
+      <span class="kw">case</span> <span class="fu">NonFatal</span>(ex) =&gt; <span class="fu">Failure</span>(ex)
     }
   }
 }</code></pre>
 <h3 id="future">Future</h3>
-<pre><code>tarit Awaitable[T] extends AnyRef {
-  abstract def ready(atMost: Duration): Unit
-  abstract def result(atMode: Duration): T
+<pre class="sourceCode scala"><code class="sourceCode scala">tarit Awaitable[T] <span class="kw">extends</span> AnyRef {
+  <span class="kw">abstract</span> <span class="kw">def</span> <span class="fu">ready</span>(atMost: Duration): Unit
+  <span class="kw">abstract</span> <span class="kw">def</span> <span class="fu">result</span>(atMode: Duration): T
 }
 
-trait Future[T] {
-  def onComplete(callback: Try[T] =&gt; Unit)(implicit executor: ExecutorContext): Unit
-  def filter(p: T =&gt; Boolean): Future[T]
-  def flatMap[U](f: T =&gt; Future[S]): Future[S]
-  def map[U](f: T =&gt; U): Future[U]
-  def recoverWith(f: PartialFunction[Throwable, Future[T]]): Future[T]
+<span class="kw">trait</span> Future[T] {
+  <span class="kw">def</span> <span class="fu">onComplete</span>(callback: Try[T] =&gt; Unit)(<span class="kw">implicit</span> executor: ExecutorContext): Unit
+  <span class="kw">def</span> <span class="fu">filter</span>(p: T =&gt; Boolean): Future[T]
+  <span class="kw">def</span> flatMap[U](f: T =&gt; Future[S]): Future[S]
+  <span class="kw">def</span> map[U](f: T =&gt; U): Future[U]
+  <span class="kw">def</span> <span class="fu">recoverWith</span>(f: PartialFunction[Throwable, Future[T]]): Future[T]
 }
 
-object Future {
-  def apply(body: =&gt; T)
-    (implicit executor: ExecutorContext): Future[T]
+<span class="kw">object</span> Future {
+  <span class="kw">def</span> <span class="fu">apply</span>(body: =&gt; T)
+    (<span class="kw">implicit</span> executor: ExecutorContext): Future[T]
 }</code></pre>
 <h3 id="promise">Promise</h3>
-<pre><code>trait Promise {
-  def future: Future[T]
-  def complete(result: Try[T]): Unit
-  def tryComplete(result: Try[T]): Boolean
-  def success(value: T): Unit = {
-    this.complete(Success(value))
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Promise {
+  <span class="kw">def</span> future: Future[T]
+  <span class="kw">def</span> <span class="fu">complete</span>(result: Try[T]): Unit
+  <span class="kw">def</span> <span class="fu">tryComplete</span>(result: Try[T]): Boolean
+  <span class="kw">def</span> <span class="fu">success</span>(value: T): Unit = {
+    <span class="kw">this</span>.<span class="fu">complete</span>(<span class="fu">Success</span>(value))
   }
-  def failure(t: Throwable): Unit = {
-    this.complete(Failure(t))
+  <span class="kw">def</span> <span class="fu">failure</span>(t: Throwable): Unit = {
+    <span class="kw">this</span>.<span class="fu">complete</span>(<span class="fu">Failure</span>(t))
   }
 }</code></pre>
 <h3 id="iterable">Iterable</h3>
-<pre><code>trait Iterable[T] {
-  def iterator: Iterator[T]
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Iterable[T] {
+  <span class="kw">def</span> iterator: Iterator[T]
 }
 
-trait Iterator[T] {
-  def hasNext(): Boolean
-  def next(): T
+<span class="kw">trait</span> Iterator[T] {
+  <span class="kw">def</span> <span class="fu">hasNext</span>(): Boolean
+  <span class="kw">def</span> <span class="fu">next</span>(): T
 }</code></pre>
 <h3 id="observable">Observable</h3>
 

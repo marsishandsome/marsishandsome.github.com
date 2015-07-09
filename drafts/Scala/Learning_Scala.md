@@ -22,22 +22,22 @@ def unit[T](x: T): M[T]
 To qualify as a monad, a type has to satisfy three laws:
 
 Associativity
-```
+```scala
 m flatMap f flatMap g == m flatMap (x => f(x) flatMap g)
 ```
 
 Left unit
-```
+```scala
 unit(x) flatMap f == f(x)
 ```
 
 Right unit
-```
+```scala
 m flatMap unit == m
 ```
 
 ### Try
-```
+```scala
 abstract class Try[+T] {
   def flatMap[U](f: T => Try[U]): Try[U] = this match {
     case Success(x) => try f(x) catch { case NonFatal(ex) => Failure(ex) }
@@ -70,7 +70,7 @@ object Try {
 ```
 
 ### Future
-```
+```scala
 tarit Awaitable[T] extends AnyRef {
   abstract def ready(atMost: Duration): Unit
   abstract def result(atMode: Duration): T
@@ -91,7 +91,7 @@ object Future {
 ```
 
 ### Promise
-```
+```scala
 trait Promise {
   def future: Future[T]
   def complete(result: Try[T]): Unit
@@ -106,7 +106,7 @@ trait Promise {
 ```
 
 ### Iterable
-```
+```scala
 trait Iterable[T] {
   def iterator: Iterator[T]
 }
