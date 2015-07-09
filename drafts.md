@@ -58,6 +58,7 @@
 
 ### Scala
 - [Access Private Method](gen/Access_Private_Method.html)
+- [Learning Scala](gen/Learning_Scala.html)
 - [Metascala](gen/Metascala.html)
 - [Scala Days San Francisco 2015](gen/Scala_Days_San_Francisco_2015.html)
 - [Scala The Industrial Parts](gen/Scala_The_Industrial_Parts.html)
