@@ -4,6 +4,10 @@
    <meta name="author" content="Mars Gu" />
    <!--link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link-->
    <link href="http://marsishandsome.github.io/template/github.css" rel="stylesheet"></link>
+   <script src="http://marsishandsome.github.io/libs/jquery/jquery-1.11.3.min.js"></script>
+   <link rel="stylesheet" href="http://marsishandsome.github.io/libs/highlight/styles/androidstudio.css">
+   <script src="http://marsishandsome.github.io/libs/highlight/highlight.pack.js"></script>
+
 </head>
 <body>
 <style>#forkongithub a{background:#81BEF7;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#EB6F6F;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:100px){#forkongithub{position:fixed;display:block;top:0;left:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;left:-60px;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-o-transform:rotate(-45deg);box-shadow:4px 4px 4px rgba(0,0,0,0.8);}}</style><span id="forkongithub"><a href="https://github.com/marsishandsome/marsishandsome.github.com">Fork me on GitHub</a></span>
@@ -47,6 +51,14 @@
 <h5 id="the-hidden-costs-of-microservices"><a href="http://www.stackbuilders.com/news/the-hidden-costs-of-microservices">THE HIDDEN COSTS OF MICROSERVICES</a></h5>
 <h5 id="microservices-at-netflix"><a href="http://www.slideshare.net/stonse/microservices-at-netflix">Microservices at Netflix</a></h5>
 <h5 id="a-microscope-on-microservices"><a href="http://techblog.netflix.com/2015/02/a-microscope-on-microservices.html">A Microscope on Microservices</a></h5>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('pre code').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">
