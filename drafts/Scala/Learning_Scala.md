@@ -2,6 +2,7 @@
 - [Effective Scala](http://twitter.github.io/effectivescala/index.html) -- Twitter
 - [Principles of Reactive Programming](https://class.coursera.org/reactive-002/auth) -- by Martin Odersky, Erik Meijer, Roland Kuhn
 - [RxScala Github](https://github.com/ReactiveX/RxScala)
+- [Scalable Component Abstractions](http://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf) -- Martin Odersky
 
 |              | One            | Many           |
 | :----------- | :------------- | :------------- |
