@@ -22,23 +22,23 @@
 <h1 id="java-serialization-problem">Java Serialization Problem</h1>
 <h3 id="-scala">问题： 序列化Scala函数的时候，为什么需要参数的类的定义？</h3>
 <p>今天在序列化一个Scala的函数的时候，碰到一个java序列化的问题，程序如下：</p>
-<pre><code>import java.io.{FileOutputStream, ObjectOutputStream}
-import org.apache.spark.rdd.RDD
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import</span> java.io.{FileOutputStream, ObjectOutputStream}
+<span class="kw">import</span> org.apache.spark.rdd.RDD
 
 object Test {
-  def main(args: Array[String]): Unit ={
-    val obj: RDD[Int] =&gt; Int = rdd =&gt; rdd.first()
-    val oout = new ObjectOutputStream(new FileOutputStream(&quot;/tmp/obj&quot;))
-    oout.writeObject(obj)
+  def <span class="fu">main</span>(args: Array[String]): Unit ={
+    val obj: RDD[Int] =&gt; Int = rdd =&gt; rdd.<span class="fu">first</span>()
+    val oout = <span class="kw">new</span> ObjectOutputStream(<span class="kw">new</span> FileOutputStream(<span class="st">&quot;/tmp/obj&quot;</span>))
+    oout.<span class="fu">writeObject</span>(obj)
   }
 }</code></pre>
 <p>Maven配置中，spark-core设为provided，因为在运行时上述程序是不需要加载RDD的类。</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
-    &lt;artifactId&gt;spark-core_2.10&lt;/artifactId&gt;
-    &lt;version&gt;${spark.version}&lt;/version&gt;
-    &lt;scope&gt;provided&lt;/scope&gt;
-&lt;/dependency&gt;</code></pre>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;dependency&gt;</span>
+    <span class="kw">&lt;groupId&gt;</span>org.apache.spark<span class="kw">&lt;/groupId&gt;</span>
+    <span class="kw">&lt;artifactId&gt;</span>spark-core_2.10<span class="kw">&lt;/artifactId&gt;</span>
+    <span class="kw">&lt;version&gt;</span>${spark.version}<span class="kw">&lt;/version&gt;</span>
+    <span class="kw">&lt;scope&gt;</span>provided<span class="kw">&lt;/scope&gt;</span>
+<span class="kw">&lt;/dependency&gt;</span></code></pre>
 <p>结果运行时出现了如下的错误：</p>
 <pre><code>Exception in thread &quot;main&quot; java.lang.NoClassDefFoundError: org/apache/spark/rdd/RDD
     at java.lang.Class.getDeclaredMethods0(Native Method)
@@ -71,87 +71,87 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.rdd.RDD
     ... 19 more</code></pre>
 <h3>分析</h3>
 <p>Scala的函数<code>val obj: RDD[Int] =&gt; Int = rdd =&gt; rdd.first()</code>会被翻译为Function类</p>
-<pre><code>val obj1 = new Function1[RDD[Int], Int]() {
-  override def apply(v1: RDD[Int]): Int = {
-    rdd.first()
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> obj1 = <span class="kw">new</span> Function1[RDD[Int], Int]() {
+  <span class="kw">override</span> <span class="kw">def</span> <span class="fu">apply</span>(v1: RDD[Int]): Int = {
+    rdd.<span class="fu">first</span>()
   }
 }</code></pre>
 <p>根据错误的stack信息，可以推测出Java在序列化Functoin1这个类的时候加载了RDD的类。原因如下：</p>
 <p>如果用户在类里面定义了writeObject方法，Java会优先选择这个方法来序列化该类。所以Java会首先通过反射的机制检查类中有没有writeObject方法</p>
-<pre><code>ObjectStreamClass.java
+<pre class="sourceCode java"><code class="sourceCode java">ObjectStreamClass.<span class="fu">java</span>
 
-getPrivateMethod(cl, &quot;writeObject&quot;,
-                  new Class&lt;?&gt;[] { ObjectOutputStream.class },
-                  Void.TYPE);</code></pre>
+<span class="fu">getPrivateMethod</span>(cl, <span class="st">&quot;writeObject&quot;</span>,
+                  <span class="kw">new</span> Class&lt;?&gt;[] { ObjectOutputStream.<span class="fu">class</span> },
+                  Void.<span class="fu">TYPE</span>);</code></pre>
 <p>在检查有没有writeObject方法的时候，调用了getDeclaredMethod获取所有的方法</p>
-<pre><code>private static Method getPrivateMethod(Class&lt;?&gt; cl, String name,
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">private</span> <span class="dt">static</span> Method <span class="fu">getPrivateMethod</span>(Class&lt;?&gt; cl, String name,
                                            Class&lt;?&gt;[] argTypes,
                                            Class&lt;?&gt; returnType)
     {
-        try {
-            Method meth = cl.getDeclaredMethod(name, argTypes);
-            meth.setAccessible(true);
-            int mods = meth.getModifiers();
-            return ((meth.getReturnType() == returnType) &amp;&amp;
-                    ((mods &amp; Modifier.STATIC) == 0) &amp;&amp;
-                    ((mods &amp; Modifier.PRIVATE) != 0)) ? meth : null;
-        } catch (NoSuchMethodException ex) {
-            return null;
+        <span class="kw">try</span> {
+            Method meth = cl.<span class="fu">getDeclaredMethod</span>(name, argTypes);
+            meth.<span class="fu">setAccessible</span>(<span class="kw">true</span>);
+            <span class="dt">int</span> mods = meth.<span class="fu">getModifiers</span>();
+            <span class="kw">return</span> ((meth.<span class="fu">getReturnType</span>() == returnType) &amp;&amp;
+                    ((mods &amp; Modifier.<span class="fu">STATIC</span>) == <span class="dv">0</span>) &amp;&amp;
+                    ((mods &amp; Modifier.<span class="fu">PRIVATE</span>) != <span class="dv">0</span>)) ? meth : <span class="kw">null</span>;
+        } <span class="kw">catch</span> (NoSuchMethodException ex) {
+            <span class="kw">return</span> <span class="kw">null</span>;
         }
     }</code></pre>
 <p>getDeclaredMethod中调用了privateGetDeclaredMethods</p>
-<pre><code>public Method getDeclaredMethod(String name, Class&lt;?&gt;... parameterTypes)
-        throws NoSuchMethodException, SecurityException {
-        // be very careful not to change the stack depth of this
-        // checkMemberAccess call for security reasons
-        // see java.lang.SecurityManager.checkMemberAccess
-        checkMemberAccess(Member.DECLARED, Reflection.getCallerClass(), true);
-        Method method = searchMethods(privateGetDeclaredMethods(false), name, parameterTypes);
-        if (method == null) {
-            throw new NoSuchMethodException(getName() + &quot;.&quot; + name + argumentTypesToString(parameterTypes));
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Method <span class="fu">getDeclaredMethod</span>(String name, Class&lt;?&gt;<span class="kw">... </span>parameterTypes)
+        <span class="kw">throws</span> NoSuchMethodException, SecurityException {
+        <span class="co">// be very careful not to change the stack depth of this</span>
+        <span class="co">// checkMemberAccess call for security reasons</span>
+        <span class="co">// see java.lang.SecurityManager.checkMemberAccess</span>
+        <span class="fu">checkMemberAccess</span>(Member.<span class="fu">DECLARED</span>, Reflection.<span class="fu">getCallerClass</span>(), <span class="kw">true</span>);
+        Method method = <span class="fu">searchMethods</span>(<span class="fu">privateGetDeclaredMethods</span>(<span class="kw">false</span>), name, parameterTypes);
+        <span class="kw">if</span> (method == <span class="kw">null</span>) {
+            <span class="kw">throw</span> <span class="kw">new</span> NoSuchMethodException(<span class="fu">getName</span>() + <span class="st">&quot;.&quot;</span> + name + <span class="fu">argumentTypesToString</span>(parameterTypes));
         }
-        return method;
+        <span class="kw">return</span> method;
     }</code></pre>
 <p>privateGetDeclaredMethods中调用了getDeclaredMethods0，该方法是一个native方法,getDeclaredMethods0会寻找所有方法中涉及到的类的定义，所以会出现RDD类找不到的错误。</p>
-<pre><code>private Method[] privateGetDeclaredMethods(boolean publicOnly) {
-       checkInitted();
-       Method[] res = null;
-       if (useCaches) {
-           clearCachesOnClassRedefinition();
-           if (publicOnly) {
-               if (declaredPublicMethods != null) {
-                   res = declaredPublicMethods.get();
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">private</span> Method[] <span class="fu">privateGetDeclaredMethods</span>(<span class="dt">boolean</span> publicOnly) {
+       <span class="fu">checkInitted</span>();
+       Method[] res = <span class="kw">null</span>;
+       <span class="kw">if</span> (useCaches) {
+           <span class="fu">clearCachesOnClassRedefinition</span>();
+           <span class="kw">if</span> (publicOnly) {
+               <span class="kw">if</span> (declaredPublicMethods != <span class="kw">null</span>) {
+                   res = declaredPublicMethods.<span class="fu">get</span>();
                }
-           } else {
-               if (declaredMethods != null) {
-                   res = declaredMethods.get();
+           } <span class="kw">else</span> {
+               <span class="kw">if</span> (declaredMethods != <span class="kw">null</span>) {
+                   res = declaredMethods.<span class="fu">get</span>();
                }
            }
-           if (res != null) return res;
+           <span class="kw">if</span> (res != <span class="kw">null</span>) <span class="kw">return</span> res;
        }
-       // No cached value available; request value from VM
-       res = Reflection.filterMethods(this, getDeclaredMethods0(publicOnly));
-       if (useCaches) {
-           if (publicOnly) {
-               declaredPublicMethods = new SoftReference&lt;&gt;(res);
-           } else {
-               declaredMethods = new SoftReference&lt;&gt;(res);
+       <span class="co">// No cached value available; request value from VM</span>
+       res = Reflection.<span class="fu">filterMethods</span>(<span class="kw">this</span>, <span class="fu">getDeclaredMethods0</span>(publicOnly));
+       <span class="kw">if</span> (useCaches) {
+           <span class="kw">if</span> (publicOnly) {
+               declaredPublicMethods = <span class="kw">new</span> SoftReference&lt;&gt;(res);
+           } <span class="kw">else</span> {
+               declaredMethods = <span class="kw">new</span> SoftReference&lt;&gt;(res);
            }
        }
-       return res;
+       <span class="kw">return</span> res;
    }</code></pre>
 <h3>解决</h3>
 <p>因为所有出现在Function1方法中的类型都需要存在在运行时环境中，所以我们可以定义一个Wrapper类来包装RDD。这样Java只会查找Wrapper类，而不需要RDD类。</p>
-<pre><code>import java.io.{FileOutputStream, ObjectOutputStream}
-import org.apache.spark.rdd.RDD
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> java.<span class="fu">io</span>.{FileOutputStream, ObjectOutputStream}
+<span class="kw">import</span> org.<span class="fu">apache</span>.<span class="fu">spark</span>.<span class="fu">rdd</span>.<span class="fu">RDD</span>
 
-class Wrapper[T](@transient val value: T)
+<span class="kw">class</span> Wrapper[T](@transient <span class="kw">val</span> value: T)
 
-object Test {
-  def main(args: Array[String]): Unit ={
-    val obj: Wrapper[RDD[Int]] =&gt; Int = rdd =&gt; rdd.value.first()
-    val oout = new ObjectOutputStream(new FileOutputStream(&quot;/tmp/obj&quot;))
-    oout.writeObject(obj)
+<span class="kw">object</span> Test {
+  <span class="kw">def</span> <span class="fu">main</span>(args: Array[String]): Unit ={
+    <span class="kw">val</span> obj: Wrapper[RDD[Int]] =&gt; Int = rdd =&gt; rdd.<span class="fu">value</span>.<span class="fu">first</span>()
+    <span class="kw">val</span> oout = <span class="kw">new</span> ObjectOutputStream(<span class="kw">new</span> FileOutputStream(<span class="st">&quot;/tmp/obj&quot;</span>))
+    oout.<span class="fu">writeObject</span>(obj)
   }
 }</code></pre>
 <h3>思考</h3>

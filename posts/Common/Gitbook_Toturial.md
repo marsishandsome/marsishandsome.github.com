@@ -13,7 +13,7 @@ GitBook是一款开源的电子书制作软件，基于Node.js，让你能够使
 [下载Node.js](http://nodejs.org/download/)
 
 ### 2. 安装Gitbook
-```
+```bash
 npm install gitbook -g
 ```
 
@@ -43,23 +43,23 @@ npm install gitbook -g
 
 ### 3. 导出
 1. site
-```
+```bash
 gitbook build ./repository -f site --output=./outputFolder
 ```
 2. page
-```
+```bash
 gitbook build ./repository -f page --output=./outputFolder
 ```
 3. json
-```
+```bash
 gitbook build ./repository -f json --output=./outputFolder
 ```
 4. ebook
-```
+```bash
 gitbook build ./repository -f ebook --output=./outputFolder
 ```
 5. pdf
-```
+```bash
 gitbook pdf ./repository -o file.pdf
 ```
 
@@ -67,4 +67,3 @@ gitbook pdf ./repository -o file.pdf
 1. [书籍制作工具GITBOOK的安装](http://blog.liyibo.org/books-installation-authoring-tool-gitbook/)
 2. [GitBook：使用Git+Markdown快速制作电子书](http://www.csdn.net/article/2014-04-09/2819217-gitbook-using-git-markdown-book)
 3. [使用 Gitbook 寫一本書](http://blog.caesarchi.com/2014/05/gitbook.html)
-

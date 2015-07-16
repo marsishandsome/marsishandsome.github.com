@@ -2,7 +2,7 @@
 
 ### 问题： 序列化Scala函数的时候，为什么需要参数的类的定义？
 今天在序列化一个Scala的函数的时候，碰到一个java序列化的问题，程序如下：
-```
+```java
 import java.io.{FileOutputStream, ObjectOutputStream}
 import org.apache.spark.rdd.RDD
 
@@ -16,7 +16,7 @@ object Test {
 ```
 
 Maven配置中，spark-core设为provided，因为在运行时上述程序是不需要加载RDD的类。
-```
+```xml
 <dependency>
     <groupId>org.apache.spark</groupId>
     <artifactId>spark-core_2.10</artifactId>
@@ -60,7 +60,7 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.rdd.RDD
 
 ### 分析
 Scala的函数```val obj: RDD[Int] => Int = rdd => rdd.first()```会被翻译为Function类
-```
+```scala
 val obj1 = new Function1[RDD[Int], Int]() {
   override def apply(v1: RDD[Int]): Int = {
     rdd.first()
@@ -71,7 +71,7 @@ val obj1 = new Function1[RDD[Int], Int]() {
 根据错误的stack信息，可以推测出Java在序列化Functoin1这个类的时候加载了RDD的类。原因如下：
 
 如果用户在类里面定义了writeObject方法，Java会优先选择这个方法来序列化该类。所以Java会首先通过反射的机制检查类中有没有writeObject方法
-```
+```java
 ObjectStreamClass.java
 
 getPrivateMethod(cl, "writeObject",
@@ -80,7 +80,7 @@ getPrivateMethod(cl, "writeObject",
 ```
 
 在检查有没有writeObject方法的时候，调用了getDeclaredMethod获取所有的方法
-```
+```java
 private static Method getPrivateMethod(Class<?> cl, String name,
                                            Class<?>[] argTypes,
                                            Class<?> returnType)
@@ -99,7 +99,7 @@ private static Method getPrivateMethod(Class<?> cl, String name,
 ```
 
 getDeclaredMethod中调用了privateGetDeclaredMethods
-```
+```java
 public Method getDeclaredMethod(String name, Class<?>... parameterTypes)
         throws NoSuchMethodException, SecurityException {
         // be very careful not to change the stack depth of this
@@ -115,7 +115,7 @@ public Method getDeclaredMethod(String name, Class<?>... parameterTypes)
 ```
 
 privateGetDeclaredMethods中调用了getDeclaredMethods0，该方法是一个native方法,getDeclaredMethods0会寻找所有方法中涉及到的类的定义，所以会出现RDD类找不到的错误。
-```
+```java
 private Method[] privateGetDeclaredMethods(boolean publicOnly) {
        checkInitted();
        Method[] res = null;
@@ -148,7 +148,7 @@ private Method[] privateGetDeclaredMethods(boolean publicOnly) {
 ### 解决
 因为所有出现在Function1方法中的类型都需要存在在运行时环境中，所以我们可以定义一个Wrapper类来包装RDD。这样Java只会查找Wrapper类，而不需要RDD类。
 
-```
+```scala
 import java.io.{FileOutputStream, ObjectOutputStream}
 import org.apache.spark.rdd.RDD
 
