@@ -11,6 +11,11 @@
 
 
 ### Monads
+- [monad wikipedia](https://en.wikipedia.org/wiki/Monad_%28functional_programming%29)
+- [functors,_applicatives,_and_monads_in_pictures](http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html)
+- [Monad in plain English?](http://stackoverflow.com/questions/2704652/monad-in-plain-english-for-the-oop-programmer-with-no-fp-background)
+- [What is a monad?](http://stackoverflow.com/questions/44965/what-is-a-monad)
+
 A monad M is a parametric type M[T] with two operations, flatMap and unit, that have to satisfy some laws.
 ```scala
 trait M[T] {

@@ -48,6 +48,12 @@
 </tbody>
 </table>
 <h3 id="monads">Monads</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Monad_%28functional_programming%29">monad wikipedia</a><br /></li>
+<li><a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html">functors,<em>applicatives,</em>and_monads_in_pictures</a><br /></li>
+<li><a href="http://stackoverflow.com/questions/2704652/monad-in-plain-english-for-the-oop-programmer-with-no-fp-background">Monad in plain English?</a><br /></li>
+<li><a href="http://stackoverflow.com/questions/44965/what-is-a-monad">What is a monad?</a></li>
+</ul>
 <p>A monad M is a parametric type M[T] with two operations, flatMap and unit, that have to satisfy some laws.</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> M[T] {
   <span class="kw">def</span> flatMap[U](f: T =&gt; M[U]): M[U]
