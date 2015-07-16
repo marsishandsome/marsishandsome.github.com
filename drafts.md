@@ -79,7 +79,6 @@
 - [Spark Job Server](gen/Spark_Job_Server.html)
 - [Spark Meetup Beijing 7](gen/Spark_Meetup_Beijing_7.html)
 - [Spark Profiling](gen/Spark_Profiling.html)
-- [Spark Summit 2015](gen/Spark_Summit_2015.html)
 - [Spark Summit China 2015](gen/Spark_Summit_China_2015.html)
 - [Spark Summit East 2015](gen/Spark_Summit_East_2015.html)
 
@@ -90,3 +89,4 @@
 - [Zeppelin](gen/Zeppelin.html)
 
 ### Working
+- [Spark Summit 2015](gen/Spark_Summit_2015.html)
