@@ -8,3 +8,18 @@
 - [Github Project](http://kayousterhout.github.io/trace-analysis/)
 - [Trace Analysis](https://github.com/kayousterhout/trace-analysis)
 - [SPARK-6418](https://issues.apache.org/jira/browse/SPARK-6418)
+
+
+### Cassandra and Spark: Optimizing for Data Locality
+
+
+### IndexedRDD: Efficient Fine-Grained Updates for RDDs
+
+
+### Integrating Spark and Solr
+
+
+### Spark on Mesos – A Deep Dive
+
+
+### Flyby: Improved Dense Matrix Multiplication
