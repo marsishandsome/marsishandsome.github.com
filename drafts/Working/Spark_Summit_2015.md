@@ -10,9 +10,6 @@
 - [SPARK-6418](https://issues.apache.org/jira/browse/SPARK-6418)
 
 
-### Cassandra and Spark: Optimizing for Data Locality
-
-
 ### IndexedRDD: Efficient Fine-Grained Updates for RDDs
 
 
