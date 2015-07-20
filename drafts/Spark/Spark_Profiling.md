@@ -50,6 +50,10 @@ CPU Profiling 的主要目的是统计函数的调用情况及执行时间，或
 
 # JVM Profiling工具
 [9 个帮助你进行Java性能调优的工具](http://www.open-open.com/news/view/1ec20f6)
+[推荐 7 个超棒的监控工具](http://www.codeceo.com/article/7-monitor-tools.html)
+
+### Plumbr
+- [官网](https://portal.plumbr.eu/#/)
 
 ### VisualVM
 - [官网](http://visualvm.java.net/)
