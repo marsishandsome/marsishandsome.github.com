@@ -40,6 +40,7 @@
 - [Twitter Heron](gen/Twitter_Heron.html)
 
 ### Java
+- [JVM Parameter](gen/JVM_Parameter.html)
 - [Java Links](gen/Java_Links.html)
 
 ### MachineLearning
