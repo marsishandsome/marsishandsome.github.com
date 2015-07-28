@@ -37,6 +37,7 @@ In theoretical computer science, the CAP theorem, also known as Brewer's theorem
 
 ### Omega
 - [Omega: flexible, scalable schedulers for large compute clusters](http://research.google.com/pubs/pub41684.html)
+- [论文](http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/41684.pdf)
 
 ### Borg
 - [Large-scale cluster management at Google with Borg](http://static.googleusercontent.com/media/research.google.com/en/us/pubs/archive/43438.pdf) -- 论文
