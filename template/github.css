@@ -50,7 +50,7 @@ h3 tt, h3 code {
   font-size: inherit; }
 
 h4 tt, h4 code {
-  font-size: inherit; }
+1  font-size: inherit; }
 
 h5 tt, h5 code {
   font-size: inherit; }
@@ -267,8 +267,9 @@ pre code {
   border-radius: 3px; }
 
 pre {
-  /*background-color: #f8f8f8;
-  border: 1px solid #cccccc;*/
+  //background-color: #f8f8f8;
+  border: 0px solid #cccccc;
+  padding: 0px;
   font-size: 13px;
   line-height: 19px;
   overflow: auto;
