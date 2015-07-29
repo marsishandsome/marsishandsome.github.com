@@ -10,7 +10,9 @@
 - [SPARK-6418](https://issues.apache.org/jira/browse/SPARK-6418)
 
 
-### IndexedRDD: Efficient Fine-Grained Updates for RDDs
+### IndexedRDD: Efficient Fine-Grained Updates for RDDs --Ankur Dave (UC Berkeley)
+- [slide](http://www.slideshare.net/SparkSummit/ankur-dave)
+- [video](https://www.youtube.com/watch?v=7NoFmrw1cV8&list=PL-x35fyliRwhP52fwDqULJLOnqnrN5nDs&index=5)
 
 
 ### Integrating Spark and Solr
