@@ -33,9 +33,9 @@
     </h1>
 <h1 id="future-and-promise">Future and Promise</h1>
 <h3 id="future-in-java">Future in Java</h3>
-<h5 id="future">Future</h5>
+<h5 id="java5-future">Java5: Future</h5>
 <ul>
-<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html">jdk1.5</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html">api</a></li>
 </ul>
 <pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> Future&lt;V&gt; {
   <span class="dt">boolean</span> <span class="fu">cancel</span>(<span class="dt">boolean</span> mayInterruptIfRunning);
@@ -43,7 +43,7 @@
   <span class="dt">boolean</span> <span class="fu">isDone</span>();
   V <span class="fu">get</span>() <span class="kw">throws</span> InterruptedException, ExecutionException;
 }</code></pre>
-<h5 id="listenablefuture">ListenableFuture</h5>
+<h5 id="guava-listenablefuture">Guava: ListenableFuture</h5>
 <ul>
 <li><a href="https://code.google.com/p/guava-libraries/wiki/ListenableFutureExplained">guava</a><br /></li>
 <li><a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/util/concurrent/ListenableFuture.html">api</a></li>
@@ -65,7 +65,7 @@ Class Futures {
                    Function&lt;? <span class="kw">super</span> I,? <span class="kw">extends</span> O&gt; function);
   ...
 }</code></pre>
-<h5 id="completablefuture">CompletableFuture</h5>
+<h5 id="java8-completablefuture">Java8: CompletableFuture</h5>
 <ul>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">jdk1.8</a></li>
 </ul>
@@ -83,6 +83,9 @@ Class Futures {
   ...
 }</code></pre>
 <h3 id="future-in-scala">Future In Scala</h3>
+<ul>
+<li><a href="http://docs.scala-lang.org/overviews/core/futures.html">Futures and Promises</a></li>
+</ul>
 <pre class="sourceCode scala"><code class="sourceCode scala">tarit Awaitable[T] <span class="kw">extends</span> AnyRef {
   <span class="kw">abstract</span> <span class="kw">def</span> <span class="fu">ready</span>(atMost: Duration): Unit
   <span class="kw">abstract</span> <span class="kw">def</span> <span class="fu">result</span>(atMode: Duration): T
@@ -111,7 +114,10 @@ Class Futures {
   }
 }</code></pre>
 <h3 id="future-in-c11">Future In C++11</h3>
-<p>TODO</p>
+<ul>
+<li><a href="http://en.cppreference.com/w/cpp/thread/future">future api</a><br /></li>
+<li><a href="http://en.cppreference.com/w/cpp/thread/promise">promise api</a></li>
+</ul>
 <h3 id="references">References</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Futures_and_promises">Wikipedia</a><br /></li>

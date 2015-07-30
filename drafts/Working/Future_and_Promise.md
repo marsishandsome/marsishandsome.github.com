@@ -2,8 +2,8 @@
 
 ### Future in Java
 
-##### Future
-- [jdk1.5](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html)
+##### Java5: Future
+- [api](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html)
 
 ```java
 interface Future<V> {
@@ -14,7 +14,7 @@ interface Future<V> {
 }
 ```
 
-##### ListenableFuture
+##### Guava: ListenableFuture
 - [guava](https://code.google.com/p/guava-libraries/wiki/ListenableFutureExplained)
 - [api](http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/util/concurrent/ListenableFuture.html)
 
@@ -38,7 +38,7 @@ Class Futures {
 }
 ```
 
-##### CompletableFuture
+##### Java8: CompletableFuture
 - [jdk1.8](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html)
 
 ```java
@@ -58,6 +58,8 @@ Class CompletableFuture<T> {
 ```
 
 ### Future In Scala
+- [Futures and Promises](http://docs.scala-lang.org/overviews/core/futures.html)
+
 ```scala
 tarit Awaitable[T] extends AnyRef {
   abstract def ready(atMost: Duration): Unit
@@ -92,7 +94,8 @@ trait Promise {
 ```
 
 ### Future In C++11
-TODO
+- [future api](http://en.cppreference.com/w/cpp/thread/future)
+- [promise api](http://en.cppreference.com/w/cpp/thread/promise)
 
 ### References
 - [Wikipedia](https://en.wikipedia.org/wiki/Futures_and_promises)
