@@ -3,6 +3,7 @@
 - 关注分布式计算，机器学习
 
 ### Common
+- [Git Usage](gen/Git_Usage.html)
 - [Gitbook Toturial](gen/Gitbook_Toturial.html)
 - [Quotes](gen/Quotes.html)
 

@@ -32,6 +32,11 @@
       </a>
     </h1>
 <h1 id="git">Git的使用</h1>
+<h3 id="rewrite-history">Rewrite History</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> filter-branch --tree-filter <span class="kw">`rm</span> -rf path/to/folder<span class="kw">`</span>
+<span class="kw">git</span> push origin --force</code></pre>
+<p><a href="http://git-scm.com/docs/git-filter-branch">document</a></p>
+<h3 id="reference">Reference</h3>
 <ul>
 <li><a href="http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/index.html">Git Magic</a> - Git简要教程<br /></li>
 <li><a href="https://codewords.recurse.com/issues/two/git-from-the-inside-out">Git from the inside out</a><br /></li>
@@ -40,22 +45,8 @@
 <li><a href="https://help.github.com/articles/caching-your-github-password-in-git/">Caching your GitHub password in Git</a><br /></li>
 <li><a href="http://pre-commit.com/">Pre Commit</a> -- Managing and maintaining multi-language pre-commit hooks<br /></li>
 <li><a href="https://github.com/blog/2019-how-to-undo-almost-anything-with-git">How to undo (almost) anything with Git</a><br /></li>
-<li><a href="https://github.com/xirong/my-git/blob/master/git-workflow-tutorial.md">Git Workflow Toturial</a></li>
-</ul>
-<h1 id="github">Github的使用</h1>
-<ul>
+<li><a href="https://github.com/xirong/my-git/blob/master/git-workflow-tutorial.md">Git Workflow Toturial</a><br /></li>
 <li><a href="http://blog.ploeh.dk/2015/01/15/10-tips-for-better-pull-requests/">10 tips for better Pull Requests</a> - by Mark Seemann</li>
-</ul>
-<h1 id="git">Git基础命令</h1>
-<ul>
-<li>git init<br /></li>
-<li>git add<br /></li>
-<li>git commit -m &quot;comments&quot;<br /></li>
-<li>git branch newBranchName<br /></li>
-<li>git checkout branchName<br /></li>
-<li>git merge branchName<br /></li>
-<li>git remove file/folder<br /></li>
-<li>git remote add name repository</li>
 </ul>
 
 

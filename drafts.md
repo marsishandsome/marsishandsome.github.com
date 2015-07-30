@@ -3,7 +3,6 @@
 - 关注分布式计算，机器学习
 
 ### Basic
-- [Git Usage](gen/Git_Usage.html)
 - [How Wanqu Works](gen/How_Wanqu_Works.html)
 - [Markdown](gen/Markdown.html)
 - [Microservices](gen/Microservices.html)
