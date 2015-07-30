@@ -32,12 +32,97 @@
       </a>
     </h1>
 <h1 id="future-and-promise">Future and Promise</h1>
-<ol>
-<li><p>Review and Survey<br /><a href="https://en.wikipedia.org/wiki/Futures_and_promises">https://en.wikipedia.org/wiki/Futures_and_promises</a></p></li>
-<li><p>Guava为什么要增强JDK 7的Future<br /><a href="http://www.wuzesheng.com/?p=2485">http://www.wuzesheng.com/?p=2485</a></p></li>
-<li><p>Twitter公司的Future<br /><a href="http://twitter.github.io/finagle/guide/Futures.html">http://twitter.github.io/finagle/guide/Futures.html</a><br /><a href="https://twitter.github.io/scala_school/finagle.html（中文版：https://code.csdn.net/DOC_Scala/scala_class_twitter/file/Anintroduction-to-Finagle.md）">https://twitter.github.io/scala_school/finagle.html（中文版：https://code.csdn.net/DOC_Scala/scala_class_twitter/file/Anintroduction-to-Finagle.md）</a></p></li>
-<li><p>JDK 8的Future又有什么变更<br /><a href="http://www.tuicool.com/articles/ABVV3q">http://www.tuicool.com/articles/ABVV3q</a><br /><a href="http://www.xker.com/page/e2015/06/198145.html">http://www.xker.com/page/e2015/06/198145.html</a></p></li>
-</ol>
+<h3 id="future-in-java">Future in Java</h3>
+<h5 id="future">Future</h5>
+<ul>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html">jdk1.5</a></li>
+</ul>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> Future&lt;V&gt; {
+  <span class="dt">boolean</span> <span class="fu">cancel</span>(<span class="dt">boolean</span> mayInterruptIfRunning);
+  <span class="dt">boolean</span> <span class="fu">isCancelled</span>();
+  <span class="dt">boolean</span> <span class="fu">isDone</span>();
+  V <span class="fu">get</span>() <span class="kw">throws</span> InterruptedException, ExecutionException;
+}</code></pre>
+<h5 id="listenablefuture">ListenableFuture</h5>
+<ul>
+<li><a href="https://code.google.com/p/guava-libraries/wiki/ListenableFutureExplained">guava</a><br /></li>
+<li><a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/util/concurrent/ListenableFuture.html">api</a></li>
+</ul>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> SettableFuture&lt;V&gt; {
+  <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">set</span>(<span class="fu">@Nullable</span> V value);
+  <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">setException</span>(Throwable throwable)
+}
+
+<span class="kw">interface</span> ListenableFuture&lt;V&gt; <span class="kw">extends</span> SettableFuture&lt;V&gt; {
+  <span class="dt">void</span> <span class="fu">addListener</span>(Runnable listener, Executor executor);
+}
+
+Class Futures {
+  <span class="kw">public</span> <span class="dt">static</span> &lt;V&gt; <span class="dt">void</span> <span class="fu">addCallback</span>(ListenableFuture&lt;V&gt; future,
+                   FutureCallback&lt;? <span class="kw">super</span> V&gt; callback);
+
+  <span class="kw">public</span> <span class="dt">static</span> &lt;I,O&gt; ListenableFuture&lt;O&gt; <span class="fu">transform</span>(ListenableFuture&lt;I&gt; input,
+                   Function&lt;? <span class="kw">super</span> I,? <span class="kw">extends</span> O&gt; function);
+  ...
+}</code></pre>
+<h5 id="completablefuture">CompletableFuture</h5>
+<ul>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">jdk1.8</a></li>
+</ul>
+<pre class="sourceCode java"><code class="sourceCode java">Class CompletableFuture&lt;T&gt; {
+  <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">complete</span>(T value);
+
+  <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">completeExceptionally</span>(Throwable ex)
+
+  <span class="kw">public</span> &lt;U&gt; CompletableFuture&lt;U&gt; <span class="fu">thenApply</span>(Function&lt;? <span class="kw">super</span> T,? <span class="kw">extends</span> U&gt; fn);
+
+  <span class="kw">public</span> &lt;U,V&gt; CompletableFuture&lt;V&gt; <span class="fu">thenCombine</span>(CompletionStage&lt;? <span class="kw">extends</span> U&gt; other,
+                                BiFunction&lt;? <span class="kw">super</span> T,? <span class="kw">super</span> U,? <span class="kw">extends</span> V&gt; fn)
+
+  <span class="kw">public</span> CompletableFuture&lt;T&gt; <span class="fu">exceptionally</span>(Function&lt;Throwable,? <span class="kw">extends</span> T&gt; fn)
+  ...
+}</code></pre>
+<h3 id="future-in-scala">Future In Scala</h3>
+<pre class="sourceCode scala"><code class="sourceCode scala">tarit Awaitable[T] <span class="kw">extends</span> AnyRef {
+  <span class="kw">abstract</span> <span class="kw">def</span> <span class="fu">ready</span>(atMost: Duration): Unit
+  <span class="kw">abstract</span> <span class="kw">def</span> <span class="fu">result</span>(atMode: Duration): T
+}
+
+<span class="kw">trait</span> Future[T] {
+  <span class="kw">def</span> <span class="fu">onComplete</span>(callback: Try[T] =&gt; Unit)(<span class="kw">implicit</span> executor: ExecutorContext): Unit
+  <span class="kw">def</span> <span class="fu">filter</span>(p: T =&gt; Boolean): Future[T]
+  <span class="kw">def</span> flatMap[U](f: T =&gt; Future[S]): Future[S]
+  <span class="kw">def</span> map[U](f: T =&gt; U): Future[U]
+  <span class="kw">def</span> <span class="fu">recoverWith</span>(f: PartialFunction[Throwable, Future[T]]): Future[T]
+}
+
+<span class="kw">object</span> Future {
+  <span class="kw">def</span> <span class="fu">apply</span>(body: =&gt; T) (<span class="kw">implicit</span> executor: ExecutorContext): Future[T]
+}</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Promise {
+  <span class="kw">def</span> future: Future[T]
+  <span class="kw">def</span> <span class="fu">complete</span>(result: Try[T]): Unit
+  <span class="kw">def</span> <span class="fu">tryComplete</span>(result: Try[T]): Boolean
+  <span class="kw">def</span> <span class="fu">success</span>(value: T): Unit = {
+    <span class="kw">this</span>.<span class="fu">complete</span>(<span class="fu">Success</span>(value))
+  }
+  <span class="kw">def</span> <span class="fu">failure</span>(t: Throwable): Unit = {
+    <span class="kw">this</span>.<span class="fu">complete</span>(<span class="fu">Failure</span>(t))
+  }
+}</code></pre>
+<h3 id="future-in-c11">Future In C++11</h3>
+<p>TODO</p>
+<h3 id="references">References</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Futures_and_promises">Wikipedia</a><br /></li>
+<li><a href="http://www.wuzesheng.com/?p=2485">深入浅出Future Pattern</a><br /></li>
+<li><a href="http://www.tuicool.com/articles/ABVV3q">Java8 中的纯异步编程</a><br /></li>
+<li><a href="http://www.xker.com/page/e2015/06/198145.html">Java中使用CompletableFuture处理异步超时</a><br /></li>
+<li><a href="http://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf">Scalable Component Abstractions</a> -- Martin Odersky<br /></li>
+<li><a href="https://github.com/ReactiveX/RxScala">RxScala Github</a><br /></li>
+<li><a href="http://twitter.github.io/finagle/guide/Futures.html">Twitter: Concurrent Programming with Futures</a><br /></li>
+<li><a href="http://twitter.github.io/effectivescala/index.html">Twitter: Effective Scala</a></li>
+</ul>
 
 
   </div>
