@@ -1,5 +1,5 @@
 # How to use
-1. 'update': fetch from github and rebase
+1. `update`: fetch from github and rebase
 2. `push`: compile all Markdown to HTML and push to github
 3. `pall`:  compile all Markdown to HTML
 4. `pmd posts/some_post.md > gen/some_post.html`: compile a Markdown file to HTML
