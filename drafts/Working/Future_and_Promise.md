@@ -1,10 +1,14 @@
 #Future and Promise
 
 ### Future in Java
+Future最早出现在Java5中，这个Future功能非常简单，只能通过轮询的方式进行查询；
+Google Guava中实现了ListenableFuture，提供addListener和addCallback的方式进行回调；
+Java8中实现了CompletableFuture，提供了比较完整的Future支持。
 
 ##### Java5: Future
 - [api](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html)
 
+Java5中的Future只提供了主动查询的接口，功能非常弱。
 ```java
 interface Future<V> {
   boolean cancel(boolean mayInterruptIfRunning);
@@ -18,17 +22,20 @@ interface Future<V> {
 - [guava](https://code.google.com/p/guava-libraries/wiki/ListenableFutureExplained)
 - [api](http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/util/concurrent/ListenableFuture.html)
 
-```java
-class SettableFuture<V> {
-  public boolean set(@Nullable V value);
-  public boolean setException(Throwable throwable)
-}
+Guava的ListenableFuture继承自Future，可以通过addListener函数添加Listener。
 
-interface ListenableFuture<V> extends SettableFuture<V> {
+```java
+interface ListenableFuture<V> extends Future<V> {
   void addListener(Runnable listener, Executor executor);
 }
+```
 
-Class Futures {
+Guava还提供了一些Future的Util函数:
+- addCallback: 可以在ListenerFuture上添加Callback
+- transform:   可以把一个ListenerFuture通过一个Function变成另外一个ListenerFuture
+
+```java
+class Futures {
   public static <V> void addCallback(ListenableFuture<V> future,
                    FutureCallback<? super V> callback);
 
@@ -38,11 +45,30 @@ Class Futures {
 }
 ```
 
+Promise在Guava中对应于SettableFuture，可以通过set和setException函数设置Future的值
+
+```java
+class SettableFuture<V> implements ListenableFuture<V> {
+  public boolean set(@Nullable V value);
+  public boolean setException(Throwable throwable)
+}
+```
+
+
 ##### Java8: CompletableFuture
 - [jdk1.8](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html)
 
+Java8中新增了CompletableFuture，是Future和Promise的结合：
+- 生产者可以通过complete和completeExceptionally函数设置Future的值
+- 消费者可以通过addListener函数添加Listener
+
+CompletableFuture还提供一些方便使用的函数：
+- thenApply:     当Future执行完成后，调用后续的Future
+- thenCombine:   合并两个Future
+- exceptionally: 当Future的执行抛出异常时，调用函数fn
+
 ```java
-Class CompletableFuture<T> {
+class CompletableFuture<T> {
   public boolean complete(T value);
 
   public boolean completeExceptionally(Throwable ex)
@@ -58,44 +84,67 @@ Class CompletableFuture<T> {
 ```
 
 ### Future In Scala
+- [future api](http://www.scala-lang.org/api/current/#scala.concurrent.Future)
+- [promise api](http://www.scala-lang.org/api/current/#scala.concurrent.Promise)
 - [Futures and Promises](http://docs.scala-lang.org/overviews/core/futures.html)
 
-```scala
-tarit Awaitable[T] extends AnyRef {
-  abstract def ready(atMost: Duration): Unit
-  abstract def result(atMode: Duration): T
-}
+Scala中的Future和Promise是分开实现，提供的接口非常丰富。
 
+```scala
 trait Future[T] {
+  //轮询接口
+  def isCompleted: Boolean
+
+  //回调函数接口
   def onComplete(callback: Try[T] => Unit)(implicit executor: ExecutorContext): Unit
+  def onSuccess[U](pf: PartialFunction[T, U])(implicit executor: ExecutionContext): Unit
+  def onFailure[U](pf: PartialFunction[Throwable, U])(implicit executor: ExecutionContext): Unit
+
+  //andThen接口
+  def andThen[U](pf: PartialFunction[Try[T], U])(implicit executor: ExecutionContext): Future[T]
+
+  //transform接口
   def filter(p: T => Boolean): Future[T]
   def flatMap[U](f: T => Future[S]): Future[S]
   def map[U](f: T => U): Future[U]
-  def recoverWith(f: PartialFunction[Throwable, Future[T]]): Future[T]
-}
 
-object Future {
-  def apply(body: => T) (implicit executor: ExecutorContext): Future[T]
+  //错误处理接口
+  def recoverWith(f: PartialFunction[Throwable, Future[T]]): Future[T]
 }
 ```
 
 ```scala
 trait Promise {
   def future: Future[T]
+
   def complete(result: Try[T]): Unit
   def tryComplete(result: Try[T]): Boolean
-  def success(value: T): Unit = {
-    this.complete(Success(value))
-  }
-  def failure(t: Throwable): Unit = {
-    this.complete(Failure(t))
-  }
+  def success(value: T): Unit
+  def failure(t: Throwable): Unit
 }
 ```
 
 ### Future In C++11
 - [future api](http://en.cppreference.com/w/cpp/thread/future)
 - [promise api](http://en.cppreference.com/w/cpp/thread/promise)
+
+```c++
+template<class T> class future {
+  T get();
+  bool valid() const;
+  void wait() const;
+  ...
+}
+```
+
+```c++
+template< class R > class promise {
+  std::future<T> get_future();
+  void set_value( const R& value );
+  void set_exception( std::exception_ptr p );
+  ...
+}
+```
 
 ### References
 - [Wikipedia](https://en.wikipedia.org/wiki/Futures_and_promises)

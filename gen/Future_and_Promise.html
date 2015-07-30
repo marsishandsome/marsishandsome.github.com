@@ -33,10 +33,12 @@
     </h1>
 <h1 id="future-and-promise">Future and Promise</h1>
 <h3 id="future-in-java">Future in Java</h3>
+<p>Future最早出现在Java5中，这个Future功能非常简单，只能通过轮询的方式进行查询；<br />Google Guava中实现了ListenableFuture，提供addListener和addCallback的方式进行回调；<br />Java8中实现了CompletableFuture，提供了比较完整的Future支持。</p>
 <h5 id="java5-future">Java5: Future</h5>
 <ul>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html">api</a></li>
 </ul>
+<p>Java5中的Future只提供了主动查询的接口，功能非常弱。</p>
 <pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> Future&lt;V&gt; {
   <span class="dt">boolean</span> <span class="fu">cancel</span>(<span class="dt">boolean</span> mayInterruptIfRunning);
   <span class="dt">boolean</span> <span class="fu">isCancelled</span>();
@@ -48,16 +50,16 @@
 <li><a href="https://code.google.com/p/guava-libraries/wiki/ListenableFutureExplained">guava</a><br /></li>
 <li><a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/util/concurrent/ListenableFuture.html">api</a></li>
 </ul>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> SettableFuture&lt;V&gt; {
-  <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">set</span>(<span class="fu">@Nullable</span> V value);
-  <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">setException</span>(Throwable throwable)
-}
-
-<span class="kw">interface</span> ListenableFuture&lt;V&gt; <span class="kw">extends</span> SettableFuture&lt;V&gt; {
+<p>Guava的ListenableFuture继承自Future，可以通过addListener函数添加Listener。</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> ListenableFuture&lt;V&gt; <span class="kw">extends</span> Future&lt;V&gt; {
   <span class="dt">void</span> <span class="fu">addListener</span>(Runnable listener, Executor executor);
-}
-
-Class Futures {
+}</code></pre>
+<p>Guava还提供了一些Future的Util函数:</p>
+<ul>
+<li>addCallback: 可以在ListenerFuture上添加Callback<br /></li>
+<li>transform: 可以把一个ListenerFuture通过一个Function变成另外一个ListenerFuture</li>
+</ul>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> Futures {
   <span class="kw">public</span> <span class="dt">static</span> &lt;V&gt; <span class="dt">void</span> <span class="fu">addCallback</span>(ListenableFuture&lt;V&gt; future,
                    FutureCallback&lt;? <span class="kw">super</span> V&gt; callback);
 
@@ -65,11 +67,27 @@ Class Futures {
                    Function&lt;? <span class="kw">super</span> I,? <span class="kw">extends</span> O&gt; function);
   ...
 }</code></pre>
+<p>Promise在Guava中对应于SettableFuture，可以通过set和setException函数设置Future的值</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> SettableFuture&lt;V&gt; <span class="kw">implements</span> ListenableFuture&lt;V&gt; {
+  <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">set</span>(<span class="fu">@Nullable</span> V value);
+  <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">setException</span>(Throwable throwable)
+}</code></pre>
 <h5 id="java8-completablefuture">Java8: CompletableFuture</h5>
 <ul>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">jdk1.8</a></li>
 </ul>
-<pre class="sourceCode java"><code class="sourceCode java">Class CompletableFuture&lt;T&gt; {
+<p>Java8中新增了CompletableFuture，是Future和Promise的结合：</p>
+<ul>
+<li>生产者可以通过complete和completeExceptionally函数设置Future的值<br /></li>
+<li>消费者可以通过addListener函数添加Listener</li>
+</ul>
+<p>CompletableFuture还提供一些方便使用的函数：</p>
+<ul>
+<li>thenApply: 当Future执行完成后，调用后续的Future<br /></li>
+<li>thenCombine: 合并两个Future<br /></li>
+<li>exceptionally: 当Future的执行抛出异常时，调用函数fn</li>
+</ul>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> CompletableFuture&lt;T&gt; {
   <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">complete</span>(T value);
 
   <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">completeExceptionally</span>(Throwable ex)
@@ -84,40 +102,46 @@ Class Futures {
 }</code></pre>
 <h3 id="future-in-scala">Future In Scala</h3>
 <ul>
+<li><a href="http://www.scala-lang.org/api/current/#scala.concurrent.Future">future api</a><br /></li>
+<li><a href="http://www.scala-lang.org/api/current/#scala.concurrent.Promise">promise api</a><br /></li>
 <li><a href="http://docs.scala-lang.org/overviews/core/futures.html">Futures and Promises</a></li>
 </ul>
-<pre class="sourceCode scala"><code class="sourceCode scala">tarit Awaitable[T] <span class="kw">extends</span> AnyRef {
-  <span class="kw">abstract</span> <span class="kw">def</span> <span class="fu">ready</span>(atMost: Duration): Unit
-  <span class="kw">abstract</span> <span class="kw">def</span> <span class="fu">result</span>(atMode: Duration): T
-}
+<p>Scala中的Future和Promise是分开实现，提供的接口非常丰富。</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Future[T] {
+  <span class="co">//轮询接口</span>
+  <span class="kw">def</span> isCompleted: Boolean
 
-<span class="kw">trait</span> Future[T] {
+  <span class="co">//回调函数接口</span>
   <span class="kw">def</span> <span class="fu">onComplete</span>(callback: Try[T] =&gt; Unit)(<span class="kw">implicit</span> executor: ExecutorContext): Unit
+  <span class="kw">def</span> onSuccess[U](pf: PartialFunction[T, U])(<span class="kw">implicit</span> executor: ExecutionContext): Unit
+  <span class="kw">def</span> onFailure[U](pf: PartialFunction[Throwable, U])(<span class="kw">implicit</span> executor: ExecutionContext): Unit
+
+  <span class="co">//andThen接口</span>
+  <span class="kw">def</span> andThen[U](pf: PartialFunction[Try[T], U])(<span class="kw">implicit</span> executor: ExecutionContext): Future[T]
+
+  <span class="co">//transform接口</span>
   <span class="kw">def</span> <span class="fu">filter</span>(p: T =&gt; Boolean): Future[T]
   <span class="kw">def</span> flatMap[U](f: T =&gt; Future[S]): Future[S]
   <span class="kw">def</span> map[U](f: T =&gt; U): Future[U]
-  <span class="kw">def</span> <span class="fu">recoverWith</span>(f: PartialFunction[Throwable, Future[T]]): Future[T]
-}
 
-<span class="kw">object</span> Future {
-  <span class="kw">def</span> <span class="fu">apply</span>(body: =&gt; T) (<span class="kw">implicit</span> executor: ExecutorContext): Future[T]
+  <span class="co">//错误处理接口</span>
+  <span class="kw">def</span> <span class="fu">recoverWith</span>(f: PartialFunction[Throwable, Future[T]]): Future[T]
 }</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Promise {
   <span class="kw">def</span> future: Future[T]
+
   <span class="kw">def</span> <span class="fu">complete</span>(result: Try[T]): Unit
   <span class="kw">def</span> <span class="fu">tryComplete</span>(result: Try[T]): Boolean
-  <span class="kw">def</span> <span class="fu">success</span>(value: T): Unit = {
-    <span class="kw">this</span>.<span class="fu">complete</span>(<span class="fu">Success</span>(value))
-  }
-  <span class="kw">def</span> <span class="fu">failure</span>(t: Throwable): Unit = {
-    <span class="kw">this</span>.<span class="fu">complete</span>(<span class="fu">Failure</span>(t))
-  }
+  <span class="kw">def</span> <span class="fu">success</span>(value: T): Unit
+  <span class="kw">def</span> <span class="fu">failure</span>(t: Throwable): Unit
 }</code></pre>
 <h3 id="future-in-c11">Future In C++11</h3>
 <ul>
 <li><a href="http://en.cppreference.com/w/cpp/thread/future">future api</a><br /></li>
 <li><a href="http://en.cppreference.com/w/cpp/thread/promise">promise api</a></li>
 </ul>
+<p><code>c++ template&lt;class T&gt; class future {   T get();   bool valid() const;   void wait() const;   ... }</code></p>
+<p><code>c++ template&lt; class R &gt; class promise {   std::future&lt;T&gt; get_future();   void set_value( const R&amp; value );   void set_exception( std::exception_ptr p );   ... }</code></p>
 <h3 id="references">References</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Futures_and_promises">Wikipedia</a><br /></li>
