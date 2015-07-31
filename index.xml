@@ -6,16 +6,9 @@
   
 
       <item>
-        <title>Java Serialization Problem</title>
-        <link>http://marsishandsome.github.io/gen/Java_Serialization_Problem.html</link>
-        <description>Java Serialization Problem</description>
-      </item>
-      
-
-      <item>
-        <title>Future and Promise</title>
-        <link>http://marsishandsome.github.io/gen/Future_and_Promise.html</link>
-        <description>Future and Promise</description>
+        <title>Java序列化问题</title>
+        <link>http://marsishandsome.github.io/gen/Java序列化问题.html</link>
+        <description>Java序列化问题</description>
       </item>
       
 
@@ -27,16 +20,23 @@
       
 
       <item>
-        <title>Spark R Architecture</title>
-        <link>http://marsishandsome.github.io/gen/Spark_R_Architecture.html</link>
-        <description>Spark R Architecture</description>
+        <title>解读Future和Promise</title>
+        <link>http://marsishandsome.github.io/gen/解读Future和Promise.html</link>
+        <description>解读Future和Promise</description>
       </item>
       
 
       <item>
-        <title>Spark on Yarn Code Analysis</title>
-        <link>http://marsishandsome.github.io/gen/Spark_on_Yarn_Code_Analysis.html</link>
-        <description>Spark on Yarn Code Analysis</description>
+        <title>Spark R架构分析</title>
+        <link>http://marsishandsome.github.io/gen/Spark_R架构分析.html</link>
+        <description>Spark R架构分析</description>
+      </item>
+      
+
+      <item>
+        <title>Spark on Yarn源码分析</title>
+        <link>http://marsishandsome.github.io/gen/Spark_on_Yarn源码分析.html</link>
+        <description>Spark on Yarn源码分析</description>
       </item>
       
 
@@ -48,23 +48,23 @@
       
 
       <item>
-        <title>Git Usage</title>
-        <link>http://marsishandsome.github.io/gen/Git_Usage.html</link>
-        <description>Git Usage</description>
+        <title>Gitbook的使用</title>
+        <link>http://marsishandsome.github.io/gen/Gitbook的使用.html</link>
+        <description>Gitbook的使用</description>
       </item>
       
 
       <item>
-        <title>Gitbook Toturial</title>
-        <link>http://marsishandsome.github.io/gen/Gitbook_Toturial.html</link>
-        <description>Gitbook Toturial</description>
+        <title>Git的使用</title>
+        <link>http://marsishandsome.github.io/gen/Git的使用.html</link>
+        <description>Git的使用</description>
       </item>
       
 
       <item>
-        <title>Quotes</title>
-        <link>http://marsishandsome.github.io/gen/Quotes.html</link>
-        <description>Quotes</description>
+        <title>摘录</title>
+        <link>http://marsishandsome.github.io/gen/摘录.html</link>
+        <description>摘录</description>
       </item>
       
   </channel>

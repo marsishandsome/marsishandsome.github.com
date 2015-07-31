@@ -2,19 +2,17 @@
 - 爱奇艺Spark团队
 - 关注分布式计算，机器学习
 
-### Java
-- [Java Serialization Problem](gen/Java_Serialization_Problem.html)
-
 ### Scala
-- [Future and Promise](gen/Future_and_Promise.html)
+- [Java序列化问题](gen/Java序列化问题.html)
 - [Scala资料汇总](gen/Scala资料汇总.html)
+- [解读Future和Promise](gen/解读Future和Promise.html)
 
 ### Spark
-- [Spark R Architecture](gen/Spark_R_Architecture.html)
-- [Spark on Yarn Code Analysis](gen/Spark_on_Yarn_Code_Analysis.html)
+- [Spark R架构分析](gen/Spark_R架构分析.html)
+- [Spark on Yarn源码分析](gen/Spark_on_Yarn源码分析.html)
 - [Spark资料汇总](gen/Spark资料汇总.html)
 
 ### 其他
-- [Git Usage](gen/Git_Usage.html)
-- [Gitbook Toturial](gen/Gitbook_Toturial.html)
-- [Quotes](gen/Quotes.html)
+- [Gitbook的使用](gen/Gitbook的使用.html)
+- [Git的使用](gen/Git的使用.html)
+- [摘录](gen/摘录.html)

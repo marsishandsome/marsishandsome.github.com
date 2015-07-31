@@ -1,4 +1,4 @@
-#Future and Promise
+#解读Future和Promise
 Future和Promise的概念早在1977年就已经提出来了。
 
 Future是一个只读的占位符，它的值在未来某个时刻会被计算出来；
