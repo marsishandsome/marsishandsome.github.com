@@ -16,9 +16,9 @@ Scala简略的入门资料
 ##### Scala Cheat Sheet
 - 百度云：Scala_Cheatsheet.pdf
 
-![](http://nj02.poms.baidupcs.com/file/86094a7bdb4884be2da2d75c91f5ffe6?bkt=p2-nj02-876&fid=336761645-250528-1094819512553116&time=1438326059&sign=FDTAXGERLBH-DCb740ccc5511e5e8fedcff06b081203-v8VkIo86QD6IuyUQOe2Caq2STgk%3D&to=n2b&fm=Nan,B,T,t&sta_dx=0&sta_cs=0&sta_ft=jpg&sta_ct=0&fm2=Nanjing02,B,T,t&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=140086094a7bdb4884be2da2d75c91f5ffe67dc27fe900000005cf3f&sl=79888463&expires=8h&rt=sh&r=245713938&mlogid=642957806&vuk=336761645&vbdid=3873030059&fin=Scala_Cheatsheet_%E9%A1%B5%E9%9D%A2_1.jpg&fn=Scala_Cheatsheet_%E9%A1%B5%E9%9D%A2_1.jpg&slt=pm&uta=0&rtype=1&iv=0&isw=0)
+![](/images/Scala_Cheatsheet_1.jpg)
 
-![](http://nj02.poms.baidupcs.com/file/fab88f6a4726abd470335dcefb63f688?bkt=p2-nj02-876&fid=336761645-250528-785894015602433&time=1438326028&sign=FDTAXGERLBH-DCb740ccc5511e5e8fedcff06b081203-wNZiGZ7SgM6Wj5zm4l6wlMhgn6w%3D&to=n2b&fm=Nan,B,T,ny&sta_dx=0&sta_cs=0&sta_ft=jpg&sta_ct=0&fm2=Nanjing02,B,T,ny&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=1400fab88f6a4726abd470335dcefb63f688621f382d00000005dd78&sl=79888463&expires=8h&rt=sh&r=639031960&mlogid=1123181010&vuk=336761645&vbdid=3873030059&fin=Scala_Cheatsheet_%E9%A1%B5%E9%9D%A2_2.jpg&fn=Scala_Cheatsheet_%E9%A1%B5%E9%9D%A2_2.jpg&slt=pm&uta=0&rtype=1&iv=0&isw=0)
+![](/images/Scala_Cheatsheet_2.jpg)
 
 ##### Scala Where It Came From Where It is Going
 - Martin在2015 San Francisco Scala Summit上的演讲
