@@ -2,12 +2,12 @@
 本篇涉及部分资料可在：[百度云下载](http://pan.baidu.com/s/1ntswMqH#path=%252F%25E5%2585%25B1%25E4%25BA%25AB%25E8%25B5%2584%25E6%2596%2599%252FScala)
 
 ### 入门书籍
-##### First Steps to Scala
+##### 1. First Steps to Scala
 Scala简略的入门资料
 - [英文版](http://www.artima.com/scalazine/articles/steps.html)
 - 百度云：Scala入门.pdf
 
-##### Programming in Scala
+##### 2. Programming in Scala
 ![](http://img4.douban.com/lpic/s4683729.jpg)
 - 百度云：Programming_in_Scala_2nd_Edition.pdf
 - 百度云：Programming_in_Scala_2nd_Edition中文版.pdf
@@ -25,22 +25,28 @@ Scala简略的入门资料
 - 百度云：Scala Where It Came From Where It is Going_Martin_Scala Days San Francisco 2015.ppt
 
 ##### Scala Performance Considerations
-百度云：Scala Performance Considerations.pdf
+- 介绍了Scala编程在性能方面需要注意的地方
+- 百度云：Scala Performance Considerations.pdf
 
 ##### Twitter Scala课堂
 - [Twitter Scala课堂](http://twitter.github.io/scala_school/zh_cn/index.html)
 - [Twitter Effective Scala](http://twitter.github.io/effectivescala/index-cn.html)
+
+##### Scala Code Style
+- [Scala Style Guide](http://docs.scala-lang.org/style/) - Scala官网的Style Guide
+- [Databricks Scala Guide](https://github.com/databricks/scala-style-guide)
 
 
 ### 课程
 ##### Functional Programming Principles in Scala
 - Coursera的公开课
 - [网址](https://www.coursera.org/course/progfun)
+- 函数式编程入门课程
 
 ##### Principles of Reactive Programming
-- Coursera的公开课
-- by Martin Odersky, Erik Meijer, Roland Kuhn
+- Coursera的公开课 by Martin Odersky, Erik Meijer, Roland Kuhn
 - [网址](https://class.coursera.org/reactive-002/auth)
+- 介绍了基于Future, Actor编程
 
 ### Scala 特性
 ### Scala Collection
@@ -67,10 +73,6 @@ Scala简略的入门资料
 
 ##### 博客
 - [在路上](http://hongjiang.info/scala/) - 有关jvm,scala与后端架构
-
-##### Scala Code Style
-- [Scala Style Guide](http://docs.scala-lang.org/style/) - Scala官网的Style Guide
-- [Databricks Scala Guide](https://github.com/databricks/scala-style-guide)
 
 ##### 工具
 - [Scala Diagrams](https://github.com/mikeyhu/scaladiagrams) - 画类图
