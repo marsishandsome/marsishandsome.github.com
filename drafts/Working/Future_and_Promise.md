@@ -111,9 +111,7 @@ trait Future[T] {
   //错误处理接口
   def recoverWith(f: PartialFunction[Throwable, Future[T]]): Future[T]
 }
-```
 
-```scala
 trait Promise {
   def future: Future[T]
 
@@ -128,6 +126,8 @@ trait Promise {
 - [future api](http://en.cppreference.com/w/cpp/thread/future)
 - [promise api](http://en.cppreference.com/w/cpp/thread/promise)
 
+C++11中的future非常简单，和java5中的Future类似，只能轮询或者阻塞等待，没有提供回调函数：
+
 ```c++
 template<class T> class future {
   T get();
@@ -137,7 +137,9 @@ template<class T> class future {
 }
 ```
 
-```c++
+C++11中的promise比较完整（因为promise本身比较简单）：
+
+```
 template< class R > class promise {
   std::future<T> get_future();
   void set_value( const R& value );

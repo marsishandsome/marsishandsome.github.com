@@ -126,8 +126,9 @@
 
   <span class="co">//错误处理接口</span>
   <span class="kw">def</span> <span class="fu">recoverWith</span>(f: PartialFunction[Throwable, Future[T]]): Future[T]
-}</code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Promise {
+}
+
+<span class="kw">trait</span> Promise {
   <span class="kw">def</span> future: Future[T]
 
   <span class="kw">def</span> <span class="fu">complete</span>(result: Try[T]): Unit
@@ -140,8 +141,15 @@
 <li><a href="http://en.cppreference.com/w/cpp/thread/future">future api</a><br /></li>
 <li><a href="http://en.cppreference.com/w/cpp/thread/promise">promise api</a></li>
 </ul>
+<p>C++11中的future非常简单，和java5中的Future类似，只能轮询或者阻塞等待，没有提供回调函数：</p>
 <p><code>c++ template&lt;class T&gt; class future {   T get();   bool valid() const;   void wait() const;   ... }</code></p>
-<p><code>c++ template&lt; class R &gt; class promise {   std::future&lt;T&gt; get_future();   void set_value( const R&amp; value );   void set_exception( std::exception_ptr p );   ... }</code></p>
+<p>C++11中的promise比较完整（因为promise本身比较简单）：</p>
+<pre><code>template&lt; class R &gt; class promise {
+  std::future&lt;T&gt; get_future();
+  void set_value( const R&amp; value );
+  void set_exception( std::exception_ptr p );
+  ...
+}</code></pre>
 <h3 id="references">References</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Futures_and_promises">Wikipedia</a><br /></li>
