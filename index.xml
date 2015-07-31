@@ -34,9 +34,16 @@
       
 
       <item>
-        <title>Scala Links</title>
-        <link>http://marsishandsome.github.io/gen/Scala_Links.html</link>
-        <description>Scala Links</description>
+        <title>Future and Promise</title>
+        <link>http://marsishandsome.github.io/gen/Future_and_Promise.html</link>
+        <description>Future and Promise</description>
+      </item>
+      
+
+      <item>
+        <title>Scala资料汇总</title>
+        <link>http://marsishandsome.github.io/gen/Scala资料汇总.html</link>
+        <description>Scala资料汇总</description>
       </item>
       
 
@@ -44,13 +51,6 @@
         <title>Spark Links</title>
         <link>http://marsishandsome.github.io/gen/Spark_Links.html</link>
         <description>Spark Links</description>
-      </item>
-      
-
-      <item>
-        <title>Future and Promise</title>
-        <link>http://marsishandsome.github.io/gen/Future_and_Promise.html</link>
-        <description>Future and Promise</description>
       </item>
       
 
