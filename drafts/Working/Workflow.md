@@ -1,8 +1,9 @@
 # Workflow
 
 ### 论文
+- [Workflow Pattern](http://eprints.qut.edu.au/9950/1/9950.pdf)
+- [工作流技术综述](http://www.jos.org.cn/1000-9825/11/899.pdf)
 - [An Overview of Workflow Management: From Process Modeling to Workflow Automation Infrastructure](http://www.workflowpatterns.com/documentation/documents/workflow95.pdf)
-
 
 ### 系统
 ##### Google Fantasm
@@ -18,3 +19,14 @@
 
 ##### Luigi
 - [spotify/luigi](https://github.com/spotify/luigi)
+
+### 设计
+
+###### 工作流模型 （支持哪些语义）
+参考Workflow Pattern
+
+##### 工作流语法
+- 图形界面
+- 编程语言
+
+##### 工作流执行
