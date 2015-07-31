@@ -1,4 +1,8 @@
 #Future and Promise
+Future和Promise的概念早在1977年就已经提出来了。
+
+Future是一个只读的占位符，它的值在未来某个时刻会被计算出来；
+Promise是一个可写的容器，可以设置Future的值  。
 
 ### Future in Java
 Future最早出现在Java5中，这个Future功能非常简单，只能通过轮询的方式进行查询；
@@ -128,7 +132,7 @@ trait Promise {
 
 C++11中的future非常简单，和java5中的Future类似，只能轮询或者阻塞等待，没有提供回调函数：
 
-```c++
+```cpp
 template<class T> class future {
   T get();
   bool valid() const;
@@ -139,7 +143,7 @@ template<class T> class future {
 
 C++11中的promise比较完整（因为promise本身比较简单）：
 
-```
+```cpp
 template< class R > class promise {
   std::future<T> get_future();
   void set_value( const R& value );
@@ -153,7 +157,7 @@ template< class R > class promise {
 - [深入浅出Future Pattern](http://www.wuzesheng.com/?p=2485)
 - [Java8 中的纯异步编程](http://www.tuicool.com/articles/ABVV3q)
 - [Java中使用CompletableFuture处理异步超时](http://www.xker.com/page/e2015/06/198145.html)
-- [Scalable Component Abstractions](http://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf) -- Martin Odersky
+- [Scalable Component Abstractions](http://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf)
 - [RxScala Github](https://github.com/ReactiveX/RxScala)
 - [Twitter: Concurrent Programming with Futures](http://twitter.github.io/finagle/guide/Futures.html)
 - [Twitter: Effective Scala](http://twitter.github.io/effectivescala/index.html)

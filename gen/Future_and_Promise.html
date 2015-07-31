@@ -32,6 +32,8 @@
       </a>
     </h1>
 <h1 id="future-and-promise">Future and Promise</h1>
+<p>Future和Promise的概念早在1977年就已经提出来了。</p>
+<p>Future是一个只读的占位符，它的值在未来某个时刻会被计算出来；<br />Promise是一个可写的容器，可以设置Future的值 。</p>
 <h3 id="future-in-java">Future in Java</h3>
 <p>Future最早出现在Java5中，这个Future功能非常简单，只能通过轮询的方式进行查询；<br />Google Guava中实现了ListenableFuture，提供addListener和addCallback的方式进行回调；<br />Java8中实现了CompletableFuture，提供了比较完整的Future支持。</p>
 <h5 id="java5-future">Java5: Future</h5>
@@ -142,12 +144,17 @@
 <li><a href="http://en.cppreference.com/w/cpp/thread/promise">promise api</a></li>
 </ul>
 <p>C++11中的future非常简单，和java5中的Future类似，只能轮询或者阻塞等待，没有提供回调函数：</p>
-<p><code>c++ template&lt;class T&gt; class future {   T get();   bool valid() const;   void wait() const;   ... }</code></p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">template</span>&lt;<span class="kw">class</span> T&gt; <span class="kw">class</span> future {
+  T get();
+  <span class="dt">bool</span> valid() <span class="dt">const</span>;
+  <span class="dt">void</span> wait() <span class="dt">const</span>;
+  ...
+}</code></pre>
 <p>C++11中的promise比较完整（因为promise本身比较简单）：</p>
-<pre><code>template&lt; class R &gt; class promise {
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">template</span>&lt; <span class="kw">class</span> R &gt; <span class="kw">class</span> promise {
   std::future&lt;T&gt; get_future();
-  void set_value( const R&amp; value );
-  void set_exception( std::exception_ptr p );
+  <span class="dt">void</span> set_value( <span class="dt">const</span> R&amp; value );
+  <span class="dt">void</span> set_exception( std::exception_ptr p );
   ...
 }</code></pre>
 <h3 id="references">References</h3>
@@ -156,7 +163,7 @@
 <li><a href="http://www.wuzesheng.com/?p=2485">深入浅出Future Pattern</a><br /></li>
 <li><a href="http://www.tuicool.com/articles/ABVV3q">Java8 中的纯异步编程</a><br /></li>
 <li><a href="http://www.xker.com/page/e2015/06/198145.html">Java中使用CompletableFuture处理异步超时</a><br /></li>
-<li><a href="http://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf">Scalable Component Abstractions</a> -- Martin Odersky<br /></li>
+<li><a href="http://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf">Scalable Component Abstractions</a><br /></li>
 <li><a href="https://github.com/ReactiveX/RxScala">RxScala Github</a><br /></li>
 <li><a href="http://twitter.github.io/finagle/guide/Futures.html">Twitter: Concurrent Programming with Futures</a><br /></li>
 <li><a href="http://twitter.github.io/effectivescala/index.html">Twitter: Effective Scala</a></li>
