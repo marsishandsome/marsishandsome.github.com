@@ -253,6 +253,9 @@ libraryDependencies += &quot;amplab&quot; % &quot;spark-indexedrdd&quot; % &quot
 
   ...
 }</code></pre>
+<h3>性能</h3>
+<p>插入的吞吐率，在Batch Size比较大的情况下，比较有优势。<br /><img src="/images/indexed_rdd3.png" /></p>
+<p>查询的速度是最快的，扫描和内存占用处于中间水平。<br /><img src="/images/indexed_rdd4.png" /></p>
 <h3 id="references">References</h3>
 <ul>
 <li><a href="https://issues.apache.org/jira/browse/SPARK-2365">Spark-2356</a><br /></li>

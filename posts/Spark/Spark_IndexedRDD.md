@@ -252,6 +252,13 @@ class IndexedRDD[K: ClassTag, V: ClassTag](
 }
 ```
 
+### 性能
+插入的吞吐率，在Batch Size比较大的情况下，比较有优势。
+![](/images/indexed_rdd3.png)
+
+查询的速度是最快的，扫描和内存占用处于中间水平。
+![](/images/indexed_rdd4.png)
+
 ### References
 - [Spark-2356](https://issues.apache.org/jira/browse/SPARK-2365)
 - [IndexedRDD Design Document](https://issues.apache.org/jira/secure/attachment/12656374/2014-07-07-IndexedRDD-design-review.pdf)
