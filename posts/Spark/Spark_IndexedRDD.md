@@ -1,11 +1,7 @@
 # Spark IndexedRDD: Efficient Fine-Grained Updates for RDDs
-由于Spark RDD的Immutable特性，如果想要更新RDD里面的数据，就要对RDD中的每个Partition进行
-一次transformation，生成一个新的RDD。而对于Streaming Aggregation以及Incremental Algorithm
-之类的算法，每次迭代都会更新少量数据，但是需要迭代非常多的次数，每一次对RDD的更新代价相对较大。
+由于Spark RDD的Immutable特性，如果想要更新RDD里面的数据，就要对RDD中的每个Partition进行一次transformation，生成一个新的RDD。而对于Streaming Aggregation以及Incremental Algorithm之类的算法，每次迭代都会更新少量数据，但是需要迭代非常多的次数，每一次对RDD的更新代价相对较大。
 
-针对这个问题AMPLab的[Ankur Dave](http://ankurdave.com/)提出了IndexedRDD，
-它是Immutability和Fine-Grained updates的精妙结合。IndexedRDD是一个基于RDD的
-Key-Value Store，扩展自RDD[(K, V)]，可以在IndexRDD上进行高效的查找、更新以及删除。
+针对这个问题AMPLab的[Ankur Dave](http://ankurdave.com/)提出了IndexedRDD，它是Immutability和Fine-Grained updates的精妙结合。IndexedRDD是一个基于RDD的Key-Value Store，扩展自RDD[(K, V)]，可以在IndexRDD上进行高效的查找、更新以及删除。
 
 IndexRDD的设计思路是：
 1. 按照Key的Hash值把数据保持到不同的Partition中
