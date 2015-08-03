@@ -20,6 +20,7 @@ Spark部分资料可在[百度云下载](http://pan.baidu.com/s/1ntswMqH#path=%2
 - [Spark Hands-on Exercises](http://ampcamp.berkeley.edu/big-data-mini-course/index.html) - Spark交互式练习
 - [AMPLab Hands-on Exercises](http://ampcamp.berkeley.edu/5/exercises/index.html) [Video](http://pan.baidu.com/s/1kTIdlMv#path=%252F) - Spark Tachyon交互式练习
 - [Apache Spark API By Example](http://homepage.cs.latrobe.edu.au/zhe/files/SparkAPIMaster.pdf) - Spark API
+- [The Essential Spark Cheat Sheet](http://pan.baidu.com/s/1ntswMqH#path=%252F%25E5%2585%25B1%25E4%25BA%25AB%25E8%25B5%2584%25E6%2596%2599%252FSpark)
 
 
 ### Spark深入研究
