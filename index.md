@@ -8,6 +8,7 @@
 - [解读Future和Promise](gen/解读Future和Promise.html)
 
 ### Spark
+- [Spark IndexedRDD](gen/Spark_IndexedRDD.html)
 - [Spark R架构分析](gen/Spark_R架构分析.html)
 - [Spark on Yarn源码分析](gen/Spark_on_Yarn源码分析.html)
 - [Spark资料汇总](gen/Spark资料汇总.html)

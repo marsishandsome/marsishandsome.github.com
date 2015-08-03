@@ -27,6 +27,13 @@
       
 
       <item>
+        <title>Spark IndexedRDD</title>
+        <link>http://marsishandsome.github.io/gen/Spark_IndexedRDD.html</link>
+        <description>Spark IndexedRDD</description>
+      </item>
+      
+
+      <item>
         <title>Spark R架构分析</title>
         <link>http://marsishandsome.github.io/gen/Spark_R架构分析.html</link>
         <description>Spark R架构分析</description>
