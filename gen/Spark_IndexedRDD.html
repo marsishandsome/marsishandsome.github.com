@@ -229,10 +229,27 @@ libraryDependencies += &quot;amplab&quot; % &quot;spark-indexedrdd&quot; % &quot
     <span class="fu">zipPartitionsWithOther</span>(updates)(<span class="kw">new</span> <span class="fu">MultiputZipper</span>(z, f))
   }
 
+  <span class="kw">private</span> <span class="kw">class</span> MultiputZipper[U](z: (K, U) =&gt; V, f: (K, V, U) =&gt; V)
+    <span class="kw">extends</span> OtherZipPartitionsFunction[U, V] <span class="kw">with</span> Serializable {
+  <span class="kw">def</span> <span class="fu">apply</span>(thisIter: Iterator[IndexedRDDPartition[K, V]], otherIter: Iterator[(K, U)])
+    : Iterator[IndexedRDDPartition[K, V]] = {
+    <span class="kw">val</span> thisPart = thisIter.<span class="fu">next</span>()
+    Iterator(thisPart.<span class="fu">multiput</span>(otherIter, z, f))
+  }
+}
+
   <span class="kw">def</span> <span class="fu">delete</span>(ks: Array[K]): IndexedRDD[K, V] = {
     <span class="kw">val</span> deletions = context.<span class="fu">parallelize</span>(ks.<span class="fu">map</span>(k =&gt; (k, ()))).<span class="fu">partitionBy</span>(partitioner.<span class="fu">get</span>)
     <span class="fu">zipPartitionsWithOther</span>(deletions)(<span class="kw">new</span> DeleteZipper)
   }
+
+  <span class="kw">private</span> <span class="kw">class</span> DeleteZipper <span class="kw">extends</span> OtherZipPartitionsFunction[Unit, V] <span class="kw">with</span> Serializable {
+   <span class="kw">def</span> <span class="fu">apply</span>(thisIter: Iterator[IndexedRDDPartition[K, V]], otherIter: Iterator[(K, Unit)])
+     : Iterator[IndexedRDDPartition[K, V]] = {
+     <span class="kw">val</span> thisPart = thisIter.<span class="fu">next</span>()
+     Iterator(thisPart.<span class="fu">delete</span>(otherIter.<span class="fu">map</span>(_.<span class="fu">_1</span>)))
+   }
+ }
 
   ...
 }</code></pre>

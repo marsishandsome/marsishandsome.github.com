@@ -226,10 +226,27 @@ class IndexedRDD[K: ClassTag, V: ClassTag](
     zipPartitionsWithOther(updates)(new MultiputZipper(z, f))
   }
 
+  private class MultiputZipper[U](z: (K, U) => V, f: (K, V, U) => V)
+    extends OtherZipPartitionsFunction[U, V] with Serializable {
+  def apply(thisIter: Iterator[IndexedRDDPartition[K, V]], otherIter: Iterator[(K, U)])
+    : Iterator[IndexedRDDPartition[K, V]] = {
+    val thisPart = thisIter.next()
+    Iterator(thisPart.multiput(otherIter, z, f))
+  }
+}
+
   def delete(ks: Array[K]): IndexedRDD[K, V] = {
     val deletions = context.parallelize(ks.map(k => (k, ()))).partitionBy(partitioner.get)
     zipPartitionsWithOther(deletions)(new DeleteZipper)
   }
+
+  private class DeleteZipper extends OtherZipPartitionsFunction[Unit, V] with Serializable {
+   def apply(thisIter: Iterator[IndexedRDDPartition[K, V]], otherIter: Iterator[(K, Unit)])
+     : Iterator[IndexedRDDPartition[K, V]] = {
+     val thisPart = thisIter.next()
+     Iterator(thisPart.delete(otherIter.map(_._1)))
+   }
+ }
 
   ...
 }
