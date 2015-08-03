@@ -1,8 +1,22 @@
 # Spark IndexedRDD: Efficient Fine-Grained Updates for RDDs
-[Ankur Dave](http://ankurdave.com/)
-AMPLab – UC Berkeley
+由于Spark RDD的Immutable特性，如果想要更新RDD里面的数据，就要对RDD中的每个Partition进行
+一次transformation，生成一个新的RDD。而对于Streaming Aggregation以及Incremental Algorithm
+之类的算法，每次迭代都会更新少量数据，但是需要迭代非常多的次数，每一次对RDD的更新代价相对较大。
+
+针对这个问题AMPLab的[Ankur Dave](http://ankurdave.com/)提出了IndexedRDD，
+它是Immutability和Fine-Grained updates的精妙结合。IndexedRDD是一个基于RDD的
+Key-Value Store，扩展自RDD[(K, V)]，可以在IndexRDD上进行高效的查找、更新以及删除。
+
+IndexRDD的设计思路是：
+1. Key的Hash值把数据保持到不同的Partition中
+2. 在每个Partition中根据Key建立索引，通过新建节点的方式来实现数据的更新
+
+![](/images/indexed_rdd2.png)
+
+![](/images/indexed_rdd1.png)
 
 ### 接口
+IndexedRDD主要提供了multiget, 
 ```scala
 class IndexedRDD[K: ClassTag, V: ClassTag] extends RDD[(K, V)] {
 
@@ -70,7 +84,7 @@ indexed4.get(999L) // => None
 
 ### References
 - [Spark-2356](https://issues.apache.org/jira/browse/SPARK-2365)
-- [Design Document](https://issues.apache.org/jira/secure/attachment/12656374/2014-07-07-IndexedRDD-design-review.pdf)
+- [IndexedRDD Design Document](https://issues.apache.org/jira/secure/attachment/12656374/2014-07-07-IndexedRDD-design-review.pdf)
 - [Spark Summit 2015 Slide](http://www.slideshare.net/SparkSummit/ankur-dave)
 - [Spark Summit 2015 Video](https://www.youtube.com/watch?v=7NoFmrw1cV8&list=PL-x35fyliRwhP52fwDqULJLOnqnrN5nDs&index=5)
 - [Github: IndexedRDD](https://github.com/amplab/spark-indexedrdd)

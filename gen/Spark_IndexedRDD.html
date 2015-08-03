@@ -32,8 +32,17 @@
       </a>
     </h1>
 <h1 id="spark-indexedrdd-efficient-fine-grained-updates-for-rdds">Spark IndexedRDD: Efficient Fine-Grained Updates for RDDs</h1>
-<p><a href="http://ankurdave.com/">Ankur Dave</a><br />AMPLab – UC Berkeley</p>
+<p>由于Spark RDD的Immutable特性，如果想要更新RDD里面的数据，就要对RDD中的每个Partition进行<br />一次transformation，生成一个新的RDD。而对于Streaming Aggregation以及Incremental Algorithm<br />之类的算法，每次迭代都会更新少量数据，但是需要迭代非常多的次数，每一次对RDD的更新代价相对较大。</p>
+<p>针对这个问题AMPLab的<a href="http://ankurdave.com/">Ankur Dave</a>提出了IndexedRDD，<br />它是Immutability和Fine-Grained updates的精妙结合。IndexedRDD是一个基于RDD的<br />Key-Value Store，扩展自RDD[(K, V)]，可以在IndexRDD上进行高效的查找、更新以及删除。</p>
+<p>IndexRDD的设计思路是：</p>
+<ol>
+<li>Key的Hash值把数据保持到不同的Partition中<br /></li>
+<li>在每个Partition中根据Key建立索引，通过新建节点的方式来实现数据的更新</li>
+</ol>
+<p><img src="/images/indexed_rdd2.png" /></p>
+<p><img src="/images/indexed_rdd1.png" /></p>
 <h3>接口</h3>
+<p>IndexedRDD主要提供了multiget,</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> IndexedRDD[K: ClassTag, V: ClassTag] <span class="kw">extends</span> RDD[(K, V)] {
 
     <span class="co">/** Gets the values corresponding to the specified keys, if any. */</span>
@@ -91,7 +100,7 @@ indexed4.<span class="fu">get</span>(999L) <span class="co">// =&gt; None</span>
 <h3 id="references">References</h3>
 <ul>
 <li><a href="https://issues.apache.org/jira/browse/SPARK-2365">Spark-2356</a><br /></li>
-<li><a href="https://issues.apache.org/jira/secure/attachment/12656374/2014-07-07-IndexedRDD-design-review.pdf">Design Document</a><br /></li>
+<li><a href="https://issues.apache.org/jira/secure/attachment/12656374/2014-07-07-IndexedRDD-design-review.pdf">IndexedRDD Design Document</a><br /></li>
 <li><a href="http://www.slideshare.net/SparkSummit/ankur-dave">Spark Summit 2015 Slide</a><br /></li>
 <li><a href="https://www.youtube.com/watch?v=7NoFmrw1cV8&amp;list=PL-x35fyliRwhP52fwDqULJLOnqnrN5nDs&amp;index=5">Spark Summit 2015 Video</a><br /></li>
 <li><a href="https://github.com/amplab/spark-indexedrdd">Github: IndexedRDD</a><br /></li>
