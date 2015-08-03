@@ -89,6 +89,7 @@
 - [Zeppelin](gen/Zeppelin.html)
 
 ### Working
+- [Editor Config](gen/Editor_Config.html)
 - [Maven](gen/Maven.html)
 - [Spark IndexedRDD](gen/Spark_IndexedRDD.html)
 - [Spark Summit 2015](gen/Spark_Summit_2015.html)
