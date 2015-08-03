@@ -149,8 +149,7 @@ libraryDependencies += &quot;amplab&quot; % &quot;spark-indexedrdd&quot; % &quot
 <span class="co">//默认实现了Long和String类型的KeySerializer</span>
 <span class="kw">class</span> LongSerializer <span class="kw">extends</span> KeySerializer[Long]
 
-<span class="kw">class</span> StringSerializer <span class="kw">extends</span> KeySerializer[String]
-}</code></pre>
+<span class="kw">class</span> StringSerializer <span class="kw">extends</span> KeySerializer[String]</code></pre>
 <h5 id="indexedrddpartition.scala">IndexedRDDPartition.scala</h5>
 <p>定义了Partition的接口</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">private</span>[indexedrdd] <span class="kw">abstract</span> <span class="kw">class</span> IndexedRDDPartition[K, V] <span class="kw">extends</span> Serializable {

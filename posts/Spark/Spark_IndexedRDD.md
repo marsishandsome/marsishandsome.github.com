@@ -138,7 +138,6 @@ trait KeySerializer[K] extends Serializable {
 class LongSerializer extends KeySerializer[Long]
 
 class StringSerializer extends KeySerializer[String]
-}
 ```
 
 ##### IndexedRDDPartition.scala
