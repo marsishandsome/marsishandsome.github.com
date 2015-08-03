@@ -91,8 +91,7 @@ IndexedRDD的每个Partition的存储用的是Persisten Adaptive Radix Trees。�
 4. 支持快速插入和删除
 5. 数据保持有序,支持Range Scan和Prefix Lookup
 
-更多细节请看[ART论文](http://www3.informatik.tu-muenchen.de/~leis/papers/ART.pdf)
-以及[Github: ART Java实现](https://github.com/ankurdave/part)。
+更多细节请看[ART论文](http://www3.informatik.tu-muenchen.de/~leis/papers/ART.pdf)以及[Github: ART Java实现](https://github.com/ankurdave/part)。
 
 
 下面是ART的主要函数：
