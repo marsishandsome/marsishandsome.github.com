@@ -15,10 +15,12 @@
 - [Example](http://aws.amazon.com/code/2535278400103493)
 
 ##### Azure Workflow Manager
-- [Documentation](https://msdn.microsoft.com/library/azure/JJ193528(v=Azure.10).aspx)
 
 ##### Luigi
-- [spotify/luigi](https://github.com/spotify/luigi)
+- [Github](https://github.com/spotify/luigi)
+- [Documentation](http://luigi.readthedocs.org/en/stable/)
+
+![](https://raw.githubusercontent.com/spotify/luigi/master/doc/user_recs.png)
 
 ### 设计
 
