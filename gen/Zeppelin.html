@@ -32,16 +32,17 @@
       </a>
     </h1>
 <h1 id="zeppelin">Zeppelin</h1>
+<h3 id="reference">Reference</h3>
 <ul>
 <li><a href="https://zeppelin.incubator.apache.org/">官网</a><br /></li>
-<li><a href="http://events.linuxfoundation.org/sites/events/files/slides/Zeppelin_ApacheCon2015_0.pdf">Introduction to Zeppelin</a><br /></li>
-<li><a href="http://blog.csdn.net/pelick/article/details/45934993">Apache Zeppelin安装及介绍</a><br /></li>
 <li><a href="https://github.com/apache/incubator-zeppelin">Github</a><br /></li>
-<li><a href="http://zeppelin.incubator.apache.org/docs/index.html">User Guide</a><br /></li>
-<li><a href="http://zeppelin.incubator.apache.org/docs/install/install.html">Install</a></li>
+<li><a href="https://issues.apache.org/jira/browse/ZEPPELIN/?selectedTab=com.atlassian.jira.jira-projects-plugin:roadmap-panel">Jira</a><br /></li>
+<li><a href="http://zeppelin.incubator.apache.org/docs/index.html">Document</a><br /></li>
+<li><a href="http://events.linuxfoundation.org/sites/events/files/slides/Zeppelin_ApacheCon2015_0.pdf">Introduction to Zeppelin</a><br /></li>
+<li><a href="http://blog.csdn.net/pelick/article/details/45934993">Apache Zeppelin安装及介绍</a></li>
 </ul>
-<h1 id="install">Install</h1>
-<h3 id="prepare">0. Prepare</h3>
+<h3 id="install">Install</h3>
+<h5 id="prepare">0. Prepare</h5>
 <p>install npm</p>
 <pre><code>wget http://nodejs.org/dist/v0.12.4/node-v0.12.4-linux-x64.tar.gz
 tar zxvf node-v0.12.4-linux-x64.tar.gz
@@ -54,10 +55,10 @@ npm set strict-ssl false
 # npm config set proxy=http://...
 # npm config set http-proxy=http://...
 # npm config set https-proxy=http://...</code></pre>
-<h3 id="download-source">1. Download Source</h3>
+<h5 id="download-source">1. Download Source</h5>
 <pre><code>git clone https://github.com/apache/incubator-zeppelin.git
 cd incubator-zeppelin</code></pre>
-<h3 id="build">2. Build</h3>
+<h5 id="build">2. Build</h5>
 <p>install dependency for zeppelin-web</p>
 <pre><code>cd zeppelin-web
 npm install</code></pre>
@@ -68,18 +69,25 @@ git config --global url.&quot;https://&quot;.insteadOf git://
 http-proxy=http://...
 https-proxy=http://...</code></pre>
 <p>build zeppelin</p>
-<pre><code>mvn clean package \
--Pspark-1.3.0 \
+<pre><code>mvn clean package install \
+-Pspark-1.3 \
 -Dhadoop.version=2.5.0-cdh5.2.0 \
 -Dprotobuf.version=2.5.0 \
 -Pyarn \
 -DskipTests</code></pre>
-<h3 id="configure">3. Configure</h3>
+<h5 id="configure">3. Configure</h5>
 <p>edit conf/zeppelin-evn.sh</p>
 <pre><code>export HADOOP_CONF_DIR=/etc/hadoop/conf</code></pre>
-<h3 id="run">4. Run</h3>
+<h5 id="run">4. Run</h5>
 <pre><code>./bin/zeppelin-daemon.sh
 ./bin/zeppelin.sh</code></pre>
+<h5 id="use">5. Use</h5>
+<pre><code>http://localhost:8080</code></pre>
+<h3 id="architecutre">Architecutre</h3>
+<p><img src="http://zeppelin.incubator.apache.org/assets/themes/zeppelin/img/interpreter.png" /></p>
+<pre><code>25065 org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer 30614 -Dspark.jars=/zeppelin/hadoop-lzo.jar -Dfile.encoding=UTF-8 -Xmx1024m -XX:MaxPermSize=512m -Dspark.jars=/zeppelin/hadoop-lzo.jar -Dfile.encoding=UTF-8 -Xmx1024m -XX:MaxPermSize=512m -Dzeppelin.log.file=/zeppelin/incubator-zeppelin/logs/zeppelin-interpreter-spark-root-Jupiter-spark-dev001-shjj.qiyi.virtual.log
+
+5252 org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer 40448 -Dspark.jars=/zeppelin/hadoop-lzo.jar -Dfile.encoding=UTF-8 -Xmx1024m -XX:MaxPermSize=512m -Dspark.jars=/zeppelin/hadoop-lzo.jar -Dfile.encoding=UTF-8 -Xmx1024m -XX:MaxPermSize=512m -Dzeppelin.log.file=/zeppelin/incubator-zeppelin/logs/zeppelin-interpreter-md-root-Jupiter-spark-dev001-shjj.qiyi.virtual.log</code></pre>
 
 
   </div>

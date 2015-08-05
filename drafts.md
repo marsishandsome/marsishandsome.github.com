@@ -87,10 +87,12 @@
 - [IPython Notebook](gen/IPython_Notebook.html)
 - [Spark Notebook](gen/Spark_Notebook.html)
 - [Zeppelin](gen/Zeppelin.html)
+- [数据可视化](gen/数据可视化.html)
 
 ### Working
 - [Editor Config](gen/Editor_Config.html)
 - [Maven](gen/Maven.html)
+- [SSH版Map Reduce](gen/SSH版Map_Reduce.html)
 - [Spark Summit 2015](gen/Spark_Summit_2015.html)
 - [The Architecture of Open Source Applications](gen/The_Architecture_of_Open_Source_Applications.html)
 - [Workflow](gen/Workflow.html)

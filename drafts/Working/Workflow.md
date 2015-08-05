@@ -6,6 +6,10 @@
 - [An Overview of Workflow Management: From Process Modeling to Workflow Automation Infrastructure](http://www.workflowpatterns.com/documentation/documents/workflow95.pdf)
 
 ### 系统
+##### Apache Oozie
+- [官网](http://oozie.apache.org/)
+- [跟着示例学Oozie](http://www.infoq.com/cn/articles/oozieexample)
+
 ##### Google Fantasm
 - [Implementing Workflows on Google App Engine with Fantasm](https://cloud.google.com/appengine/articles/fantasm?csw=1)
 
