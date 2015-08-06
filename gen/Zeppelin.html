@@ -69,7 +69,8 @@ git config --global url.&quot;https://&quot;.insteadOf git://
 http-proxy=http://...
 https-proxy=http://...</code></pre>
 <p>build zeppelin</p>
-<pre><code>mvn clean package install \
+<pre><code>export MAVEN_OPTS=&quot;-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m&quot;
+mvn clean package install \
 -Pspark-1.3 \
 -Dhadoop.version=2.5.0-cdh5.2.0 \
 -Dprotobuf.version=2.5.0 \

@@ -52,6 +52,7 @@ https-proxy=http://...
 
 build zeppelin
 ```
+export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
 mvn clean package install \
 -Pspark-1.3 \
 -Dhadoop.version=2.5.0-cdh5.2.0 \
