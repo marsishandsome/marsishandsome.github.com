@@ -78,7 +78,6 @@
 - [Spark A Li Cloud](gen/Spark_A_Li_Cloud.html)
 - [Spark Job Server](gen/Spark_Job_Server.html)
 - [Spark Meetup Beijing 7](gen/Spark_Meetup_Beijing_7.html)
-- [Spark Profiling](gen/Spark_Profiling.html)
 - [Spark Summit China 2015](gen/Spark_Summit_China_2015.html)
 - [Spark Summit East 2015](gen/Spark_Summit_East_2015.html)
 
@@ -93,6 +92,9 @@
 - [Editor Config](gen/Editor_Config.html)
 - [Maven](gen/Maven.html)
 - [SSH版Map Reduce](gen/SSH版Map_Reduce.html)
+- [Spark Hadoop Kerberos](gen/Spark_Hadoop_Kerberos.html)
+- [Spark Profiling](gen/Spark_Profiling.html)
+- [Spark Profiling2](gen/Spark_Profiling2.html)
 - [Spark Summit 2015](gen/Spark_Summit_2015.html)
 - [The Architecture of Open Source Applications](gen/The_Architecture_of_Open_Source_Applications.html)
 - [Workflow](gen/Workflow.html)
