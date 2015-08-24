@@ -92,6 +92,7 @@
 - [Editor Config](gen/Editor_Config.html)
 - [Maven](gen/Maven.html)
 - [SSH版Map Reduce](gen/SSH版Map_Reduce.html)
+- [Spark Dynamic Allocation](gen/Spark_Dynamic_Allocation.html)
 - [Spark Hadoop Kerberos](gen/Spark_Hadoop_Kerberos.html)
 - [Spark Profiling](gen/Spark_Profiling.html)
 - [Spark Profiling2](gen/Spark_Profiling2.html)

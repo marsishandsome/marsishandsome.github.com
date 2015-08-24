@@ -7,6 +7,7 @@
 
 ### CAP定理 (Eric Brewer)
 - [Wikipedia](CAP theorem)
+- [You Can’t Sacrifice Partition Tolerance](http://codahale.com/you-cant-sacrifice-partition-tolerance/)
 
 In theoretical computer science, the CAP theorem, also known as Brewer's theorem, states that it is impossible for a distributed computer system to simultaneously provide all three of the following guarantees:
 1. Consistency (all nodes see the same data at the same time)
