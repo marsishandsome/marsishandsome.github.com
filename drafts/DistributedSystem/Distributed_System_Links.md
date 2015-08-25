@@ -3,6 +3,7 @@
 - [一共81个，开源大数据处理工具汇总（下）](http://www.36dsj.com/archives/25042)
 - [“分布式机器学习的故事”系列分享](http://cxwangyi.github.io/notes/2014-01-20-distributed-machine-learning.html)
 - [后Hadoop时代的大数据架构](http://zhuanlan.zhihu.com/donglaoshi/19962491?from=timeline&isappinstalled=0) -- 董飞
+- [Apache YARN/Mesos与Google Borg差距多远？](http://mp.weixin.qq.com/s?__biz=MjM5NzAyNTE0Ng==&mid=207442842&idx=1&sn=c23b157e68ca5bd9654b395dc4362eef&scene=0#rd)
 
 
 ### CAP定理 (Eric Brewer)

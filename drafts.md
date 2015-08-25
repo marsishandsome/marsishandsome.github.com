@@ -32,6 +32,7 @@
 - [Druid](gen/Druid.html)
 - [Flink](gen/Flink.html)
 - [Giraph](gen/Giraph.html)
+- [Google](gen/Google.html)
 - [HBase](gen/HBase.html)
 - [Ignite](gen/Ignite.html)
 - [Parameter Server](gen/Parameter_Server.html)
@@ -99,3 +100,4 @@
 - [Spark Summit 2015](gen/Spark_Summit_2015.html)
 - [The Architecture of Open Source Applications](gen/The_Architecture_of_Open_Source_Applications.html)
 - [Workflow](gen/Workflow.html)
+- [运维](gen/运维.html)
