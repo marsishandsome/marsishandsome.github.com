@@ -84,6 +84,9 @@
 - [Spark Summit China 2015](gen/Spark_Summit_China_2015.html)
 - [Spark Summit East 2015](gen/Spark_Summit_East_2015.html)
 
+### SparkTalk
+- [draft](gen/draft.html)
+
 ### WebShellNotebook
 - [Databricks Cloud](gen/Databricks_Cloud.html)
 - [IPython Notebook](gen/IPython_Notebook.html)
