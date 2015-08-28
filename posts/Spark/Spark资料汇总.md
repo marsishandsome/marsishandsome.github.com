@@ -3,6 +3,7 @@ Spark部分资料可在[百度云下载](http://pan.baidu.com/s/1ntswMqH#path=%2
 
 ### Spark论文
 ##### Spark Core
+- {{Spark/Papers/Core/Resilient%20Distributed%20Datasets%20A%20Fault-Tolerant%20Abstraction%20for%20In-Memory%20Cluster%20Computing.pdf}}
 - [Spark: Cluster Computing with Working Sets](/libs/pdfjs/web/viewer.html?file=https://raw.githubusercontent.com/marsishandsome/files.github.com/master/Spark/Papers/Core/Resilient%20Distributed%20Datasets%20A%20Fault-Tolerant%20Abstraction%20for%20In-Memory%20Cluster%20Computing.pdf)
 - [Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing](http://www.cs.berkeley.edu/~matei/papers/2012/nsdi_spark.pdf)
 - [Spark Matei PHD 论文翻译版](https://code.csdn.net/CODE_Translation/spark_matei_phd)
