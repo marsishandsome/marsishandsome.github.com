@@ -17,3 +17,7 @@
 # SummingBird
 - [Summingbird: A Framework for Integrating Batch and Online MapReduce Computations](http://www.vldb.org/pvldb/vol7/p1441-boykin.pdf) -- Oscar Boykin
 - [Github](https://github.com/twitter/summingbird)
+
+# Simplified Lambda
+- [yahoo/simplified-lambda](https://github.com/yahoo/simplified-lambda)
+- [The Yahoo Behind Fresh Deep Learning Approaches at Flickr](http://www.theplatform.net/2015/09/03/the-yahoo-behind-fresh-deep-learning-approaches-at-flickr/)
