@@ -106,4 +106,5 @@
 - [Tachyon](gen/Tachyon.html)
 - [The Architecture of Open Source Applications](gen/The_Architecture_of_Open_Source_Applications.html)
 - [Workflow](gen/Workflow.html)
+- [用InfluxDB+Grafana搭建实时监控系统](gen/用InfluxDB+Grafana搭建实时监控系统.html)
 - [运维](gen/运维.html)
