@@ -16,6 +16,8 @@ Spark部分资料可在[百度云下载](http://pan.baidu.com/s/1ntswMqH#path=%2
 - [Discretized Streams: An Efficient and Fault-Tolerant Model for Stream Processing on Large Clusters](http://www.cs.berkeley.edu/~matei/papers/2012/hotcloud_spark_streaming.pdf)
 - [The 8 Requirements of Real-Time Stream Processing](http://cs.brown.edu/~ugur/8rulesSigRec.pdf)
 
+##### Spark MLlib
+- [linalg: Matrix Computations in Apache Spark](http://arxiv.org/abs/1509.02256)
 
 ### Spark入门
 - [Spark Hands-on Exercises](http://ampcamp.berkeley.edu/big-data-mini-course/index.html) - Spark交互式练习
