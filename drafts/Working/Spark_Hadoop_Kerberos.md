@@ -9,7 +9,9 @@
 - [Hadoop Security Design](http://www.valleytalk.org/wp-content/uploads/2013/03/hadoop-security-design.pdf)
 
 ### Notes
---conf spark.hadoop.fs.hdfs.impl.disable.cache=true
+- --conf spark.hadoop.fs.hdfs.impl.disable.cache=true
+- [spark on yarn : job提交重要参数说明](http://www.boywell.com/Spark/job-submit-parameters-setting-of-spark-on-yarn.html)
+- [hive由fs.hdfs.impl.disable.cache参数引起的重写分区数据的异常](http://blog.csdn.net/jyl1798/article/details/42521789)
 
 ### Spark-1.3
 ```scala

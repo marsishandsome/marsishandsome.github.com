@@ -42,7 +42,11 @@
 <li><a href="http://www.valleytalk.org/wp-content/uploads/2013/03/hadoop-security-design.pdf">Hadoop Security Design</a></li>
 </ul>
 <h3 id="notes">Notes</h3>
-<p>--conf spark.hadoop.fs.hdfs.impl.disable.cache=true</p>
+<ul>
+<li>--conf spark.hadoop.fs.hdfs.impl.disable.cache=true<br /></li>
+<li><a href="http://www.boywell.com/Spark/job-submit-parameters-setting-of-spark-on-yarn.html">spark on yarn : job提交重要参数说明</a><br /></li>
+<li><a href="http://blog.csdn.net/jyl1798/article/details/42521789">hive由fs.hdfs.impl.disable.cache参数引起的重写分区数据的异常</a></li>
+</ul>
 <h3 id="spark-1.3">Spark-1.3</h3>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> credentials = UserGroupInformation.<span class="fu">getCurrentUser</span>.<span class="fu">getCredentials</span>
 Client.<span class="fu">obtainTokensForNamenodes</span>
