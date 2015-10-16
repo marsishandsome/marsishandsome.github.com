@@ -94,6 +94,7 @@
 
 ### WebShellNotebook
 - [Databricks Cloud](gen/Databricks_Cloud.html)
+- [Google DataLab](gen/Google_DataLab.html)
 - [IPython Notebook](gen/IPython_Notebook.html)
 - [Spark Notebook](gen/Spark_Notebook.html)
 - [Zeppelin](gen/Zeppelin.html)

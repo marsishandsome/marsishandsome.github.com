@@ -31,36 +31,12 @@
         <img src="http://marsishandsome.github.io/template/rss.png" style="width:30px;height:30px;"/>
       </a>
     </h1>
-<h1 id="spark-hadoop-kerberos">Spark Hadoop Kerberos</h1>
-<h3 id="references">References</h3>
+<h1 id="google-datalab">Google DataLab</h1>
 <ul>
-<li><a href="https://issues.apache.org/jira/browse/SPARK-5342">Spark-5342 Allow long running Spark apps to run on secure YARN/HDFS</a><br /></li>
-<li><a href="https://issues.apache.org/jira/browse/SPARK-8688">Spark-8688 Hadoop Configuration has to disable client cache when writing or reading delegation tokens</a><br /></li>
-<li><a href="https://issues.apache.org/jira/secure/attachment/12693526/SparkYARN.pdf">Long Running Spark Apps on Secure YARN</a><br /></li>
-<li><a href="https://issues.apache.org/jira/browse/SPARK-6918">SPARK-6918 Secure HBase with Kerberos does not work over YARN</a><br /></li>
-<li><a href="http://hortonworks.com/blog/the-role-of-delegation-tokens-in-apache-hadoop-security/">The Role of Delegation Tokens in Apache Hadoop Security</a><br /></li>
-<li><a href="http://www.valleytalk.org/wp-content/uploads/2013/03/hadoop-security-design.pdf">Hadoop Security Design</a></li>
+<li><a href="http://www.cnbeta.com/articles/438523.htm">Google推出Cloud Datalab：数据探索与可视化的交互式工具</a><br /></li>
+<li><a href="https://cloud.google.com/datalab/overview">Datalab Overview</a><br /></li>
+<li><a href="https://github.com/GoogleCloudPlatform/datalab">Github</a></li>
 </ul>
-<h3 id="notes">Notes</h3>
-<p>--conf spark.hadoop.fs.hdfs.impl.disable.cache=true</p>
-<h3 id="spark-1.3">Spark-1.3</h3>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> credentials = UserGroupInformation.<span class="fu">getCurrentUser</span>.<span class="fu">getCredentials</span>
-Client.<span class="fu">obtainTokensForNamenodes</span>
-FileSystem.<span class="fu">addDelegationTokens</span>
-UserGroupInformation.<span class="fu">getCurrentUser</span>().<span class="fu">addCredentials</span>(credentials)
-
-
-ContainerLaunchContext.<span class="fu">setTokens</span>
-
-<span class="kw">val</span> dob = <span class="kw">new</span> DataOutputBuffer
-credentials.<span class="fu">writeTokenStorageToStream</span>(dob)
-amContainer.<span class="fu">setTokens</span>(ByteBuffer.<span class="fu">wrap</span>(dob.<span class="fu">getData</span>))</code></pre>
-<pre><code>Kind: YARN_AM_RM_TOKEN, Service: rm1:8030,rm2.:8030, Ident: (org.apache.hadoop.yarn.security.AMRMTokenIdentifier@7a53ac3c)
-
-Kind: HDFS_DELEGATION_TOKEN, Service: ha-hdfs:hadoop-namenode, Ident: (HDFS_DELEGATION_TOKEN token 294431 for test)</code></pre>
-<h3 id="spark-1.4">Spark-1.4</h3>
-<h3 id="hadoop-delegation-tokens-maximum-lifetime-of-7-days">Hadoop Delegation Tokens maximum lifetime of 7 days</h3>
-<p>dfs.namenode.delegation.token.max-lifetime = 3h<br />dfs.namenode.delegation.key.update-interval = 1h<br />dfs.namenode.delegation.token.renew-interval = 1h</p>
 
 
   </div>

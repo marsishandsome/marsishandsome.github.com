@@ -2,10 +2,14 @@
 
 ### References
 - [Spark-5342 Allow long running Spark apps to run on secure YARN/HDFS](https://issues.apache.org/jira/browse/SPARK-5342)
+- [Spark-8688 Hadoop Configuration has to disable client cache when writing or reading delegation tokens](https://issues.apache.org/jira/browse/SPARK-8688)
 - [Long Running Spark Apps on Secure YARN](https://issues.apache.org/jira/secure/attachment/12693526/SparkYARN.pdf)
 - [SPARK-6918 Secure HBase with Kerberos does not work over YARN](https://issues.apache.org/jira/browse/SPARK-6918)
 - [The Role of Delegation Tokens in Apache Hadoop Security](http://hortonworks.com/blog/the-role-of-delegation-tokens-in-apache-hadoop-security/)
-- [Adding Security to Apache Hadoop](http://hortonworks.com/wp-content/uploads/2011/10/security-design_withCover-1.pdf)
+- [Hadoop Security Design](http://www.valleytalk.org/wp-content/uploads/2013/03/hadoop-security-design.pdf)
+
+### Notes
+--conf spark.hadoop.fs.hdfs.impl.disable.cache=true
 
 ### Spark-1.3
 ```scala
@@ -31,3 +35,6 @@ Kind: HDFS_DELEGATION_TOKEN, Service: ha-hdfs:hadoop-namenode, Ident: (HDFS_DELE
 ### Spark-1.4
 
 ### Hadoop Delegation Tokens maximum lifetime of 7 days
+dfs.namenode.delegation.token.max-lifetime = 3h
+dfs.namenode.delegation.key.update-interval = 1h
+dfs.namenode.delegation.token.renew-interval = 1h
