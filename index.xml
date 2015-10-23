@@ -7,70 +7,70 @@
 
       <item>
         <title>Java序列化问题</title>
-        <link>http://marsishandsome.github.io/gen/Java序列化问题.html</link>
+        <link>http://marsishandsome.github.io/gen/posts/Scala/Java序列化问题.html</link>
         <description>Java序列化问题</description>
       </item>
       
 
       <item>
         <title>Scala资料汇总</title>
-        <link>http://marsishandsome.github.io/gen/Scala资料汇总.html</link>
+        <link>http://marsishandsome.github.io/gen/posts/Scala/Scala资料汇总.html</link>
         <description>Scala资料汇总</description>
       </item>
       
 
       <item>
         <title>解读Future和Promise</title>
-        <link>http://marsishandsome.github.io/gen/解读Future和Promise.html</link>
+        <link>http://marsishandsome.github.io/gen/posts/Scala/解读Future和Promise.html</link>
         <description>解读Future和Promise</description>
       </item>
       
 
       <item>
         <title>Spark IndexedRDD</title>
-        <link>http://marsishandsome.github.io/gen/Spark_IndexedRDD.html</link>
+        <link>http://marsishandsome.github.io/gen/posts/Spark/Spark_IndexedRDD.html</link>
         <description>Spark IndexedRDD</description>
       </item>
       
 
       <item>
         <title>Spark R架构分析</title>
-        <link>http://marsishandsome.github.io/gen/Spark_R架构分析.html</link>
+        <link>http://marsishandsome.github.io/gen/posts/Spark/Spark_R架构分析.html</link>
         <description>Spark R架构分析</description>
       </item>
       
 
       <item>
         <title>Spark on Yarn源码分析</title>
-        <link>http://marsishandsome.github.io/gen/Spark_on_Yarn源码分析.html</link>
+        <link>http://marsishandsome.github.io/gen/posts/Spark/Spark_on_Yarn源码分析.html</link>
         <description>Spark on Yarn源码分析</description>
       </item>
       
 
       <item>
         <title>Spark资料汇总</title>
-        <link>http://marsishandsome.github.io/gen/Spark资料汇总.html</link>
+        <link>http://marsishandsome.github.io/gen/posts/Spark/Spark资料汇总.html</link>
         <description>Spark资料汇总</description>
       </item>
       
 
       <item>
         <title>Gitbook的使用</title>
-        <link>http://marsishandsome.github.io/gen/Gitbook的使用.html</link>
+        <link>http://marsishandsome.github.io/gen/posts/其他/Gitbook的使用.html</link>
         <description>Gitbook的使用</description>
       </item>
       
 
       <item>
         <title>Git的使用</title>
-        <link>http://marsishandsome.github.io/gen/Git的使用.html</link>
+        <link>http://marsishandsome.github.io/gen/posts/其他/Git的使用.html</link>
         <description>Git的使用</description>
       </item>
       
 
       <item>
         <title>摘录</title>
-        <link>http://marsishandsome.github.io/gen/摘录.html</link>
+        <link>http://marsishandsome.github.io/gen/posts/其他/摘录.html</link>
         <description>摘录</description>
       </item>
       

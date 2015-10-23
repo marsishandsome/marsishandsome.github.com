@@ -31,9 +31,9 @@ function pall(){
 }
 
 function pFolder(){
-  for post in `ls $post_dir`
+  for post in `ls src/$post_dir`
   do
-    if [ -d "$post_dir/$post" ]; then
+    if [ -d "src/$post_dir/$post" ]; then
       echo "  $post"
       pSubFolder "$post_dir/$post" $post
     fi
@@ -46,19 +46,20 @@ function pSubFolder(){
 
   echo -e "\n### $category" >> "$index.md"
 
-  for post in `ls $sub_post_dir`
+  for post in `ls src/$sub_post_dir`
   do
-    if [ -f "$sub_post_dir/$post" ]; then
+    if [ -f "src/$sub_post_dir/$post" ]; then
       post_without_md=${post%.md}
       post_with_space=${post_without_md//_/ }
       echo "    $post_with_space"
 
-      ./pmd "$sub_post_dir/$post" > "$gen_dir/$post_without_md.html"
-      echo -e "- [$post_with_space]($gen_dir/$post_without_md.html)" >> "$index.md"
+	  mkdir -p "$gen_dir/$sub_post_dir"
+      ./pmd "src/$sub_post_dir/$post" > "$gen_dir/$sub_post_dir/$post_without_md.html"
+      echo -e "- [$post_with_space]($gen_dir/$sub_post_dir/$post_without_md.html)" >> "$index.md"
       echo "
       <item>
         <title>$post_with_space</title>
-        <link>http://marsishandsome.github.io/$gen_dir/$post_without_md.html</link>
+        <link>http://marsishandsome.github.io/$gen_dir/$sub_post_dir/$post_without_md.html</link>
         <description>$post_with_space</description>
       </item>
       " >> "$index.xml"

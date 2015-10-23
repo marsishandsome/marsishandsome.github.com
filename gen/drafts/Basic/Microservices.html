@@ -1,0 +1,98 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <meta name="author" content="Mars Gu" />
+
+   <!--jquery-->
+   <script src="http://marsishandsome.github.io/libs/jquery/jquery-1.11.3.min.js"></script>
+
+   <!--highlight-->
+   <link rel="stylesheet" href="http://marsishandsome.github.io/libs/highlight/styles/androidstudio.css">
+   <script src="http://marsishandsome.github.io/libs/highlight/highlight.pack.js"></script>
+
+   <!--boostrap-->
+   <link href="http://marsishandsome.github.io/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+   <link href="http://marsishandsome.github.io/libs/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"></link>
+   <script src="http://marsishandsome.github.io/libs/js/bootstrap.min.js"></script>
+
+   <!--markdown-->
+   <link href="http://marsishandsome.github.io/template/github.css" rel="stylesheet"></link>
+
+</head>
+<body>
+<style>#forkongithub a{background:#81BEF7;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#EB6F6F;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:100px){#forkongithub{position:fixed;display:block;top:0;left:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;left:-60px;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-o-transform:rotate(-45deg);box-shadow:4px 4px 4px rgba(0,0,0,0.8);}}</style><span id="forkongithub"><a href="https://github.com/marsishandsome/marsishandsome.github.com">Fork me on GitHub</a></span>
+<div class="row">
+  <div class="span10 offset2">
+    <h1>
+      <a href="/">
+        Mars的笔记
+      </a>
+      <a href="http://feeds.feedburner.com/marsishandsome">
+        <img src="http://marsishandsome.github.io/template/rss.png" style="width:30px;height:30px;"/>
+      </a>
+    </h1>
+<h1 id="microservices">Microservices</h1>
+<h3 id="links">Links</h3>
+<ul>
+<li><a href="http://microservices.io/">Microservice architecture patterns and best practices</a><br /></li>
+<li><a href="http://www.oschina.net/translate/introduction-to-microservices">Introduction to Microservices</a> --Chris Richardson<br /></li>
+<li><a href="http://martinfowler.com/articles/microservice-trade-offs.html">Microservice Trade-Offs</a> --Martin Fowler</li>
+</ul>
+<h3 id="nginx">Nginx</h3>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Nginx">WIKI</a></li>
+</ul>
+<h3 id="netflix">Netflix</h3>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Netflix">WIKI</a><br /></li>
+<li><a href="http://netflix.github.io/#repo">Netflix Open Source Software Center</a><br /></li>
+<li><a href="http://techblog.netflix.com/">The Netflix Tech Blog</a></li>
+</ul>
+<h3>参考文章</h3>
+<h5 id="adopting-microservices-at-netflix-lessons-for-architectural-design"><a href="http://nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Adopting Microservices at Netflix: Lessons for Architectural Design</a></h5>
+<ul>
+<li>微服务架构是一个：service-oriented architecture composed of loosely coupled elements that have bounded contexts<br /></li>
+<li>为每个微服务建立不同的数据后端，这些数据后端不互相依赖<br /></li>
+<li>如果需要重写某个服务，可以保留就的服务，添加新的服务，等到新的服务运行稳定以后，替换旧的服务<br /></li>
+<li>每个微服务有各自的Build工程<br /></li>
+<li>部署到容器<br /></li>
+<li>让微服务做到无状态，这样可以做到auto scaling</li>
+</ul>
+<h5 id="fast-delivery-nginx.conf2014-october-2014"><a href="https://youtu.be/5qJ_BibbMLw">Fast Delivery nginx.conf2014, October 2014</a></h5>
+<h5 id="adopting-microservices-at-netflix-lessons-for-team-and-process-design"><a href="http://nginx.com/blog/adopting-microservices-at-netflix-lessons-for-team-and-process-design/">Adopting Microservices at Netflix: Lessons for Team and Process Design</a></h5>
+<h5 id="the-hidden-costs-of-microservices"><a href="http://www.stackbuilders.com/news/the-hidden-costs-of-microservices">THE HIDDEN COSTS OF MICROSERVICES</a></h5>
+<h5 id="microservices-at-netflix"><a href="http://www.slideshare.net/stonse/microservices-at-netflix">Microservices at Netflix</a></h5>
+<h5 id="a-microscope-on-microservices"><a href="http://techblog.netflix.com/2015/02/a-microscope-on-microservices.html">A Microscope on Microservices</a></h5>
+
+
+  </div>
+</div>
+
+<!--highlight begin-->
+<script type="text/javascript">
+$(document).ready(function() {
+    $('pre code').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+<!--highlight end-->
+
+<!--disques begin-->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'mars-notes';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<!--disques end-->
+
+</body>
+</html>

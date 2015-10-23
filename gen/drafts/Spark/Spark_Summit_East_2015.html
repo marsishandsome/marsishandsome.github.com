@@ -1,0 +1,246 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <meta name="author" content="Mars Gu" />
+
+   <!--jquery-->
+   <script src="http://marsishandsome.github.io/libs/jquery/jquery-1.11.3.min.js"></script>
+
+   <!--highlight-->
+   <link rel="stylesheet" href="http://marsishandsome.github.io/libs/highlight/styles/androidstudio.css">
+   <script src="http://marsishandsome.github.io/libs/highlight/highlight.pack.js"></script>
+
+   <!--boostrap-->
+   <link href="http://marsishandsome.github.io/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+   <link href="http://marsishandsome.github.io/libs/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"></link>
+   <script src="http://marsishandsome.github.io/libs/js/bootstrap.min.js"></script>
+
+   <!--markdown-->
+   <link href="http://marsishandsome.github.io/template/github.css" rel="stylesheet"></link>
+
+</head>
+<body>
+<style>#forkongithub a{background:#81BEF7;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#EB6F6F;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:100px){#forkongithub{position:fixed;display:block;top:0;left:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;left:-60px;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-o-transform:rotate(-45deg);box-shadow:4px 4px 4px rgba(0,0,0,0.8);}}</style><span id="forkongithub"><a href="https://github.com/marsishandsome/marsishandsome.github.com">Fork me on GitHub</a></span>
+<div class="row">
+  <div class="span10 offset2">
+    <h1>
+      <a href="/">
+        Mars的笔记
+      </a>
+      <a href="http://feeds.feedburner.com/marsishandsome">
+        <img src="http://marsishandsome.github.io/template/rss.png" style="width:30px;height:30px;"/>
+      </a>
+    </h1>
+<h1 id="spark-summit-east-2015"><a href="http://spark-summit.org/east/2015">SPARK SUMMIT EAST 2015</a></h1>
+<p>New Directions for Spark in 2015</p>
+<ul>
+<li>Matei Zaharia (CTO, Databricks)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-1-Matei-Zaharia.pdf">slide</a></li>
+</ul>
+<p>2014</p>
+<ul>
+<li>DataFrame API<br /></li>
+<li>Machine Learning Piplines<br /></li>
+<li>SparkR 1.4</li>
+</ul>
+<p>2015</p>
+<ul>
+<li>Data Science -- High-level interfaces similar to single-machine tools<br /></li>
+<li>Platform Interfaces -- Plug in data sources and algorithms</li>
+</ul>
+<p>Goal: Unified engine across data sources, workloads and environments</p>
+<h3 id="embracing-spark-as-the-scalable-data-analytics-platform-for-the-enterprise">Embracing Spark as the Scalable Data Analytics Platform for the Enterprise</h3>
+<ul>
+<li>Matthew Glickman (Managing Director, Goldman Sachs)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-4-Matthew-Glickman.pdf">slide</a><br /></li>
+<li>Don’t wrap Spark<br /></li>
+<li>Think of Spark Client API like ODBC/JDBC<br /></li>
+<li>using existing JVM IDE environment instead of spark-submit for easier debugging<br /></li>
+<li>Dynamically deploy code to cluster at run-time with lambda closures</li>
+</ul>
+<pre><code>val sc = new SparkContext(conf)
+sc.addJar(JarCreator.createJarFile(JarCreator.getClassesFromClassPath(getClass.getPackage.getName)))</code></pre>
+<h3 id="spark-user-concurrency-and-contextrdd-sharing-at-production-scale">Spark User Concurrency and Context/RDD Sharing at Production Scale</h3>
+<ul>
+<li>Farzad Aref (Zoomdata), Justin Langseth (Zoomdata)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-14-Zoomdata-Alarcon.pdf">slide</a><br /></li>
+<li>类似于Spark Job Server, Hive Thrift Server</li>
+</ul>
+<h3 id="power-hive-with-spark">Power Hive with Spark</h3>
+<ul>
+<li>Chao Sun (Cloudera), Marcelo Vanzin (Cloudera)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-17-Marcelo-Vanzin-Chao-Sun.pdf">slide</a></li>
+</ul>
+<p>Dynamic Executor Allocation</p>
+<p>Remote Spark Context</p>
+<ul>
+<li>SparkContext uses non-trivial amount of memory<br /></li>
+<li>Spark doesn’t support multiple SparkContexts<br /></li>
+<li><code>new SparkContext()</code> doesn’t support cluster mode<br /></li>
+<li>Need to isolate user’s sessions<br /></li>
+<li><p>Need to account for user’s resource usage</p></li>
+<li><p>Solution: allow HS2 to start Spark apps out-of-process and interact with them.</p></li>
+</ul>
+<h3 id="developer-using-spark-and-elasticsearch-for-real-time-data-analysis">Developer Using Spark and Elasticsearch for real-time data analysis</h3>
+<ul>
+<li>Costin Leau (Elasticsearch)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-35-Leau.pdf">slide</a></li>
+</ul>
+<h3 id="spark-application-carousel-highlights-of-several-applications-built-with-spark">Spark Application Carousel: Highlights of Several Applications Built with Spark</h3>
+<ul>
+<li>Ankur Dave (UC Berkeley)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-20-Vida-Ha.pdf">slide</a><br /></li>
+<li><a href="https://www.youtube.com/watch?v=cnkaAnMvHb4&amp;index=5&amp;list=PL-x35fyliRwger2GwWLG4vigDRGCDyzCI">video</a></li>
+</ul>
+<p>案例一：Web Logs分析</p>
+<ul>
+<li>计算指标的最大最小值<br /></li>
+<li>计算访问超过N次的IP地址<br /></li>
+<li>把日志作为外部数据源导入到SparkSQL，用sql可以做各种分析<br /></li>
+<li>使用Partitioning <code>ALTER TABLE access_logs   ADD PARTITION (date='20150318') LOCATION    ‘/logs/2015/3/18’</code><br /></li>
+<li>Cache最近N天的数据<br /></li>
+<li>把统计数据存入SparkSQL的Temp表格</li>
+</ul>
+<p>案例二：Wikipedia</p>
+<ul>
+<li>并行下载Wikipedia网页 <code>sc.parallelize</code><br /></li>
+<li>分割xml文件，每一行为一个xml Element<br /></li>
+<li>用xml parser提取感兴趣的数据，另存为parquet，注册为table<br /></li>
+<li>cache表格，用sql做分析<br /></li>
+<li>用MLlib做数据分析</li>
+</ul>
+<p>案例三：Facebook API</p>
+<ul>
+<li>抓取Facebook数据<br /></li>
+<li>用GraphX的Page Rank算法计算最受欢迎的人</li>
+</ul>
+<h3 id="graphx-graph-analytics-in-spark">GraphX: Graph Analytics in Spark</h3>
+<ul>
+<li>Ankur Dave (UC Berkeley)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-23-Ankur-Dave.pdf">slide</a><br /></li>
+<li><a href="https://www.youtube.com/watch?v=Y7hq5MudV9M&amp;index=6&amp;list=PL-x35fyliRwger2GwWLG4vigDRGCDyzCI">video</a></li>
+</ul>
+<p>GraphX入门</p>
+<h3 id="experience-and-lessons-learned-for-large-scale-graph-analysis-using-graphx">Experience and Lessons Learned for Large-Scale Graph Analysis using GraphX</h3>
+<ul>
+<li>Jason (Jinquan) Dai (Intel)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-26-Jason_Dai-NEW.pdf">slide</a><br /></li>
+<li><a href="https://www.youtube.com/watch?v=1MWxIUoIYFA&amp;index=6&amp;list=PL-x35fyliRwger2GwWLG4vigDRGCDyzCI">video</a></li>
+</ul>
+<p>Stack overflow error</p>
+<ul>
+<li>Serialization of RDD objects with extremely long lineage</li>
+</ul>
+<p>Work-arounds</p>
+<ul>
+<li>Allocate large JVM stack frame size<br /></li>
+<li>Checkpoint RDD periodically</li>
+</ul>
+<h3 id="towards-modularizing-spark-machine-learning-jobs">Towards Modularizing Spark Machine Learning Jobs</h3>
+<ul>
+<li>Lance Co Ting Keh (Box)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-29-Lance-Co-Ting-Keh.pdf">slide</a><br /></li>
+<li><a href="https://www.youtube.com/watch?v=x6FnZNjS3lQ&amp;index=7&amp;list=PL-x35fyliRwger2GwWLG4vigDRGCDyzCI">video</a></li>
+</ul>
+<p>用Sparkle进行Spark ML模块化编程</p>
+<p>例子</p>
+<pre><code>val finalSparkle    =
+        for {
+                rddA &lt;-     ReadTextFile(textPath)
+                rddB    &lt;-      ReadSequenceFile(sequencePath)
+                rddC    &lt;-      JsonDecode[TypeA](rddA)
+                rddD    &lt;-      DecodeKeyValue[TypeA](rddB)
+                rddE    &lt;-      JoinByKey(List(rddC,    rddD))
+                rddF    &lt;-      Localize(rddE)
+                rddG    &lt;-      LabelPropagation(rddF)
+                rddH    &lt;-      AccuracyMetric(rddG)
+                rddI    &lt;-      Globalize(rddH)
+                _               &lt;-      WriteMetadata(rddI)
+                _               &lt;-      WriteHDFS(rddJ)(_.asJson.nospaces)
+        } yield rddI</code></pre>
+<p>接口</p>
+<pre><code>trait Sparkle[A] {
+        def run(sc: SparkContext): A
+        def flatMap[B](f: A =&gt; Sparkle[B]): Sparkle[B]
+        def map[B](f: A =&gt;  B): Sparkle[B]
+}</code></pre>
+<h3 id="estimating-financial-risk-with-spark">Estimating Financial Risk with Spark</h3>
+<ul>
+<li>Sandy Ryza (Cloudera)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-21-Sandy-Ryza.pdf">slide</a><br /></li>
+<li><a href="https://www.youtube.com/watch?v=0OM68k3np0E&amp;list=PL-x35fyliRwiiYSXHyI61RXdHlYR3QjZ1&amp;index=5">video</a></li>
+</ul>
+<p><a href="https://github.com/cloudera/spark-timeseries">spark-timeseries</a> -- A library for financial and time series calculations on Apache Spark</p>
+<h3 id="sparking-an-anti-money-laundering-revolution">Spark’ing an Anti Money Laundering Revolution</h3>
+<ul>
+<li>Katie Levans (Tresata)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-24-Levans-Kuipers.pdf">slide</a><br /></li>
+<li><a href="https://www.youtube.com/watch?v=g9_JehbQ17Q&amp;list=PL-x35fyliRwiiYSXHyI61RXdHlYR3QjZ1&amp;index=6">video</a></li>
+</ul>
+<h3 id="recommendations-in-a-flash-how-gilt-uses-spark-to-improve-its-customer-experience">Recommendations in a Flash: How Gilt Uses Spark to Improve Its Customer Experience</h3>
+<ul>
+<li>Zachary Cohn (Gilt Groupe)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-27-ZacharyCohn.pdf">slide</a><br /></li>
+<li><a href="https://www.youtube.com/watch?v=vkHMBosm-U4&amp;index=7&amp;list=PL-x35fyliRwiiYSXHyI61RXdHlYR3QjZ1">video</a></li>
+</ul>
+<h3 id="graph-based-genomic-integration-using-spark">Graph-Based Genomic Integration using Spark</h3>
+<ul>
+<li>David Tester (Novartis Institutes for Biomedical Research)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-30-David-Tester.pdf">slide</a><br /></li>
+<li><a href="https://www.youtube.com/watch?v=ID0pbzf6o7E&amp;index=8&amp;list=PL-x35fyliRwiiYSXHyI61RXdHlYR3QjZ1">video</a></li>
+</ul>
+<h3 id="practical-machine-learning-pipelines-with-mllib">Practical Machine Learning Pipelines with MLlib</h3>
+<ul>
+<li>Joseph Bradley (Databricks)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-22-Joseph-Bradley.pdf">slide</a><br /></li>
+<li><a href="https://www.youtube.com/watch?v=Riuee7qxdX4&amp;index=5&amp;list=PL-x35fyliRwiy50Ud2ltPx8_yA4H34ppJ">video</a></li>
+</ul>
+<h3 id="streaming-machine-learning-in-spark">Streaming machine learning in Spark</h3>
+<ul>
+<li>Jeremy Freeman (HHMI Janelia Research Center)<br /></li>
+<li><a href="https://www.youtube.com/watch?v=uUQTSPvD1mc&amp;list=PL-x35fyliRwiy50Ud2ltPx8_yA4H34ppJ&amp;index=6">video</a></li>
+</ul>
+<h3 id="heterospark-a-heterogeneous-cpugpu-spark-platform-for-deep-learning-algorithms">HeteroSpark: A Heterogeneous CPU/GPU Spark Platform for Deep Learning Algorithms</h3>
+<ul>
+<li>Peilong Li (U of Massachusetts Lowell), Yan Luo (U of Massachusetts Lowell)<br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-28-Peilong-Li-Yan-Luo.pdf">slide</a><br /></li>
+<li><a href="https://www.youtube.com/watch?v=jpQxWcmXKyU&amp;list=PL-x35fyliRwiy50Ud2ltPx8_yA4H34ppJ&amp;index=7">video</a></li>
+</ul>
+<h3 id="multi-modal-big-data-analysis-within-the-spark-ecosystem">Multi-modal big data analysis within the Spark ecosystem</h3>
+<ul>
+<li>Jordi Torres (Barcelona Supercomputing Center)<br /></li>
+<li><a href="https://www.youtube.com/watch?v=aGXoN_SqpIo&amp;list=PL-x35fyliRwiy50Ud2ltPx8_yA4H34ppJ&amp;index=8">video</a></li>
+</ul>
+
+
+  </div>
+</div>
+
+<!--highlight begin-->
+<script type="text/javascript">
+$(document).ready(function() {
+    $('pre code').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+<!--highlight end-->
+
+<!--disques begin-->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'mars-notes';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<!--disques end-->
+
+</body>
+</html>
