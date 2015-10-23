@@ -45,7 +45,10 @@ Block Access Token = {TokenID, TokenAuthenticator}
 - Spark-1.4.0: [SPARK-6918 Secure HBase with Kerberos does not work over YARN](https://issues.apache.org/jira/browse/SPARK-6918)
 - Spark-1.5.0: [Spark-8688 Hadoop Configuration has to disable client cache when writing or reading delegation tokens](https://issues.apache.org/jira/browse/SPARK-8688)
 - Spark-1.5.0: [Spark-7524 add configs for keytab and principal, move originals to internal](https://issues.apache.org/jira/browse/SPARK-7524)
+
+### Patch
 - [Spark-11182 HDFS Delegation Token will be expired when calling "UserGroupInformation.getCurrentUser.addCredentials" in HA mode](https://issues.apache.org/jira/browse/SPARK-11182)
+- [HDFS-9276 Failed to Update HDFS Delegation Token for long running application in HA mode](https://issues.apache.org/jira/browse/HDFS-9276)
 
 ### Configuring YARN for Long-running Applications (Hadoop 2.6.0)
 - [Configuring YARN for Long-running Applications](http://www.cloudera.com/content/www/en-us/documentation/enterprise/5-3-x/topics/cm_sg_yarn_long_jobs.html)
