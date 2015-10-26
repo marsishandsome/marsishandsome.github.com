@@ -1,1 +1,1 @@
-landslide src/slides/Spark/Hadoop_Security.md -d gen/slides/Spark/Hadoop_Security.html
+landslide src/slides/Spark/Hadoop_Security.md -i -d gen/slides/Spark/Hadoop_Security.html
