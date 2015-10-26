@@ -9,7 +9,7 @@
 
 ---
 # Kerberos
-![](http://g.hiphotos.baidu.com/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=0f03a3c4a344ad343ab28fd5b1cb6791/a5c27d1ed21b0ef485f59977dfc451da81cb3efd.jpg)
+![](../../../images/kerberos/kerberos.jpg)
 
 ---
 # Kerberos: The Network Authentication Protocol
