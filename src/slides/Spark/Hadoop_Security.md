@@ -1,4 +1,6 @@
 # Hadoop Security (Kerberos)
+- 顾亮亮
+- 2015.11.03
 
 ---
 # Agenda
@@ -231,6 +233,7 @@ Yarn Application
     fs.listFiles(new Path("/user"), false)
 
 ---
+# Use Case 3: Using HDFS Delegation Token (CONT.)
 Runtime
 ![](../../../images/kerberos/ugi5.PNG)
 
