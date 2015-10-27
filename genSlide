@@ -1,2 +1,10 @@
-#landslide src/slides/Spark/Hadoop_Security.md -i -d gen/slides/Spark/Hadoop_Security.html
-landslide src/slides/Spark/Hadoop_Security.md -d gen/slides/Spark/Hadoop_Security2.html
+# landslide src/slides/Spark/Hadoop_Security.md \
+#-i \
+#-c \
+#-t landslide/themes/iqiyi \
+#-d ../Hadoop_Security.html
+
+landslide src/slides/Spark/Hadoop_Security.md \
+-t landslide/themes/iqiyi \
+-d ../Hadoop_Security_Test.html
+
