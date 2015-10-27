@@ -5,9 +5,9 @@
 ---
 # Agenda
 - Kerberos
-- Hadoop Security
-- Spark Security
-- Hadoop Security Programming API
+- Token Expire Problem when Hadoop meet Kerberos
+- How Spark solve the Problem
+- Hadoop Kerberos Programming API
 
 ---
 # Kerberos (百度百科)
@@ -40,7 +40,7 @@
 ![](../../../images/kerberos/kerberos4.PNG)
 
 ---
-# Hadoop Security
+# Token Expire Problem when Hadoop meet Kerberos
 
 ---
 # Hadoop Authentication Flow
@@ -63,19 +63,17 @@
 - Block Access Token = {TokenID, TokenAuthenticator}
 
 ---
-# Hadoop + Kerberos Authentication
-keytab (long term)
+# Token Expire Problem when Hadoop meet Kerberos
 
--> TGT (max life time = 3 days)
-
--> TGS for NameNode (max life time = 3 days)
-
--> HDFS Delegation Token (max life time = 7 days)
-
--> Block Access Token (not persist)
+1. keytab (long term)
+2. TGT (max life time = 3 days)
+3. TGS for NameNode (max life time = 3 days)
+4. HDFS Delegation Token (max life time = 7 days)
+5. Block Access Token (not persist)
 
 ---
-# Spark Security
+# How Spark solve the Problem
+
 
 ---
 # Old Design
@@ -103,25 +101,10 @@ keytab (long term)
 - [HDFS-9276 Failed to Update HDFS Delegation Token for long running application in HA mode](https://issues.apache.org/jira/browse/HDFS-9276)
 
 ---
-# Hadoop Patches in 2.6.0
-- [Configuring YARN for Long-running Applications](http://www.cloudera.com/content/www/en-us/documentation/enterprise/5-3-x/topics/cm_sg_yarn_long_jobs.html)
-- [Yarn-2704  Localization and log-aggregation will fail if hdfs delegation token expired after token-max-life-time](https://issues.apache.org/jira/browse/YARN-2704)
-- [Yarn-2704 Github](https://github.com/apache/hadoop/commit/a16d022ca4313a41425c8e97841c841a2d6f2f54?diff=split)
-
----
-# Kerberos Programming API
+# Hadoop Kerberos Programming API
 
 ---
 # UserGroupInformation (Hadoop)
-
-    !scala
-    UserGroupInformation.loginUserFromKeytab(principal, keytab)
-    val ugi = UserGroupInformation.getCurrentUser
-
-![](../../../images/kerberos/ugi1.PNG)
-
----
-# UserGroupInformation API
     !java
     // Log a user in from a keytab file. Loads a user identity from a keytab
     // file and logs them in. They become the currently logged-in user.
@@ -145,6 +128,15 @@ keytab (long term)
 
     // Run the given action as the user.
     public <T> T doAs(PrivilegedAction<T> action)
+
+---
+# UserGroupInformation Runtime
+
+    !scala
+    UserGroupInformation.loginUserFromKeytab(principal, keytab)
+    val ugi = UserGroupInformation.getCurrentUser
+
+![](../../../images/kerberos/ugi1.PNG)
 
 ---
 # Subject (Java)
