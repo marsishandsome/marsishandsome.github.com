@@ -1,4 +1,4 @@
-# 如何在Hadoop中避免Kerberos过期问题 <br />顾亮亮 <br />2015.11.03
+# Hadoop Kerberos的那些坑 <br />顾亮亮 <br />2015.11.03
 
 ---
 # Agenda
