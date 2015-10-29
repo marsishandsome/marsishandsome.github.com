@@ -60,18 +60,32 @@ From: [The MIT Kerberos Administrator’s How-to Guide](http://www.kerberos.org/
 From: [Hadoop Security Design](http://www.valleytalk.org/wp-content/uploads/2013/03/hadoop-security-design.pdf)
 
 ---
-# HDFS Authentication
+# HDFS Authentication (Case 1: Sigle JVM Application)
 ![](../../../images/kerberos/hadoop2.PNG)
+
+1. 用Keytab从KDC拿到TGT，进而拿到对应NameNode的TGS
+2. 用TGS向NameNode做验证，进而拿到BlocksToken
+3. 用BlocksToken从DataNode读取数据
+
+### Block Token
+- TokenID = {expirationDate, keyID, ownerID, blockID, accessModes}
+- TokenAuthenticator = HMAC-SHA1(key, TokenID)
+- Block Access Token = {TokenID, TokenAuthenticator}
+
+---
+# HDFS Authentication (Case 2: Yarn Application)
+### <font color="red">Yarn上运行的Executor如何做验证？</font>
+
+1. client用Keytab从KDC拿到TGT，进而拿到对应NameNode的TGS
+2. client用TGS向NameNode做验证，然后获取HDFS Delegation Token
+3. client把HDFS Delegation Token发送到各个Executor
+3. Executor用HDFS Delegation Token向NameNode获取BlocksToken
+4. Executor用BlocksToken从DataNode读取数据
 
 ### HDFS Delegation Token
 - TokenID = {ownerID, renewerID, issueDate, maxDate, sequenceNumber}
 - TokenAuthenticator = HMAC-SHA1(masterKey, TokenID)
 - Delegation Token = {TokenID, TokenAuthenticator}
-
-### Block Access Token
-- TokenID = {expirationDate, keyID, ownerID, blockID, accessModes}
-- TokenAuthenticator = HMAC-SHA1(key, TokenID)
-- Block Access Token = {TokenID, TokenAuthenticator}
 
 ---
 # Token Expired Problem when Hadoop meet Kerberos
@@ -230,7 +244,7 @@ Run once every day in crontab
 **Do <font color="red">NOT</font> call UserGroupInformation.loginUserFromKeytab again**
 
 ---
-# Use Case 3: Muilti-User in Signle JVM
+# Use Case 3: Multi-User in Signle JVM
 <font color="red">Wrong:</font>
 
     !scala
@@ -275,17 +289,17 @@ Run once every day in crontab
 <font color="green">Right:</font>
 
     !scala
-    val creds1 = new org.apache.hadoop.security.Credentials()
-    val ugi1 = UserGroupInformation.loginUserFromKeytabAndReturnUGI(principal,
+    val creds = new org.apache.hadoop.security.Credentials()
+    val ugi = UserGroupInformation.loginUserFromKeytabAndReturnUGI(principal,
                                                                     keytab)
-    ugi1.doAs(new PrivilegedExceptionAction[Void] {
+    ugi.doAs(new PrivilegedExceptionAction[Void] {
       override def run(): Void = {
         val fs = FileSystem.get(new Configuration())
-        fs.addDelegationTokens("test", creds1)
+        fs.addDelegationTokens("test", creds)
         null
       }
     })
-    UserGroupInformation.getCurrentUser.addCredentials(creds1)
+    UserGroupInformation.getCurrentUser.addCredentials(creds)
 
 **Update credentials periodically before token expired**
 
