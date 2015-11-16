@@ -117,6 +117,14 @@ From: [Long Running Spark Apps on Secure YARN](https://issues.apache.org/jira/se
 [Spark-5342 Allow long running Spark apps to run on secure YARN/HDFS](https://issues.apache.org/jira/browse/SPARK-5342)
 
 ---
+# Log Aggregation Token Expire Problem
+**Configuring YARN for Long-running Applications (Hadoop 2.6.0)**
+
+- [Configuring YARN for Long-running Applications](http://www.cloudera.com/content/www/en-us/documentation/enterprise/5-3-x/topics/cm_sg_yarn_long_jobs.html)
+- [Yarn-2704  Localization and log-aggregation will fail if hdfs delegation token expired after token-max-life-time](https://issues.apache.org/jira/browse/YARN-2704)
+- [Yarn-2704 Github](https://github.com/apache/hadoop/commit/a16d022ca4313a41425c8e97841c841a2d6f2f54?diff=split)
+
+---
 # Hadoop Kerberos Programming API
 
 ---

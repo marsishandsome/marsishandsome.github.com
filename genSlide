@@ -1,7 +1,7 @@
-#landslide src/slides/Spark/Hadoop_Security.md \
-#-i \
-#-t landslide/themes/iqiyi \
-#-d ../Hadoop_Security.html
+landslide src/slides/Spark/Hadoop_Security.md \
+-i \
+-t landslide/themes/iqiyi \
+-d ../Hadoop_Security.html
 
 landslide src/slides/Spark/Hadoop_Security.md \
 -t landslide/themes/iqiyi \

@@ -54,7 +54,7 @@ build zeppelin
 ```
 export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
 mvn clean package install \
--Pspark-1.3 \
+-Pspark-1.5 \
 -Dhadoop.version=2.5.0-cdh5.2.0 \
 -Dprotobuf.version=2.5.0 \
 -Pyarn \
