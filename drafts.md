@@ -88,6 +88,7 @@
 - [Spark Meetup Beijing 7](gen/drafts/Spark/Spark_Meetup_Beijing_7.html)
 - [Spark Summit China 2015](gen/drafts/Spark/Spark_Summit_China_2015.html)
 - [Spark Summit East 2015](gen/drafts/Spark/Spark_Summit_East_2015.html)
+- [Spark Summit Europe 2015](gen/drafts/Spark/Spark_Summit_Europe_2015.html)
 
 ### SparkTalk
 - [draft](gen/drafts/SparkTalk/draft.html)
@@ -96,8 +97,6 @@
 - [Databricks Cloud](gen/drafts/WebShellNotebook/Databricks_Cloud.html)
 - [Google DataLab](gen/drafts/WebShellNotebook/Google_DataLab.html)
 - [IPython Notebook](gen/drafts/WebShellNotebook/IPython_Notebook.html)
-- [Spark Notebook](gen/drafts/WebShellNotebook/Spark_Notebook.html)
-- [Zeppelin](gen/drafts/WebShellNotebook/Zeppelin.html)
 - [数据可视化](gen/drafts/WebShellNotebook/数据可视化.html)
 
 ### Working
