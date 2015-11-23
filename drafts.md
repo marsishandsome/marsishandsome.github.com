@@ -83,6 +83,7 @@
 - [KeystoneML](gen/drafts/Spark/KeystoneML.html)
 - [Petuum](gen/drafts/Spark/Petuum.html)
 - [Spark1.4](gen/drafts/Spark/Spark1.4.html)
+- [Spark1.6](gen/drafts/Spark/Spark1.6.html)
 - [Spark A Li Cloud](gen/drafts/Spark/Spark_A_Li_Cloud.html)
 - [Spark Job Server](gen/drafts/Spark/Spark_Job_Server.html)
 - [Spark Meetup Beijing 7](gen/drafts/Spark/Spark_Meetup_Beijing_7.html)
