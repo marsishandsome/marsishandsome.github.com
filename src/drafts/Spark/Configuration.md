@@ -1,7 +1,7 @@
 # Spark Configuration
 
 ## Core
-spark.driver.host=10.153.76.82
+spark.driver.host=xxx.xxx.xxx.xxx
 spark.io.compression.codec=org.apache.spark.io.LZFCompressionCodec
 spark.serializer=org.apache.spark.serializer.KryoSerializer
 
