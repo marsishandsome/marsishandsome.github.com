@@ -1,4 +1,5 @@
 # Spark常用配置
+- [Spark Configuration](http://spark.apache.org/docs/latest/configuration.html)
 
 ## Core
 - spark.io.compression.codec=org.apache.spark.io.LZFCompressionCodec
