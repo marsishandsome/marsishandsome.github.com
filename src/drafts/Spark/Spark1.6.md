@@ -45,13 +45,21 @@ Spark-1.6中简化了内存配置，执行内存和存储内存可以互相借�
 - [Design Doc](https://docs.google.com/document/d/1NoALLyd83zGs1hNGMm0Pc5YOVgiPpMHugGMk6COqxxE/edit#heading=h.ph3w0clkd4em)
 - [Prototype](https://github.com/apache/spark/pull/9256)
 
+```updateStateByKey```存在以下问题
+1. 没有delete key机制，随着数据增多，每个Batch的处理时间会增大
+2. 没有Timeout机制
+
+```trackStateByKey```试图解决这些问题，增加了delete key以及Timeout机制，用户可以更加灵活的使用有状态的Streaming。
+
 TODO
 
 ## Pipeline persistence in Spark ML
 - [SPARK-6725](https://issues.apache.org/jira/browse/SPARK-6725)
 - [Design Doc](https://docs.google.com/document/d/1RleM4QiKwdfZZHf0_G6FBNaF7_koc1Ui7qfMT1pf4IA/edit)
 
-TODO
+Spark ML之前只能保存Module，1.6中新增可以保存Pipline，可用于
+1. 重新运行workflow
+2. 导出到外部的系统
 
 ## [Spark 1.6.0 Preview](https://docs.cloud.databricks.com/docs/spark/1.6/index.html#00%20Spark%201.6%20Preview.html)
 TODO

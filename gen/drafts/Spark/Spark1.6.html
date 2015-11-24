@@ -75,13 +75,23 @@ ds.map {
 <li><a href="https://docs.google.com/document/d/1NoALLyd83zGs1hNGMm0Pc5YOVgiPpMHugGMk6COqxxE/edit#heading=h.ph3w0clkd4em">Design Doc</a><br /></li>
 <li><a href="https://github.com/apache/spark/pull/9256">Prototype</a></li>
 </ul>
+<p><code>updateStateByKey</code>存在以下问题</p>
+<ol>
+<li>没有delete key机制，随着数据增多，每个Batch的处理时间会增大<br /></li>
+<li>没有Timeout机制</li>
+</ol>
+<p><code>trackStateByKey</code>试图解决这些问题，增加了delete key以及Timeout机制，用户可以更加灵活的使用有状态的Streaming。</p>
 <p>TODO</p>
 <h2 id="pipeline-persistence-in-spark-ml">Pipeline persistence in Spark ML</h2>
 <ul>
 <li><a href="https://issues.apache.org/jira/browse/SPARK-6725">SPARK-6725</a><br /></li>
 <li><a href="https://docs.google.com/document/d/1RleM4QiKwdfZZHf0_G6FBNaF7_koc1Ui7qfMT1pf4IA/edit">Design Doc</a></li>
 </ul>
-<p>TODO</p>
+<p>Spark ML之前只能保存Module，1.6中新增可以保存Pipline，可用于</p>
+<ol>
+<li>重新运行workflow<br /></li>
+<li>导出到外部的系统</li>
+</ol>
 <h2 id="spark-1.6.0-preview"><a href="https://docs.cloud.databricks.com/docs/spark/1.6/index.html#00%20Spark%201.6%20Preview.html">Spark 1.6.0 Preview</a></h2>
 <p>TODO</p>
 
