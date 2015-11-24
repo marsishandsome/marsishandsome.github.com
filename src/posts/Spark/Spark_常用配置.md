@@ -1,7 +1,6 @@
 # Spark常用配置
 
 ## Core
-- spark.driver.host=xxx.xxx.xxx.xxx
 - spark.io.compression.codec=org.apache.spark.io.LZFCompressionCodec
 - spark.serializer=org.apache.spark.serializer.KryoSerializer
 
