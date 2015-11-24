@@ -52,6 +52,17 @@
 <li><a href="https://issues.apache.org/jira/browse/SPARK-10000">SPARK-10000</a><br /></li>
 <li><a href="https://issues.apache.org/jira/secure/attachment/12765646/unified-memory-management-spark-10000.pdf">Design Doc</a></li>
 </ul>
+<p>Old Design</p>
+<ul>
+<li>Execution spark.shuffle.memoryFraction (default=0.2)<br /></li>
+<li>Storage spark.storage.memoryFraction (default=0.6)<br /></li>
+<li>Other (default=0.2)</li>
+</ul>
+<p>New Design</p>
+<ul>
+<li>spark.memory.fraction (default=0.75)<br /></li>
+<li>spark.memory.storageFraction (default=0.5)</li>
+</ul>
 <p>TODO</p>
 <h2 id="optimized-state-storage-in-spark-streaming">Optimized state storage in Spark Streaming</h2>
 <ul>

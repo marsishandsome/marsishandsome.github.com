@@ -21,7 +21,17 @@ TODO
 - [SPARK-10000](https://issues.apache.org/jira/browse/SPARK-10000)
 - [Design Doc](https://issues.apache.org/jira/secure/attachment/12765646/unified-memory-management-spark-10000.pdf)
 
+Old Design
+- Execution spark.shuffle.memoryFraction (default=0.2)
+- Storage spark.storage.memoryFraction (default=0.6)
+- Other (default=0.2)
+
+New Design
+- spark.memory.fraction (default=0.75)
+- spark.memory.storageFraction (default=0.5)
+
 TODO
+
 
 ## Optimized state storage in Spark Streaming
 - [SPARK-2629](https://issues.apache.org/jira/browse/SPARK-2629)
