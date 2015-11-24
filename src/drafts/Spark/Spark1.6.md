@@ -51,8 +51,6 @@ Spark-1.6中简化了内存配置，执行内存和存储内存可以互相借�
 
 ```trackStateByKey```试图解决这些问题，增加了delete key以及Timeout机制，用户可以更加灵活的使用有状态的Streaming。
 
-TODO
-
 ## Pipeline persistence in Spark ML
 - [SPARK-6725](https://issues.apache.org/jira/browse/SPARK-6725)
 - [Design Doc](https://docs.google.com/document/d/1RleM4QiKwdfZZHf0_G6FBNaF7_koc1Ui7qfMT1pf4IA/edit)
