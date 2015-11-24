@@ -11,6 +11,15 @@ RDD API可以进行类型检查，但是不能使用Catalyst进行优化；
 DataFrame API可以使用Catalyst进行优化，但是不能进行类型检查；
 Dataset API介于两者之间，即可以进行类型检查又可以使用Catalyst进行优化。
 
+```
+// Dataset例子
+val df = Seq((1, 2)).toDF("a", "b") // DataFrame
+val ds = df.as[(Int, Int)]          // Dateset
+ds.map {
+  case (a, b) => (a, b, a + b)
+}
+```
+
 ### [Type safe api reference](https://github.com/twitter/scalding/wiki/Type-safe-api-reference)
 TODO
 
@@ -21,17 +30,15 @@ TODO
 - [SPARK-10000](https://issues.apache.org/jira/browse/SPARK-10000)
 - [Design Doc](https://issues.apache.org/jira/secure/attachment/12765646/unified-memory-management-spark-10000.pdf)
 
-Old Design
-- Execution spark.shuffle.memoryFraction (default=0.2)
-- Storage spark.storage.memoryFraction (default=0.6)
-- Other (default=0.2)
+在Spark-1.5中，Spark的内存分为三个部分
+1. 执行内存 spark.shuffle.memoryFraction (default=0.2)
+2. 存储内存 spark.storage.memoryFraction (default=0.6)
+3. 其他内存 (default=0.2)
 
-New Design
-- spark.memory.fraction (default=0.75)
-- spark.memory.storageFraction (default=0.5)
-
-TODO
-
+这三部分内存是互相独立的，不能互相借用，这给使用者提出了很高的要求。
+Spark-1.6中简化了内存配置，执行内存和存储内存可以互相借用，其中
+1. spark.memory.fraction (default=0.75) 这部分内存用于执行和存储
+2. spark.memory.storageFraction (default=0.5) 这部分内存是存储内存的最大值
 
 ## Optimized state storage in Spark Streaming
 - [SPARK-2629](https://issues.apache.org/jira/browse/SPARK-2629)
