@@ -11,6 +11,7 @@
 - [Spark IndexedRDD](gen/posts/Spark/Spark_IndexedRDD.html)
 - [Spark R架构分析](gen/posts/Spark/Spark_R架构分析.html)
 - [Spark on Yarn源码分析](gen/posts/Spark/Spark_on_Yarn源码分析.html)
+- [Spark 常用配置](gen/posts/Spark/Spark_常用配置.html)
 - [Spark资料汇总](gen/posts/Spark/Spark资料汇总.html)
 
 ### 其他
