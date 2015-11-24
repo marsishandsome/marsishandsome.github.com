@@ -77,6 +77,7 @@
 - [Chromelogger4j](gen/drafts/Software/Chromelogger4j.html)
 
 ### Spark
+- [Configuration](gen/drafts/Spark/Configuration.html)
 - [Distributed Data Frame](gen/drafts/Spark/Distributed_Data_Frame.html)
 - [Hadoop Summit 2015](gen/drafts/Spark/Hadoop_Summit_2015.html)
 - [Hive on Spark](gen/drafts/Spark/Hive_on_Spark.html)
