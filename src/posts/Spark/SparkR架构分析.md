@@ -1,4 +1,4 @@
-# Spark R架构分析
+# SparkR架构分析
 SparkR项目最近已经merge到spark的master分支，将会在spark-1.4.0中正式发布。
 
 我认为SparkR项目的意义在于：

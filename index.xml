@@ -27,16 +27,23 @@
       
 
       <item>
-        <title>Spark IndexedRDD</title>
-        <link>http://marsishandsome.github.io/gen/posts/Spark/Spark_IndexedRDD.html</link>
-        <description>Spark IndexedRDD</description>
+        <title>SparkR Toturial</title>
+        <link>http://marsishandsome.github.io/gen/posts/Spark/SparkR_Toturial.html</link>
+        <description>SparkR Toturial</description>
       </item>
       
 
       <item>
-        <title>Spark R架构分析</title>
-        <link>http://marsishandsome.github.io/gen/posts/Spark/Spark_R架构分析.html</link>
-        <description>Spark R架构分析</description>
+        <title>SparkR架构分析</title>
+        <link>http://marsishandsome.github.io/gen/posts/Spark/SparkR架构分析.html</link>
+        <description>SparkR架构分析</description>
+      </item>
+      
+
+      <item>
+        <title>Spark IndexedRDD</title>
+        <link>http://marsishandsome.github.io/gen/posts/Spark/Spark_IndexedRDD.html</link>
+        <description>Spark IndexedRDD</description>
       </item>
       
 
