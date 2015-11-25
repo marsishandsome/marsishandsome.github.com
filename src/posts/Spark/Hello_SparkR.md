@@ -1,4 +1,5 @@
 # Hello SparkR
+**如果需要运行在Yarn上，Yarn所有机器上需要安装R环境。**
 
 ## SparkR的两种使用方式
 
