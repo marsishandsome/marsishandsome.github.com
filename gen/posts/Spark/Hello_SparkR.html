@@ -31,30 +31,29 @@
         <img src="http://marsishandsome.github.io/template/rss.png" style="width:30px;height:30px;"/>
       </a>
     </h1>
-<h1 id="sparkr-toturial">SparkR Toturial</h1>
+<h1 id="hello-sparkr">Hello SparkR</h1>
 <h2 id="sparkr">SparkR的两种使用方式</h2>
 <h3 id="sparkr-shell-">1. SparkR Shell 交互式命令行</h3>
-<p>SparkR Shell是一个交互式命令行，用户可以输入R代码，进行交互式操作。SparkR有两种模式：Local模式和Yarn-Client模式。</p>
+<p>SparkR Shell是一个交互式命令行，用户可以输入R代码，进行交互式操作。<br />SparkR有两种模式：Local模式和Yarn-Client模式。</p>
 <h4 id="local">Local模式</h4>
 <p>Local模式下，任务将会运行在本地机器。</p>
 <pre><code>$SPARK_HOME/bin/sparkR --master local[*]</code></pre>
 <h4 id="yarn-client">Yarn-Client模式</h4>
-<p>Yarn-Client模式下，Spark的Driver将会运行在本地机器，而Executor将会运行在Yarn的节点上。</p>
-<pre><code>$SPARK_HOME/bin/sparkR --master yarn-client --num-executors 2 --queue spark</code></pre>
+<p>Yarn-Client模式下，Spark的Driver运行在本地机器，Executor运行在Yarn的节点上。</p>
+<pre><code>$SPARK_HOME/bin/sparkR --master yarn-client --num-executors 2</code></pre>
 <h3 id="spark-submit-">2. Spark Submit 向集群提交任务</h3>
-<p>通过Spark Submit，用户可以把R的任务提交到集群上运行。Spark Submit有三种模式：Local模式，Yarn-Client模式以及Yarn-Cluser模式。<br />其中Local模式和Yarn-Client模式同SparkR Shell，Yarn-Cluser模式下，除了Executor运行在Yarn节点，Driver也会运行在Yarn节点。<br />Local模式和Yarn-Client模式适合调试，Yarn-Cluser模式适合生产环境。</p>
-<pre><code>$SPARK_HOME/bin/spark-submit --master yarn-cluster --num-executors 2 --queue spark  /path/to/test.R</code></pre>
+<p>通过Spark Submit，用户可以把R的任务提交到集群上运行。<br />Spark Submit有三种模式：Local模式，Yarn-Client模式以及Yarn-Cluser模式。<br />其中Local模式和Yarn-Client模式同SparkR Shell，Yarn-Cluser模式中Executor和Driver都运行在Yarn节点。<br />Local模式和Yarn-Client模式适合调试，Yarn-Cluser模式适合生产环境。</p>
+<pre><code>$SPARK_HOME/bin/spark-submit --master yarn-cluster --num-executors 2 /path/to/test.R</code></pre>
 <h2 id="rexternal-package">如何下载并加载R的External Package?</h2>
 <h3 id="external-packages">1. 下载依赖的External Packages</h3>
-<p>用SparkR Shell下载（只需下载一次）需要依赖的External Package，这些Package会自动下载到$SPARK_HOME/R/lib目录下</p>
+<p>用SparkR Shell调用R的函数<code>install.packages</code>下载（只需下载一次）需要依赖的External Package，<br />这些Package会自动下载到$SPARK_HOME/R/lib目录下。</p>
 <pre><code>$SPARK_HOME/bin/sparkR --master local[*]
 install.packages(&quot;matlab&quot;, repos = &quot;http://mirror.bjtu.edu.cn/cran&quot;)</code></pre>
 <h3 id="yarn">2. 提交任务到Yarn集群</h3>
-<p>Spark会自动把$SPARK_HOME/R/lib下的External Package打包成$SPARK_HOME/R/lib/sparkr.zip并上传到相应的Yarn结点。</p>
+<p>Spark会自动把<code>$SPARK_HOME/R/lib</code>下的R Packages打包成<code>$SPARK_HOME/R/lib/sparkr.zip</code><br />并上传到相应的Yarn结点。</p>
 <pre><code>$SPARK_HOME/bin/spark-submit \
 --master yarn-cluster \
 --num-executors 2 \
---queue spark \
 /path/to/example.R</code></pre>
 <h2 id="sparkr">SparkR的使用例子</h2>
 <h3 id="rdd-api">使用RDD API</h3>
@@ -63,37 +62,70 @@ install.packages(&quot;matlab&quot;, repos = &quot;http://mirror.bjtu.edu.cn/cra
 library(SparkR)
 sc &lt;- sparkR.init()
 path &lt;- &quot;/tmp/test.txt&quot;
+
+# RDD[String]
 rdd &lt;- SparkR:::textFile(sc, path)
-words &lt;- SparkR:::flatMap(rdd, function(line) { strsplit(line, &quot; &quot;)[[1]] })
-wordCount &lt;- SparkR:::lapply(words, function(word) { list(word, 1L) })
+
+# RDD[String]
+words &lt;- SparkR:::flatMap(rdd, function(line) {
+  strsplit(line, &quot; &quot;)[[1]]
+})
+
+# RDD[(String, Int)]
+wordCount &lt;- SparkR:::lapply(words, function(word) {
+  list(word, 1L)
+})
+
+# RDD[(String, Int)]
 counts &lt;- SparkR:::reduceByKey(wordCount, &quot;+&quot;, 2L)
+
 SparkR:::collect(counts)</code></pre>
 <h3 id="r-packages">使用R Packages</h3>
 <p>如果在<code>SparkR:::lapply</code>和<code>SparkR:::lapplyPartition</code>等函数中使用了R Packages,<br />这就需要让Spark在执行器上加载相应的R Packages，SparkR提供了<code>SparkR:::includePackage</code>函数来完成这个功能。</p>
 <pre><code># Use Matrix Package
 library(SparkR)
 sc &lt;- sparkR.init()
-rdd &lt;- SparkR:::parallelize(sc, 1 : 10, 2)
-generateSparse &lt;- function(x) {
-# Use sparseMatrix function from the Matrix package
-sparseMatrix(i=c(1, 2, 3), j=c(1, 2, 3), x=c(1, 2, 3))
-}
+
+# import Matrix Package on Executors
 SparkR:::includePackage(sc, Matrix)
+
+# RDD[Int]
+rdd &lt;- SparkR:::parallelize(sc, 1 : 10, 2)
+
+# function: map x to a Matrix
+generateSparse &lt;- function(x) {
+  sparseMatrix(i=c(1, 2, 3), j=c(1, 2, 3), x=c(1, 2, 3))
+}
+
+# RDD[Matrix]
 sparseMat &lt;- SparkR:::lapplyPartition(rdd, generateSparse)
+
 SparkR:::collect(sparseMat)</code></pre>
 <h3 id="r-packages">动态下载R Packages</h3>
 <p><code>install.packages</code>是R中用来动态安装R Packages的函数，在SparkR中调用这个函数会把对应的R Packages下载到<br /><code>$SPARK_HOME/R/lib</code>目录，如果运行在Yarn模式下，lib目录下所有的R Packages会一起打包成<br /><code>$Spark_HOME/R/lib/sparkr.zip</code>，并上传到相应的Yarn执行器中。</p>
 <pre><code># Use Matlab
 library(SparkR)
+
+# download matlab Package
 install.packages(&quot;matlab&quot;, repos = &quot;http://mirror.bjtu.edu.cn/cran&quot;)
+
 sc &lt;- sparkR.init()
 library(matlab)
+
+# import matlab Package on Executors
 SparkR:::includePackage(sc, matlab)
+
+# RDD[Int]
 rdd &lt;- SparkR:::parallelize(sc, 1 : 10, 2)
+
+# function: map x to ones
 generateOnes &lt;- function(x) {
-ones(3)
+  ones(3)
 }
+
+# RDD[ones]
 onesRDD &lt;- SparkR:::lapplyPartition(rdd, generateOnes)
+
 SparkR:::collect(onesRDD)</code></pre>
 <h2>推荐学习资料</h2>
 <ul>

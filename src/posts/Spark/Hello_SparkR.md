@@ -1,9 +1,10 @@
-# SparkR Toturial
+# Hello SparkR
 
 ## SparkR的两种使用方式
 
 ### 1. SparkR Shell 交互式命令行
-SparkR Shell是一个交互式命令行，用户可以输入R代码，进行交互式操作。SparkR有两种模式：Local模式和Yarn-Client模式。
+SparkR Shell是一个交互式命令行，用户可以输入R代码，进行交互式操作。
+SparkR有两种模式：Local模式和Yarn-Client模式。
 
 #### Local模式
 Local模式下，任务将会运行在本地机器。
@@ -11,35 +12,37 @@ Local模式下，任务将会运行在本地机器。
 $SPARK_HOME/bin/sparkR --master local[*]
 ```
 #### Yarn-Client模式
-Yarn-Client模式下，Spark的Driver将会运行在本地机器，而Executor将会运行在Yarn的节点上。
+Yarn-Client模式下，Spark的Driver运行在本地机器，Executor运行在Yarn的节点上。
 ```
-$SPARK_HOME/bin/sparkR --master yarn-client --num-executors 2 --queue spark
+$SPARK_HOME/bin/sparkR --master yarn-client --num-executors 2
 ```
 
 ### 2. Spark Submit 向集群提交任务
-通过Spark Submit，用户可以把R的任务提交到集群上运行。Spark Submit有三种模式：Local模式，Yarn-Client模式以及Yarn-Cluser模式。
-其中Local模式和Yarn-Client模式同SparkR Shell，Yarn-Cluser模式下，除了Executor运行在Yarn节点，Driver也会运行在Yarn节点。
+通过Spark Submit，用户可以把R的任务提交到集群上运行。
+Spark Submit有三种模式：Local模式，Yarn-Client模式以及Yarn-Cluser模式。
+其中Local模式和Yarn-Client模式同SparkR Shell，Yarn-Cluser模式中Executor和Driver都运行在Yarn节点。
 Local模式和Yarn-Client模式适合调试，Yarn-Cluser模式适合生产环境。
 ```
-$SPARK_HOME/bin/spark-submit --master yarn-cluster --num-executors 2 --queue spark  /path/to/test.R
+$SPARK_HOME/bin/spark-submit --master yarn-cluster --num-executors 2 /path/to/test.R
 ```
 
 ## 如何下载并加载R的External Package?
 
 ### 1. 下载依赖的External Packages
-用SparkR Shell下载（只需下载一次）需要依赖的External Package，这些Package会自动下载到$SPARK_HOME/R/lib目录下
+用SparkR Shell调用R的函数```install.packages```下载（只需下载一次）需要依赖的External Package，
+这些Package会自动下载到$SPARK_HOME/R/lib目录下。
 ```
 $SPARK_HOME/bin/sparkR --master local[*]
 install.packages("matlab", repos = "http://mirror.bjtu.edu.cn/cran")
 ```
 
 ### 2. 提交任务到Yarn集群
-Spark会自动把$SPARK_HOME/R/lib下的External Package打包成$SPARK_HOME/R/lib/sparkr.zip并上传到相应的Yarn结点。
+Spark会自动把```$SPARK_HOME/R/lib```下的R Packages打包成```$SPARK_HOME/R/lib/sparkr.zip```
+并上传到相应的Yarn结点。
 ```
 $SPARK_HOME/bin/spark-submit \
 --master yarn-cluster \
 --num-executors 2 \
---queue spark \
 /path/to/example.R
 ```
 
@@ -52,10 +55,23 @@ $SPARK_HOME/bin/spark-submit \
 library(SparkR)
 sc <- sparkR.init()
 path <- "/tmp/test.txt"
+
+# RDD[String]
 rdd <- SparkR:::textFile(sc, path)
-words <- SparkR:::flatMap(rdd, function(line) { strsplit(line, " ")[[1]] })
-wordCount <- SparkR:::lapply(words, function(word) { list(word, 1L) })
+
+# RDD[String]
+words <- SparkR:::flatMap(rdd, function(line) {
+  strsplit(line, " ")[[1]]
+})
+
+# RDD[(String, Int)]
+wordCount <- SparkR:::lapply(words, function(word) {
+  list(word, 1L)
+})
+
+# RDD[(String, Int)]
 counts <- SparkR:::reduceByKey(wordCount, "+", 2L)
+
 SparkR:::collect(counts)
 ```
 
@@ -66,13 +82,21 @@ SparkR:::collect(counts)
 # Use Matrix Package
 library(SparkR)
 sc <- sparkR.init()
-rdd <- SparkR:::parallelize(sc, 1 : 10, 2)
-generateSparse <- function(x) {
-# Use sparseMatrix function from the Matrix package
-sparseMatrix(i=c(1, 2, 3), j=c(1, 2, 3), x=c(1, 2, 3))
-}
+
+# import Matrix Package on Executors
 SparkR:::includePackage(sc, Matrix)
+
+# RDD[Int]
+rdd <- SparkR:::parallelize(sc, 1 : 10, 2)
+
+# function: map x to a Matrix
+generateSparse <- function(x) {
+  sparseMatrix(i=c(1, 2, 3), j=c(1, 2, 3), x=c(1, 2, 3))
+}
+
+# RDD[Matrix]
 sparseMat <- SparkR:::lapplyPartition(rdd, generateSparse)
+
 SparkR:::collect(sparseMat)
 ```
 
@@ -83,15 +107,27 @@ SparkR:::collect(sparseMat)
 ```
 # Use Matlab
 library(SparkR)
+
+# download matlab Package
 install.packages("matlab", repos = "http://mirror.bjtu.edu.cn/cran")
+
 sc <- sparkR.init()
 library(matlab)
+
+# import matlab Package on Executors
 SparkR:::includePackage(sc, matlab)
+
+# RDD[Int]
 rdd <- SparkR:::parallelize(sc, 1 : 10, 2)
+
+# function: map x to ones
 generateOnes <- function(x) {
-ones(3)
+  ones(3)
 }
+
+# RDD[ones]
 onesRDD <- SparkR:::lapplyPartition(rdd, generateOnes)
+
 SparkR:::collect(onesRDD)
 ```
 

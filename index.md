@@ -8,7 +8,7 @@
 - [解读Future和Promise](gen/posts/Scala/解读Future和Promise.html)
 
 ### Spark
-- [SparkR Toturial](gen/posts/Spark/SparkR_Toturial.html)
+- [Hello SparkR](gen/posts/Spark/Hello_SparkR.html)
 - [SparkR架构分析](gen/posts/Spark/SparkR架构分析.html)
 - [Spark IndexedRDD](gen/posts/Spark/Spark_IndexedRDD.html)
 - [Spark on Yarn源码分析](gen/posts/Spark/Spark_on_Yarn源码分析.html)
