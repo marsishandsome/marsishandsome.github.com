@@ -6,16 +6,18 @@
 - [Prototype](https://github.com/marmbrus/spark/pull/18/files)
 
 RDD API可以进行类型检查，但是不能使用Catalyst进行优化；
+
 DataFrame API可以使用Catalyst进行优化，但是不能进行类型检查；
+
 Dataset API介于两者之间，即可以进行类型检查又可以使用Catalyst进行优化。
 
 ```
-// Dataset例子
-val df = Seq((1, 2)).toDF("a", "b") // DataFrame
-val ds = df.as[(Int, Int)]          // Dateset
-ds.map {
-  case (a, b) => (a, b, a + b)
-}
+case class Data(a: Int, b: String)
+val ds = Seq(
+  Data(1, "one"),
+  Data(2, "two")).toDS()
+
+ds.collect()
 ```
 
 ## Automatic memory configuration
@@ -54,6 +56,7 @@ Spark ML之前只能保存Module，1.6中新增可以保存Pipline，可用于
 
 ## SQL Queries on Files
 - [SPARK-11197](https://issues.apache.org/jira/browse/SPARK-11197)
+
 从Apache Drill借鉴过来的API，不需要把文件注册成Table再进行SQL查询，支持直接在文件上做查询。
 ```
 Seq(("Michael", "Databricks"))

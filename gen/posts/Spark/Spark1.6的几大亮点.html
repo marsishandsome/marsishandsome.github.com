@@ -38,13 +38,15 @@
 <li><a href="https://docs.google.com/document/d/1ZVaDqOcLm2-NcS0TElmslHLsEIEwqzt0vBvzpLrV6Ik/edit#">Design Doc</a><br /></li>
 <li><a href="https://github.com/marmbrus/spark/pull/18/files">Prototype</a></li>
 </ul>
-<p>RDD API可以进行类型检查，但是不能使用Catalyst进行优化；<br />DataFrame API可以使用Catalyst进行优化，但是不能进行类型检查；<br />Dataset API介于两者之间，即可以进行类型检查又可以使用Catalyst进行优化。</p>
-<pre><code>// Dataset例子
-val df = Seq((1, 2)).toDF(&quot;a&quot;, &quot;b&quot;) // DataFrame
-val ds = df.as[(Int, Int)]          // Dateset
-ds.map {
-  case (a, b) =&gt; (a, b, a + b)
-}</code></pre>
+<p>RDD API可以进行类型检查，但是不能使用Catalyst进行优化；</p>
+<p>DataFrame API可以使用Catalyst进行优化，但是不能进行类型检查；</p>
+<p>Dataset API介于两者之间，即可以进行类型检查又可以使用Catalyst进行优化。</p>
+<pre><code>case class Data(a: Int, b: String)
+val ds = Seq(
+  Data(1, &quot;one&quot;),
+  Data(2, &quot;two&quot;)).toDS()
+
+ds.collect()</code></pre>
 <h2 id="automatic-memory-configuration">Automatic memory configuration</h2>
 <ul>
 <li><a href="https://issues.apache.org/jira/browse/SPARK-10000">SPARK-10000</a><br /></li>
@@ -85,9 +87,16 @@ ds.map {
 </ol>
 <h2 id="sql-queries-on-files">SQL Queries on Files</h2>
 <ul>
-<li><a href="https://issues.apache.org/jira/browse/SPARK-11197">SPARK-11197</a><br />从Apache Drill借鉴过来的API，不需要把文件注册成Table再进行SQL查询，支持直接在文件上做查询。<br />```<br />Seq((&quot;Michael&quot;, &quot;Databricks&quot;))<br /> .toDF(&quot;name&quot;, &quot;company&quot;)<br /> .write<br /> .mode(&quot;overwrite&quot;)<br /> .save(&quot;/home/spark/1.6/people&quot;)</li>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-11197">SPARK-11197</a></li>
 </ul>
-<p>%sql SELECT * FROM parquet.<code>/home/spark/1.6/people</code><br />```</p>
+<p>从Apache Drill借鉴过来的API，不需要把文件注册成Table再进行SQL查询，支持直接在文件上做查询。</p>
+<pre><code>Seq((&quot;Michael&quot;, &quot;Databricks&quot;))
+  .toDF(&quot;name&quot;, &quot;company&quot;)
+  .write
+  .mode(&quot;overwrite&quot;)
+  .save(&quot;/home/spark/1.6/people&quot;)
+
+%sql SELECT * FROM parquet.`/home/spark/1.6/people`</code></pre>
 <h2 id="reference">Reference</h2>
 <ul>
 <li><a href="https://databricks.com/blog/2015/11/20/announcing-spark-1-6-preview-in-databricks.html">Announcing Spark 1.6 Preview in Databricks</a><br /></li>
