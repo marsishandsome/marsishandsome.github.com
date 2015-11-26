@@ -9,6 +9,7 @@
 
 ### Spark
 - [Hello SparkR](gen/posts/Spark/Hello_SparkR.html)
+- [Spark1.6的几大亮点](gen/posts/Spark/Spark1.6的几大亮点.html)
 - [SparkR架构分析](gen/posts/Spark/SparkR架构分析.html)
 - [Spark IndexedRDD](gen/posts/Spark/Spark_IndexedRDD.html)
 - [Spark on Yarn源码分析](gen/posts/Spark/Spark_on_Yarn源码分析.html)
