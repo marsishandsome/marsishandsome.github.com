@@ -20,6 +20,10 @@ val ds = Seq(
 ds.collect()
 ```
 
+DataFrame API类似于Twitter Scalding的[Fields based API](https://github.com/twitter/scalding/wiki/Fields-based-API-Reference);
+
+Dataset API类似于Twitter Scalding的[Type safe API](https://github.com/twitter/scalding/wiki/Type-safe-api-reference)。
+
 ## Automatic memory configuration
 - [SPARK-10000](https://issues.apache.org/jira/browse/SPARK-10000)
 - [Design Doc](https://issues.apache.org/jira/secure/attachment/12765646/unified-memory-management-spark-10000.pdf)
