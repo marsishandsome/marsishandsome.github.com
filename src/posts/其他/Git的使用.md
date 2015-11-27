@@ -1,5 +1,11 @@
 # Git的使用
 
+### Add Reviewer
+编辑 ```.git/config```
+```
+receivepack = git receive-pack --reviewer reviewer1 --reviewer reviewer2
+```
+
 ### Rewrite History
 ```bash
 git filter-branch --tree-filter `rm -rf path/to/folder`

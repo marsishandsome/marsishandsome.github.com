@@ -32,6 +32,9 @@
       </a>
     </h1>
 <h1 id="git">Git的使用</h1>
+<h3 id="add-reviewer">Add Reviewer</h3>
+<p>编辑 <code>.git/config</code></p>
+<pre><code>receivepack = git receive-pack --reviewer reviewer1 --reviewer reviewer2</code></pre>
 <h3 id="rewrite-history">Rewrite History</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> filter-branch --tree-filter <span class="kw">`rm</span> -rf path/to/folder<span class="kw">`</span>
 <span class="kw">git</span> push origin --force</code></pre>
