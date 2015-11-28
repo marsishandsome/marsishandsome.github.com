@@ -77,6 +77,7 @@
 - [Chromelogger4j](gen/drafts/Software/Chromelogger4j.html)
 
 ### Spark
+- [2015.11.02 New Developments in Spark by Matei Zaharia](gen/drafts/Spark/2015.11.02_New_Developments_in_Spark_by_Matei_Zaharia.html)
 - [Distributed Data Frame](gen/drafts/Spark/Distributed_Data_Frame.html)
 - [Hadoop Summit 2015](gen/drafts/Spark/Hadoop_Summit_2015.html)
 - [Hive on Spark](gen/drafts/Spark/Hive_on_Spark.html)
