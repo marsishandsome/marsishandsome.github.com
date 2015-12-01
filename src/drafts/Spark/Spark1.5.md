@@ -24,7 +24,6 @@ left.join(broadcast(right), "joinKey")
 ### Memory and local disk only checkpointing support
 - [SPARK-1855](https://issues.apache.org/jira/browse/SPARK-1855)
 - [Design Doc](https://issues.apache.org/jira/secure/attachment/12741708/SPARK-7292-design.pdf)
-- [Patch](https://github.com/apache/spark/pull/7279/files)
 
 ```rdd.checkpoint()```是基于DFS实现的，RDD的数据将会复制3份保持到硬盘，为了提高checkpoint的效率，
 Spark提供了```rdd.localCheckpoint()```，Executor会把RDD的数据保持一份到本地磁盘，
@@ -33,11 +32,30 @@ Spark提供了```rdd.localCheckpoint()```，Executor会把RDD的数据保持一�
 ### Dynamic allocation in YARN works with preferred locations
 - [SPARK-4352](https://issues.apache.org/jira/browse/SPARK-4352)
 - [Design Doc](https://issues.apache.org/jira/secure/attachment/12735126/Supportpreferrednodelocationindynamicallocation.pdf)
-- [Patch](https://github.com/apache/spark/pull/6394/files)
 
 Spark会记录所有Pending Task的数据依赖，在向Yarn申请资源的时候，会尽量申请靠近数据的执行器。
 
-### Dynamic resource allocation support
+### Dynamic resource allocation support in Standalone Cluster
+- [SPARK-4751](https://issues.apache.org/jira/browse/SPARK-4751)
+
+之前Spark Standalone集群在启动任务前就需要把所需的执行器全部申请好，
+现在支持运行起来以后动态增加执行器。
+
+### Faster and more robust dynamic partition insert
+- [SPARK-8890](https://issues.apache.org/jira/browse/SPARK-8890)
+
+在使用Insert方式插入数据到HDFS的时候，每个执行器会打开所有需要插入的Partition的文件，
+如果需要插入的文件数量很多，会导致执行器OOM。
+该Patch只允许每个Executor一次最多打开```spark.sql.sources.maxConcurrentWrites```个文件，
+默认值是5。如果大于这个数量，就对所需插入的数据进行外部排序，再依此进行插入。
+
+### Support for YARN cluster mode in R
+- [SPARK-6797](https://issues.apache.org/jira/browse/SPARK-6797)
+
+SparkR在Yarn模式下，会把提交机器上```$SPARK_HOME/R/lib/SparkR```包括里面用户下载的RPackages
+一起打包成sparkr.zip，并上传到Yarn上，使得Executors可以读取到相应的RPackages。
+
+### Aliases to make DataFrame functions more R-like
 TODO
 
 ## Spark1.5.1
