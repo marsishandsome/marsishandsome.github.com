@@ -1,12 +1,13 @@
-# 常用的Maven插件
+# Maven常用插件
 
-##  properties
+##  Properties
 ```
 <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <PermGen>128m</PermGen>
-    <MaxPermGen>1024m</MaxPermGen>
+    <PermGen>64m</PermGen>
+    <MaxPermGen>512m</MaxPermGen>
+    <CodeCacheSize>512m</CodeCacheSize>
     <java.version>1.7</java.version>
     <scala.version>2.10.4</scala.version>
     <scala.binary.version>2.10</scala.binary.version>
@@ -14,9 +15,16 @@
 </properties>
 ```
 
-## scala-maven-plugin
-- [Document](http://davidb.github.io/scala-maven-plugin/)
+## Scala Maven plugin
+- [Scala Maven Plugin](http://davidb.github.io/scala-maven-plugin/)
 - [Github](https://github.com/davidB/scala-maven-plugin)
+
+Scala的Maven插件，常用配置包括
+- 增量式编译
+- Zinc服务器，加速编译
+- Scala编译参数
+- Java编译参数
+- JVM启动参数
 
 ```
 <plugin>
@@ -24,6 +32,12 @@
     <artifactId>scala-maven-plugin</artifactId>
     <version>3.2.0</version>
     <executions>
+      <execution>
+              <id>eclipse-add-source</id>
+              <goals>
+                <goal>add-source</goal>
+              </goals>
+            </execution>
         <execution>
             <id>scala-compile-first</id>
             <phase>process-resources</phase>
@@ -38,34 +52,63 @@
                 <goal>testCompile</goal>
             </goals>
         </execution>
+        <execution>
+              <id>attach-scaladocs</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>doc-jar</goal>
+              </goals>
+            </execution>
     </executions>
     <configuration>
         <scalaVersion>${scala.version}</scalaVersion>
         <recompileMode>incremental</recompileMode>
-        <useZincServer>false</useZincServer>
+        <useZincServer>true</useZincServer>
         <args>
             <arg>-unchecked</arg>
             <arg>-deprecation</arg>
-            <arg>-feature</arg>
-            <arg>-language:postfixOps</arg>
+            <arg>-feature</arg>gs>
         </args>
-        <jvmArgs>
-            <jvmArg>-Xms1024m</jvmArg>
-            <jvmArg>-Xmx1024m</jvmArg>
-            <jvmArg>-XX:PermSize=${PermGen}</jvmArg>
-            <jvmArg>-XX:MaxPermSize=${MaxPermGen}</jvmArg>
-        </jvmArgs>
         <javacArgs>
             <javacArg>-source</javacArg>
             <javacArg>${java.version}</javacArg>
             <javacArg>-target</javacArg>
             <javacArg>${java.version}</javacArg>
+            <javacArg>-Xlint:all,-serial,-path</javacArg>
         </javacArgs>
+        <jvmArgs>
+            <jvmArg>-Xms1024m</jvmArg>
+            <jvmArg>-Xmx1024m</jvmArg>
+            <jvmArg>-XX:PermSize=${PermGen}</jvmArg>
+            <jvmArg>-XX:MaxPermSize=${MaxPermGen}</jvmArg>
+            <jvmArg>-XX:ReservedCodeCacheSize=${CodeCacheSize}</jvmArg>
+        </jvmArgs>
     </configuration>
 </plugin>
 ```
 
-## maven-shade-plugin
+## Maven Compiler Plugin
+- [Maven Compiler Plugin](https://maven.apache.org/plugins/maven-compiler-plugin/)
+
+```
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <version>3.3</version>
+  <configuration>
+    <source>${java.version}</source>
+    <target>${java.version}</target>
+    <encoding>UTF-8</encoding>
+    <maxmem>1024m</maxmem>
+    <fork>true</fork>
+    <compilerArgs>
+      <arg>-Xlint:all,-serial,-path</arg>
+    </compilerArgs>
+  </configuration>
+</plugin>
+```
+
+## Maven Shade Plugin
 - [Maven Shade Plugin](https://maven.apache.org/plugins/maven-shade-plugin/)
 
 ```

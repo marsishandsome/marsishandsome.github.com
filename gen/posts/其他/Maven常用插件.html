@@ -31,28 +31,43 @@
         <img src="http://marsishandsome.github.io/template/rss.png" style="width:30px;height:30px;"/>
       </a>
     </h1>
-<h1 id="maven">常用的Maven插件</h1>
-<h2 id="properties">properties</h2>
+<h1 id="maven">Maven常用插件</h1>
+<h2 id="properties">Properties</h2>
 <pre><code>&lt;properties&gt;
     &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
     &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
-    &lt;PermGen&gt;128m&lt;/PermGen&gt;
-    &lt;MaxPermGen&gt;1024m&lt;/MaxPermGen&gt;
+    &lt;PermGen&gt;64m&lt;/PermGen&gt;
+    &lt;MaxPermGen&gt;512m&lt;/MaxPermGen&gt;
+    &lt;CodeCacheSize&gt;512m&lt;/CodeCacheSize&gt;
     &lt;java.version&gt;1.7&lt;/java.version&gt;
     &lt;scala.version&gt;2.10.4&lt;/scala.version&gt;
     &lt;scala.binary.version&gt;2.10&lt;/scala.binary.version&gt;
     &lt;scala.macros.version&gt;2.0.1&lt;/scala.macros.version&gt;
 &lt;/properties&gt;</code></pre>
-<h2 id="scala-maven-plugin">scala-maven-plugin</h2>
+<h2 id="scala-maven-plugin">Scala Maven plugin</h2>
 <ul>
-<li><a href="http://davidb.github.io/scala-maven-plugin/">Document</a><br /></li>
+<li><a href="http://davidb.github.io/scala-maven-plugin/">Scala Maven Plugin</a><br /></li>
 <li><a href="https://github.com/davidB/scala-maven-plugin">Github</a></li>
+</ul>
+<p>Scala的Maven插件，常用配置包括</p>
+<ul>
+<li>增量式编译<br /></li>
+<li>Zinc服务器，加速编译<br /></li>
+<li>Scala编译参数<br /></li>
+<li>Java编译参数<br /></li>
+<li>JVM启动参数</li>
 </ul>
 <pre><code>&lt;plugin&gt;
     &lt;groupId&gt;net.alchim31.maven&lt;/groupId&gt;
     &lt;artifactId&gt;scala-maven-plugin&lt;/artifactId&gt;
     &lt;version&gt;3.2.0&lt;/version&gt;
     &lt;executions&gt;
+      &lt;execution&gt;
+              &lt;id&gt;eclipse-add-source&lt;/id&gt;
+              &lt;goals&gt;
+                &lt;goal&gt;add-source&lt;/goal&gt;
+              &lt;/goals&gt;
+            &lt;/execution&gt;
         &lt;execution&gt;
             &lt;id&gt;scala-compile-first&lt;/id&gt;
             &lt;phase&gt;process-resources&lt;/phase&gt;
@@ -67,32 +82,59 @@
                 &lt;goal&gt;testCompile&lt;/goal&gt;
             &lt;/goals&gt;
         &lt;/execution&gt;
+        &lt;execution&gt;
+              &lt;id&gt;attach-scaladocs&lt;/id&gt;
+              &lt;phase&gt;verify&lt;/phase&gt;
+              &lt;goals&gt;
+                &lt;goal&gt;doc-jar&lt;/goal&gt;
+              &lt;/goals&gt;
+            &lt;/execution&gt;
     &lt;/executions&gt;
     &lt;configuration&gt;
         &lt;scalaVersion&gt;${scala.version}&lt;/scalaVersion&gt;
         &lt;recompileMode&gt;incremental&lt;/recompileMode&gt;
-        &lt;useZincServer&gt;false&lt;/useZincServer&gt;
+        &lt;useZincServer&gt;true&lt;/useZincServer&gt;
         &lt;args&gt;
             &lt;arg&gt;-unchecked&lt;/arg&gt;
             &lt;arg&gt;-deprecation&lt;/arg&gt;
-            &lt;arg&gt;-feature&lt;/arg&gt;
-            &lt;arg&gt;-language:postfixOps&lt;/arg&gt;
+            &lt;arg&gt;-feature&lt;/arg&gt;gs&gt;
         &lt;/args&gt;
-        &lt;jvmArgs&gt;
-            &lt;jvmArg&gt;-Xms1024m&lt;/jvmArg&gt;
-            &lt;jvmArg&gt;-Xmx1024m&lt;/jvmArg&gt;
-            &lt;jvmArg&gt;-XX:PermSize=${PermGen}&lt;/jvmArg&gt;
-            &lt;jvmArg&gt;-XX:MaxPermSize=${MaxPermGen}&lt;/jvmArg&gt;
-        &lt;/jvmArgs&gt;
         &lt;javacArgs&gt;
             &lt;javacArg&gt;-source&lt;/javacArg&gt;
             &lt;javacArg&gt;${java.version}&lt;/javacArg&gt;
             &lt;javacArg&gt;-target&lt;/javacArg&gt;
             &lt;javacArg&gt;${java.version}&lt;/javacArg&gt;
+            &lt;javacArg&gt;-Xlint:all,-serial,-path&lt;/javacArg&gt;
         &lt;/javacArgs&gt;
+        &lt;jvmArgs&gt;
+            &lt;jvmArg&gt;-Xms1024m&lt;/jvmArg&gt;
+            &lt;jvmArg&gt;-Xmx1024m&lt;/jvmArg&gt;
+            &lt;jvmArg&gt;-XX:PermSize=${PermGen}&lt;/jvmArg&gt;
+            &lt;jvmArg&gt;-XX:MaxPermSize=${MaxPermGen}&lt;/jvmArg&gt;
+            &lt;jvmArg&gt;-XX:ReservedCodeCacheSize=${CodeCacheSize}&lt;/jvmArg&gt;
+        &lt;/jvmArgs&gt;
     &lt;/configuration&gt;
 &lt;/plugin&gt;</code></pre>
-<h2 id="maven-shade-plugin">maven-shade-plugin</h2>
+<h2 id="maven-compiler-plugin">Maven Compiler Plugin</h2>
+<ul>
+<li><a href="https://maven.apache.org/plugins/maven-compiler-plugin/">Maven Compiler Plugin</a></li>
+</ul>
+<pre><code>&lt;plugin&gt;
+  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+  &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+  &lt;version&gt;3.3&lt;/version&gt;
+  &lt;configuration&gt;
+    &lt;source&gt;${java.version}&lt;/source&gt;
+    &lt;target&gt;${java.version}&lt;/target&gt;
+    &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+    &lt;maxmem&gt;1024m&lt;/maxmem&gt;
+    &lt;fork&gt;true&lt;/fork&gt;
+    &lt;compilerArgs&gt;
+      &lt;arg&gt;-Xlint:all,-serial,-path&lt;/arg&gt;
+    &lt;/compilerArgs&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+<h2 id="maven-shade-plugin">Maven Shade Plugin</h2>
 <ul>
 <li><a href="https://maven.apache.org/plugins/maven-shade-plugin/">Maven Shade Plugin</a></li>
 </ul>
