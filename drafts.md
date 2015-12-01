@@ -91,6 +91,7 @@
 - [Spark Summit China 2015](gen/drafts/Spark/Spark_Summit_China_2015.html)
 - [Spark Summit East 2015](gen/drafts/Spark/Spark_Summit_East_2015.html)
 - [Spark Summit Europe 2015](gen/drafts/Spark/Spark_Summit_Europe_2015.html)
+- [Spark Unit Test](gen/drafts/Spark/Spark_Unit_Test.html)
 
 ### SparkTalk
 - [draft](gen/drafts/SparkTalk/draft.html)
