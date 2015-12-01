@@ -1,0 +1,133 @@
+# 常用的Maven插件
+
+##  properties
+```
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <PermGen>128m</PermGen>
+    <MaxPermGen>1024m</MaxPermGen>
+    <java.version>1.7</java.version>
+    <scala.version>2.10.4</scala.version>
+    <scala.binary.version>2.10</scala.binary.version>
+    <scala.macros.version>2.0.1</scala.macros.version>
+</properties>
+```
+
+## scala-maven-plugin
+- [Document](http://davidb.github.io/scala-maven-plugin/)
+- [Github](https://github.com/davidB/scala-maven-plugin)
+
+```
+<plugin>
+    <groupId>net.alchim31.maven</groupId>
+    <artifactId>scala-maven-plugin</artifactId>
+    <version>3.2.0</version>
+    <executions>
+        <execution>
+            <id>scala-compile-first</id>
+            <phase>process-resources</phase>
+            <goals>
+                <goal>compile</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>scala-test-compile-first</id>
+            <phase>process-test-resources</phase>
+            <goals>
+                <goal>testCompile</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
+        <scalaVersion>${scala.version}</scalaVersion>
+        <recompileMode>incremental</recompileMode>
+        <useZincServer>false</useZincServer>
+        <args>
+            <arg>-unchecked</arg>
+            <arg>-deprecation</arg>
+            <arg>-feature</arg>
+            <arg>-language:postfixOps</arg>
+        </args>
+        <jvmArgs>
+            <jvmArg>-Xms1024m</jvmArg>
+            <jvmArg>-Xmx1024m</jvmArg>
+            <jvmArg>-XX:PermSize=${PermGen}</jvmArg>
+            <jvmArg>-XX:MaxPermSize=${MaxPermGen}</jvmArg>
+        </jvmArgs>
+        <javacArgs>
+            <javacArg>-source</javacArg>
+            <javacArg>${java.version}</javacArg>
+            <javacArg>-target</javacArg>
+            <javacArg>${java.version}</javacArg>
+        </javacArgs>
+    </configuration>
+</plugin>
+```
+
+## maven-shade-plugin
+- [Maven Shade Plugin](https://maven.apache.org/plugins/maven-shade-plugin/)
+
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>2.4.2</version>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+            <configuration>
+                <shadedArtifactAttached>false</shadedArtifactAttached>
+                <artifactSet>
+                    <includes>
+                        <include>*:*</include>
+                    </includes>
+                </artifactSet>
+                <filters>
+                    <filter>
+                        <artifact>*:*</artifact>
+                        <excludes>
+                            <exclude>META-INF/*.SF</exclude>
+                            <exclude>META-INF/*.DSA</exclude>
+                            <exclude>META-INF/*.RSA</exclude>
+                        </excludes>
+                    </filter>
+                </filters>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+
+## maven-enforcer-plugin
+- [Maven Enforcer Plugin](http://maven.apache.org/enforcer/maven-enforcer-plugin/)
+- [Maven Enforcer Rules](http://maven.apache.org/enforcer/enforcer-rules/)
+- [Rule: Dependency Convergence](http://maven.apache.org/enforcer/enforcer-rules/dependencyConvergence.html)
+- [Fight Dependency Hell in Maven](http://cupofjava.de/blog/2013/02/01/fight-dependency-hell-in-maven/)
+
+> If a project has two dependencies, A and B, both depending on the same artifact, C, this rule will fail the build if A depends on a different version of C then the version of C depended on by B.
+
+```
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-enforcer-plugin</artifactId>
+  <version>1.4.1</version>
+  <executions>
+    <execution>
+      <id>enforce</id>
+      <configuration>
+        <rules>
+          <dependencyConvergence/>
+        </rules>
+      </configuration>
+      <goals>
+        <goal>enforce</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+```

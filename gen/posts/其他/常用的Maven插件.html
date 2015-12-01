@@ -1,0 +1,190 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <meta name="author" content="Mars Gu" />
+
+   <!--jquery-->
+   <script src="http://marsishandsome.github.io/libs/jquery/jquery-1.11.3.min.js"></script>
+
+   <!--highlight-->
+   <link rel="stylesheet" href="http://marsishandsome.github.io/libs/highlight/styles/androidstudio.css">
+   <script src="http://marsishandsome.github.io/libs/highlight/highlight.pack.js"></script>
+
+   <!--boostrap-->
+   <link href="http://marsishandsome.github.io/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+   <link href="http://marsishandsome.github.io/libs/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"></link>
+   <script src="http://marsishandsome.github.io/libs/js/bootstrap.min.js"></script>
+
+   <!--markdown-->
+   <link href="http://marsishandsome.github.io/template/github.css" rel="stylesheet"></link>
+
+</head>
+<body>
+<style>#forkongithub a{background:#81BEF7;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#EB6F6F;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:100px){#forkongithub{position:fixed;display:block;top:0;left:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;left:-60px;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-o-transform:rotate(-45deg);box-shadow:4px 4px 4px rgba(0,0,0,0.8);}}</style><span id="forkongithub"><a href="https://github.com/marsishandsome/marsishandsome.github.com">Fork me on GitHub</a></span>
+<div class="row">
+  <div class="span10 offset2">
+    <h1>
+      <a href="/">
+        Mars的笔记
+      </a>
+      <a href="http://feeds.feedburner.com/marsishandsome">
+        <img src="http://marsishandsome.github.io/template/rss.png" style="width:30px;height:30px;"/>
+      </a>
+    </h1>
+<h1 id="maven">常用的Maven插件</h1>
+<h2 id="properties">properties</h2>
+<pre><code>&lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+    &lt;PermGen&gt;128m&lt;/PermGen&gt;
+    &lt;MaxPermGen&gt;1024m&lt;/MaxPermGen&gt;
+    &lt;java.version&gt;1.7&lt;/java.version&gt;
+    &lt;scala.version&gt;2.10.4&lt;/scala.version&gt;
+    &lt;scala.binary.version&gt;2.10&lt;/scala.binary.version&gt;
+    &lt;scala.macros.version&gt;2.0.1&lt;/scala.macros.version&gt;
+&lt;/properties&gt;</code></pre>
+<h2 id="scala-maven-plugin">scala-maven-plugin</h2>
+<ul>
+<li><a href="http://davidb.github.io/scala-maven-plugin/">Document</a><br /></li>
+<li><a href="https://github.com/davidB/scala-maven-plugin">Github</a></li>
+</ul>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;net.alchim31.maven&lt;/groupId&gt;
+    &lt;artifactId&gt;scala-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;3.2.0&lt;/version&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;id&gt;scala-compile-first&lt;/id&gt;
+            &lt;phase&gt;process-resources&lt;/phase&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;compile&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+        &lt;execution&gt;
+            &lt;id&gt;scala-test-compile-first&lt;/id&gt;
+            &lt;phase&gt;process-test-resources&lt;/phase&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;testCompile&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+    &lt;configuration&gt;
+        &lt;scalaVersion&gt;${scala.version}&lt;/scalaVersion&gt;
+        &lt;recompileMode&gt;incremental&lt;/recompileMode&gt;
+        &lt;useZincServer&gt;false&lt;/useZincServer&gt;
+        &lt;args&gt;
+            &lt;arg&gt;-unchecked&lt;/arg&gt;
+            &lt;arg&gt;-deprecation&lt;/arg&gt;
+            &lt;arg&gt;-feature&lt;/arg&gt;
+            &lt;arg&gt;-language:postfixOps&lt;/arg&gt;
+        &lt;/args&gt;
+        &lt;jvmArgs&gt;
+            &lt;jvmArg&gt;-Xms1024m&lt;/jvmArg&gt;
+            &lt;jvmArg&gt;-Xmx1024m&lt;/jvmArg&gt;
+            &lt;jvmArg&gt;-XX:PermSize=${PermGen}&lt;/jvmArg&gt;
+            &lt;jvmArg&gt;-XX:MaxPermSize=${MaxPermGen}&lt;/jvmArg&gt;
+        &lt;/jvmArgs&gt;
+        &lt;javacArgs&gt;
+            &lt;javacArg&gt;-source&lt;/javacArg&gt;
+            &lt;javacArg&gt;${java.version}&lt;/javacArg&gt;
+            &lt;javacArg&gt;-target&lt;/javacArg&gt;
+            &lt;javacArg&gt;${java.version}&lt;/javacArg&gt;
+        &lt;/javacArgs&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+<h2 id="maven-shade-plugin">maven-shade-plugin</h2>
+<ul>
+<li><a href="https://maven.apache.org/plugins/maven-shade-plugin/">Maven Shade Plugin</a></li>
+</ul>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
+    &lt;version&gt;2.4.2&lt;/version&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;shade&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;configuration&gt;
+                &lt;shadedArtifactAttached&gt;false&lt;/shadedArtifactAttached&gt;
+                &lt;artifactSet&gt;
+                    &lt;includes&gt;
+                        &lt;include&gt;*:*&lt;/include&gt;
+                    &lt;/includes&gt;
+                &lt;/artifactSet&gt;
+                &lt;filters&gt;
+                    &lt;filter&gt;
+                        &lt;artifact&gt;*:*&lt;/artifact&gt;
+                        &lt;excludes&gt;
+                            &lt;exclude&gt;META-INF/*.SF&lt;/exclude&gt;
+                            &lt;exclude&gt;META-INF/*.DSA&lt;/exclude&gt;
+                            &lt;exclude&gt;META-INF/*.RSA&lt;/exclude&gt;
+                        &lt;/excludes&gt;
+                    &lt;/filter&gt;
+                &lt;/filters&gt;
+            &lt;/configuration&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+&lt;/plugin&gt;</code></pre>
+<h2 id="maven-enforcer-plugin">maven-enforcer-plugin</h2>
+<ul>
+<li><a href="http://maven.apache.org/enforcer/maven-enforcer-plugin/">Maven Enforcer Plugin</a><br /></li>
+<li><a href="http://maven.apache.org/enforcer/enforcer-rules/">Maven Enforcer Rules</a><br /></li>
+<li><a href="http://maven.apache.org/enforcer/enforcer-rules/dependencyConvergence.html">Rule: Dependency Convergence</a><br /></li>
+<li><a href="http://cupofjava.de/blog/2013/02/01/fight-dependency-hell-in-maven/">Fight Dependency Hell in Maven</a></li>
+</ul>
+<blockquote>
+<p>If a project has two dependencies, A and B, both depending on the same artifact, C, this rule will fail the build if A depends on a different version of C then the version of C depended on by B.</p>
+</blockquote>
+<pre><code>&lt;plugin&gt;
+  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+  &lt;artifactId&gt;maven-enforcer-plugin&lt;/artifactId&gt;
+  &lt;version&gt;1.4.1&lt;/version&gt;
+  &lt;executions&gt;
+    &lt;execution&gt;
+      &lt;id&gt;enforce&lt;/id&gt;
+      &lt;configuration&gt;
+        &lt;rules&gt;
+          &lt;dependencyConvergence/&gt;
+        &lt;/rules&gt;
+      &lt;/configuration&gt;
+      &lt;goals&gt;
+        &lt;goal&gt;enforce&lt;/goal&gt;
+      &lt;/goals&gt;
+    &lt;/execution&gt;
+  &lt;/executions&gt;
+&lt;/plugin&gt;</code></pre>
+
+
+  </div>
+</div>
+
+<!--highlight begin-->
+<script type="text/javascript">
+$(document).ready(function() {
+    $('pre code').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+<!--highlight end-->
+
+<!--disques begin-->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'mars-notes';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<!--disques end-->
+
+</body>
+</html>
