@@ -74,7 +74,26 @@ sqlContext.sql(&quot;&quot;&quot;select gm(filedName) from tableName&quot;&quot;
 <li><a href="https://issues.apache.org/jira/browse/SPARK-6797">SPARK-6797</a></li>
 </ul>
 <p>SparkR在Yarn模式下，会把提交机器上<code>$SPARK_HOME/R/lib/SparkR</code>包括里面用户下载的RPackages<br />一起打包成sparkr.zip，并上传到Yarn上，使得Executors可以读取到相应的RPackages。</p>
-<h3 id="aliases-to-make-dataframe-functions-more-r-like">Aliases to make DataFrame functions more R-like</h3>
+<h3 id="spark-streaming-back-pressure">Spark Streaming Back Pressure</h3>
+<ul>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-7398">SPARK-7398</a><br /></li>
+<li><a href="http://www.wikiwand.com/en/PID_controller">PID</a></li>
+</ul>
+<p>因为Spark Streaming没有流量控制，在高峰期的时候每个Batch需要处理的数据会变多，很容易导致OOM问题。<br />增加了Back Pressure机制以后，Spark会控制每个Batch的数据量，避免OOM。</p>
+<p>默认使用以下配置控制流量：</p>
+<ul>
+<li><code>spark.streaming.receiver.maxRate</code><br /></li>
+<li><code>spark.streaming.kafka.maxRatePerPartition</code></li>
+</ul>
+<p>Spark还提供了更加动态的流量控制算法：PID</p>
+<ul>
+<li><code>spark.streaming.backpressure.rateEstimator=pid</code></li>
+</ul>
+<p>未来除了堆积的策略外，还会加入可配置的策略，例如：采样、丢弃等。</p>
+<h3 id="better-load-balancing-and-scheduling-of-receivers-across-cluster">Better load balancing and scheduling of receivers across cluster</h3>
+<ul>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-8882">SPARK-8882</a></li>
+</ul>
 <p>TODO</p>
 <h2 id="spark1.5.1">Spark1.5.1</h2>
 <h2 id="spark1.5.2">Spark1.5.2</h2>

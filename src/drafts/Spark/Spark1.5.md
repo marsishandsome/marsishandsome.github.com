@@ -55,7 +55,25 @@ Spark会记录所有Pending Task的数据依赖，在向Yarn申请资源的时�
 SparkR在Yarn模式下，会把提交机器上```$SPARK_HOME/R/lib/SparkR```包括里面用户下载的RPackages
 一起打包成sparkr.zip，并上传到Yarn上，使得Executors可以读取到相应的RPackages。
 
-### Aliases to make DataFrame functions more R-like
+### Spark Streaming Back Pressure
+- [SPARK-7398](https://issues.apache.org/jira/browse/SPARK-7398)
+- [PID](http://www.wikiwand.com/en/PID_controller)
+
+因为Spark Streaming没有流量控制，在高峰期的时候每个Batch需要处理的数据会变多，很容易导致OOM问题。
+增加了Back Pressure机制以后，Spark会控制每个Batch的数据量，避免OOM。
+
+默认使用以下配置控制流量：
+- ```spark.streaming.receiver.maxRate```
+- ```spark.streaming.kafka.maxRatePerPartition```
+
+Spark还提供了更加动态的流量控制算法：PID
+- ```spark.streaming.backpressure.rateEstimator=pid```
+
+未来除了堆积的策略外，还会加入可配置的策略，例如：采样、丢弃等。
+
+### Better load balancing and scheduling of receivers across cluster
+- [SPARK-8882](https://issues.apache.org/jira/browse/SPARK-8882)
+
 TODO
 
 ## Spark1.5.1
