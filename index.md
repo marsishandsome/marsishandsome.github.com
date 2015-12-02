@@ -19,5 +19,6 @@
 ### 其他
 - [Gitbook的使用](gen/posts/其他/Gitbook的使用.html)
 - [Git的使用](gen/posts/其他/Git的使用.html)
+- [Linux常用命令](gen/posts/其他/Linux常用命令.html)
 - [Maven常用插件](gen/posts/其他/Maven常用插件.html)
 - [摘录](gen/posts/其他/摘录.html)
