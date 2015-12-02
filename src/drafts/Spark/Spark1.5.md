@@ -74,7 +74,7 @@ Spark还提供了更加动态的流量控制算法：PID
 ### Better load balancing and scheduling of receivers across cluster
 - [SPARK-8882](https://issues.apache.org/jira/browse/SPARK-8882)
 
-TODO
+Receiver所在的Executor挂掉之后，新增调度算法来调度Receiver。
 
 ## Spark1.5.1
 
