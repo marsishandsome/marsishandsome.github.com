@@ -2,6 +2,10 @@
 - 爱奇艺Spark团队
 - 关注分布式计算，机器学习
 
+### Maven
+- [Maven常用插件](gen/posts/Maven/Maven常用插件.html)
+- [Maven插件开发](gen/posts/Maven/Maven插件开发.html)
+
 ### Scala
 - [Java序列化问题](gen/posts/Scala/Java序列化问题.html)
 - [Scala资料汇总](gen/posts/Scala/Scala资料汇总.html)
@@ -20,5 +24,4 @@
 - [Gitbook的使用](gen/posts/其他/Gitbook的使用.html)
 - [Git的使用](gen/posts/其他/Git的使用.html)
 - [Linux常用命令](gen/posts/其他/Linux常用命令.html)
-- [Maven常用插件](gen/posts/其他/Maven常用插件.html)
 - [摘录](gen/posts/其他/摘录.html)
