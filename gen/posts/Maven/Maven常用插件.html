@@ -169,6 +169,32 @@
         &lt;/execution&gt;
     &lt;/executions&gt;
 &lt;/plugin&gt;</code></pre>
+<h2 id="scalatest-maven-plugin">scalatest-maven-plugin</h2>
+<ul>
+<li><a href="http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin">Website</a><br /></li>
+<li><a href="https://github.com/scalatest/scalatest-maven-plugin">Github</a></li>
+</ul>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;org.scalatest&lt;/groupId&gt;
+    &lt;artifactId&gt;scalatest-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;reportsDirectory&gt;
+            ${project.build.directory}/surefire-reports
+        &lt;/reportsDirectory&gt;
+        &lt;junitxml&gt;.&lt;/junitxml&gt;
+        &lt;filereports&gt;${project.build.directory}/TestSuite.txt
+        &lt;/filereports&gt;
+    &lt;/configuration&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;id&gt;test&lt;/id&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;test&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+&lt;/plugin&gt;</code></pre>
 <h2 id="maven-enforcer-plugin">maven-enforcer-plugin</h2>
 <ul>
 <li><a href="http://maven.apache.org/enforcer/maven-enforcer-plugin/">Maven Enforcer Plugin</a><br /></li>

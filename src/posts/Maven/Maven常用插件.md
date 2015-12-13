@@ -145,6 +145,33 @@ Scala的Maven插件，常用配置包括
 </plugin>
 ```
 
+## scalatest-maven-plugin
+- [Website](http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin)
+- [Github](https://github.com/scalatest/scalatest-maven-plugin)
+
+```
+<plugin>
+    <groupId>org.scalatest</groupId>
+    <artifactId>scalatest-maven-plugin</artifactId>
+    <version>1.0</version>
+    <configuration>
+        <reportsDirectory>
+            ${project.build.directory}/surefire-reports
+        </reportsDirectory>
+        <junitxml>.</junitxml>
+        <filereports>${project.build.directory}/TestSuite.txt
+        </filereports>
+    </configuration>
+    <executions>
+        <execution>
+            <id>test</id>
+            <goals>
+                <goal>test</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
 
 ## maven-enforcer-plugin
 - [Maven Enforcer Plugin](http://maven.apache.org/enforcer/maven-enforcer-plugin/)
