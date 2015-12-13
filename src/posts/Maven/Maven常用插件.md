@@ -173,6 +173,62 @@ Scala的Maven插件，常用配置包括
 </plugin>
 ```
 
+### maven-source-plugin
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-source-plugin</artifactId>
+    <version>2.4</version>
+    <configuration>
+        <attach>true</attach>
+    </configuration>
+    <executions>
+        <execution>
+            <id>create-source-jar</id>
+            <goals>
+                <goal>jar-no-fork</goal>
+                <goal>test-jar-no-fork</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+### builder-helper-maven-plugin
+```
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>build-helper-maven-plugin</artifactId>
+    <version>1.9.1</version>
+    <executions>
+        <execution>
+            <id>add-scala-sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>add-source</goal>
+            </goals>
+            <configuration>
+                <sources>
+                    <source>src/main/scala</source>
+                </sources>
+            </configuration>
+        </execution>
+        <execution>
+            <id>add-scala-test-sources</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+                <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+                <sources>
+                    <source>src/test/scala</source>
+                </sources>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
 ## maven-enforcer-plugin
 - [Maven Enforcer Plugin](http://maven.apache.org/enforcer/maven-enforcer-plugin/)
 - [Maven Enforcer Rules](http://maven.apache.org/enforcer/enforcer-rules/)
