@@ -95,9 +95,6 @@
 - [Spark Summit Europe 2015](gen/drafts/Spark/Spark_Summit_Europe_2015.html)
 - [Spark Unit Test](gen/drafts/Spark/Spark_Unit_Test.html)
 
-### SparkTalk
-- [draft](gen/drafts/SparkTalk/draft.html)
-
 ### WebShellNotebook
 - [Databricks Cloud](gen/drafts/WebShellNotebook/Databricks_Cloud.html)
 - [Google DataLab](gen/drafts/WebShellNotebook/Google_DataLab.html)
