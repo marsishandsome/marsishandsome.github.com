@@ -34,6 +34,7 @@
 - [Giraph](gen/drafts/DistributedSystem/Giraph.html)
 - [HBase](gen/drafts/DistributedSystem/HBase.html)
 - [Ignite](gen/drafts/DistributedSystem/Ignite.html)
+- [Kafka](gen/drafts/DistributedSystem/Kafka.html)
 - [Parameter Server](gen/drafts/DistributedSystem/Parameter_Server.html)
 - [Pinot](gen/drafts/DistributedSystem/Pinot.html)
 - [Twitter Heron](gen/drafts/DistributedSystem/Twitter_Heron.html)
