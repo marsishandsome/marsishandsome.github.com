@@ -20,6 +20,10 @@ git push origin --force
 4.git commit --amend
 5.git push origin HEAD:refs/for/B
 
+### Add tag
+git tag -a v0.0.1 -m "Release Version 0.0.1"
+git push origin v0.0.1
+
 ### Reference
 - [Git Magic](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/index.html) - Git简要教程
 - [Git from the inside out](https://codewords.recurse.com/issues/two/git-from-the-inside-out)
