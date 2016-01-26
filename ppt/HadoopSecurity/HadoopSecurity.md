@@ -11,7 +11,7 @@
 # Kerberos (百度百科)
 > Kerberos这一名词来源于希腊神话 三个头的狗——地狱之门守护者
 
-![](../../../images/kerberos/kerberos.jpg)
+![](images/kerberos/kerberos.jpg)
 
 ---
 # Kerberos (Wikipedia)
@@ -35,33 +35,33 @@ resources related to information security and computer security in general and t
 ---
 # Step 1: Authentication Service - TGT Delivery
 **TGT: Ticket Granting Ticket**
-![](../../../images/kerberos/kerberos2.PNG)
+![](images/kerberos/kerberos2.PNG)
 From: [The MIT Kerberos Administrator’s How-to Guide](http://www.kerberos.org/software/adminkerberos.pdf)
 
 ---
 # Step 2: Ticket Granting Service - TGS Delivery
 **TGS: Ticket Granting Service**
-![](../../../images/kerberos/kerberos3.PNG)
+![](images/kerberos/kerberos3.PNG)
 
 ---
 # Diagrams
-![](../../../images/kerberos/kerberos1.PNG)
+![](images/kerberos/kerberos1.PNG)
 
 ---
 # Overal
-![](../../../images/kerberos/kerberos4.PNG)
+![](images/kerberos/kerberos4.PNG)
 
 ---
 # Token Expired Problem when Hadoop meet Kerberos
 
 ---
 # Hadoop Authentication Flow
-![](../../../images/kerberos/hadoop.PNG)
+![](images/kerberos/hadoop.PNG)
 From: [Hadoop Security Design](http://www.valleytalk.org/wp-content/uploads/2013/03/hadoop-security-design.pdf)
 
 ---
 # HDFS Authentication (Case 1: Sigle JVM Application)
-![](../../../images/kerberos/hadoop2.PNG)
+![](images/kerberos/hadoop2.PNG)
 
 1. 用Keytab从KDC拿到TGT，进而拿到对应NameNode的TGS
 2. 用TGS向NameNode做验证，进而拿到BlocksToken
@@ -103,13 +103,13 @@ From: [Hadoop Security Design](http://www.valleytalk.org/wp-content/uploads/2013
 
 ---
 # Old Design
-![](../../../images/kerberos/spark1.PNG)
+![](images/kerberos/spark1.PNG)
 
 <font color="red">**Problem: cannot run > 7 days on Yarn**</font>
 
 ---
 # New Design from Spark-1.4.0
-![](../../../images/kerberos/spark2.PNG)
+![](images/kerberos/spark2.PNG)
 From: [Long Running Spark Apps on Secure YARN](https://issues.apache.org/jira/secure/attachment/12693526/SparkYARN.pdf)
 
 <font color="green">**Upload Keytab to HDFS and login from Keytab before token expired**</font>
@@ -160,7 +160,7 @@ From: [Long Running Spark Apps on Secure YARN](https://issues.apache.org/jira/se
     UserGroupInformation.loginUserFromKeytab(principal, keytab)
     val ugi = UserGroupInformation.getCurrentUser
 
-![](../../../images/kerberos/ugi1.PNG)
+![](images/kerberos/ugi1.PNG)
 
 ---
 # Subject (Java)
@@ -172,7 +172,7 @@ From: [Long Running Spark Apps on Secure YARN](https://issues.apache.org/jira/se
     !scala
     val ugi = UserGroupInformation.getCurrentUser
 
-![](../../../images/kerberos/ugi2.PNG)
+![](images/kerberos/ugi2.PNG)
 
 
 ---

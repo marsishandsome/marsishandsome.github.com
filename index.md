@@ -2,6 +2,10 @@
 - 爱奇艺Spark团队
 - 关注分布式计算，机器学习
 
+### PPT
+- [Hadoop Security](ppt/HadoopSecurity-public.html)
+- [Spark Memory Management](ppt/SparkMemoryManagement-public.html)
+
 ### Maven
 - [Maven常用插件](gen/posts/Maven/Maven常用插件.html)
 - [Maven插件开发](gen/posts/Maven/Maven插件开发.html)

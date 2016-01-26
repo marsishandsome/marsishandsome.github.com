@@ -2,6 +2,10 @@
 - 爱奇艺Spark团队
 - 关注分布式计算，机器学习
 
+### PPT
+- [Hadoop Security](ppt/HadoopSecurity-public.html)
+- [Spark Memory Management](ppt/SparkMemoryManagement-public.html)
+
 ### Basic
 - [How Wanqu Works](gen/drafts/Basic/How_Wanqu_Works.html)
 - [Markdown](gen/drafts/Basic/Markdown.html)
