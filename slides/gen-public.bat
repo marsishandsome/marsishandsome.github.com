@@ -1,3 +1,3 @@
-landslide SparkMemoryManagement/Index.md -d SparkMemoryManagement-public.html
-landslide HadoopSecurity/Index.md -d HadoopSecurity-public.html
+landslide SparkMemoryManagement/Index.md -i -d SparkMemoryManagement-public.html
+landslide HadoopSecurity/Index.md -i -d HadoopSecurity-public.html
 
