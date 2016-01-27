@@ -123,7 +123,7 @@
             <section><blockquote>
 <p>Kerberos这一名词来源于希腊神话 三个头的狗——地狱之门守护者</p>
 </blockquote>
-<p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos/kerberos.jpg" /></p></section>
+<p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos.jpg" /></p></section>
             
           </div>
           <div class="presenter_notes">
@@ -233,7 +233,7 @@ resources related to information security and computer security in general and t
             
             
             <section><p><strong>TGT: Ticket Granting Ticket</strong>
-<img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos/kerberos2.PNG" />
+<img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos2.PNG" />
 From: <a href="http://www.kerberos.org/software/adminkerberos.pdf">The MIT Kerberos Administrator’s How-to Guide</a></p></section>
             
           </div>
@@ -265,7 +265,7 @@ From: <a href="http://www.kerberos.org/software/adminkerberos.pdf">The MIT Kerbe
             
             
             <section><p><strong>TGS: Ticket Granting Service</strong>
-<img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos/kerberos3.PNG" /></p></section>
+<img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos3.PNG" /></p></section>
             
           </div>
           <div class="presenter_notes">
@@ -295,7 +295,7 @@ From: <a href="http://www.kerberos.org/software/adminkerberos.pdf">The MIT Kerbe
             <header><h1>Diagrams</h1></header>
             
             
-            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos/kerberos1.PNG" /></p></section>
+            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos1.PNG" /></p></section>
             
           </div>
           <div class="presenter_notes">
@@ -325,7 +325,7 @@ From: <a href="http://www.kerberos.org/software/adminkerberos.pdf">The MIT Kerbe
             <header><h1>Overal</h1></header>
             
             
-            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos/kerberos4.PNG" /></p></section>
+            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos4.PNG" /></p></section>
             
           </div>
           <div class="presenter_notes">
@@ -383,7 +383,7 @@ From: <a href="http://www.kerberos.org/software/adminkerberos.pdf">The MIT Kerbe
             <header><h1>Hadoop Authentication Flow</h1></header>
             
             
-            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos/hadoop.PNG" />
+            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/hadoop.PNG" />
 From: <a href="http://www.valleytalk.org/wp-content/uploads/2013/03/hadoop-security-design.pdf">Hadoop Security Design</a></p></section>
             
           </div>
@@ -414,7 +414,7 @@ From: <a href="http://www.valleytalk.org/wp-content/uploads/2013/03/hadoop-secur
             <header><h1>HDFS Authentication (Case 1: Sigle JVM Application)</h1></header>
             
             
-            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos/hadoop2.PNG" /></p>
+            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/hadoop2.PNG" /></p>
 <ol>
 <li>用Keytab从KDC拿到TGT，进而拿到对应NameNode的TGS</li>
 <li>用TGS向NameNode做验证，进而拿到BlocksToken</li>
@@ -563,7 +563,7 @@ From: <a href="http://www.valleytalk.org/wp-content/uploads/2013/03/hadoop-secur
             <header><h1>Old Design</h1></header>
             
             
-            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos/spark1.PNG" /></p>
+            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/spark1.PNG" /></p>
 <p><font color="red"><strong>Problem: cannot run &gt; 7 days on Yarn</strong></font></p></section>
             
           </div>
@@ -594,7 +594,7 @@ From: <a href="http://www.valleytalk.org/wp-content/uploads/2013/03/hadoop-secur
             <header><h1>New Design from Spark-1.4.0</h1></header>
             
             
-            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos/spark2.PNG" />
+            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/spark2.PNG" />
 From: <a href="https://issues.apache.org/jira/secure/attachment/12693526/SparkYARN.pdf">Long Running Spark Apps on Secure YARN</a></p>
 <p><font color="green"><strong>Upload Keytab to HDFS and login from Keytab before token expired</strong></font></p>
 <p><a href="https://issues.apache.org/jira/browse/SPARK-5342">Spark-5342 Allow long running Spark apps to run on secure YARN/HDFS</a></p></section>
@@ -747,7 +747,7 @@ From: <a href="https://issues.apache.org/jira/secure/attachment/12693526/SparkYA
 <span class="lineno">2 </span><span class="k">val</span> <span class="n">ugi</span> <span class="k">=</span> <span class="nc">UserGroupInformation</span><span class="o">.</span><span class="n">getCurrentUser</span>
 </pre></div>
 
-<p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos/ugi1.PNG" /></p></section>
+<p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/ugi1.PNG" /></p></section>
             
           </div>
           <div class="presenter_notes">
@@ -812,7 +812,7 @@ From: <a href="https://issues.apache.org/jira/secure/attachment/12693526/SparkYA
             <section><div class="highlight"><pre><span class="lineno">1 </span><span class="k">val</span> <span class="n">ugi</span> <span class="k">=</span> <span class="nc">UserGroupInformation</span><span class="o">.</span><span class="n">getCurrentUser</span>
 </pre></div>
 
-<p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/kerberos/ugi2.PNG" /></p></section>
+<p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\HadoopSecurity\images/ugi2.PNG" /></p></section>
             
           </div>
           <div class="presenter_notes">
