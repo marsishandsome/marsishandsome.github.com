@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Ernest Delgado (ernestd@google.com)
+                 Alex Russell (slightlyoff@chromium.org)
+
+  landslide modifications: Adam Zapletal (adamzap@gmail.com)
+                           Nicolas Perriault (nperriault@gmail.com)
+-->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Spark Memory Management <br /><font size="5">顾亮亮 <br />2016.01.26</font></title>
+    <!-- Styles -->
+    
+    <link rel="stylesheet" media="print" href="file://c:\Python34\lib\site-packages\landslide-1.1.3-py3.4.egg\landslide\themes\default\css\print.css">
+    <link rel="stylesheet" media="screen, projection" href="file://c:\Python34\lib\site-packages\landslide-1.1.3-py3.4.egg\landslide\themes\default\css\screen.css">
+    
+    
+    <!-- /Styles -->
+    <!-- Javascripts -->
+    
+    <script type="text/javascript" src="file://c:\Python34\lib\site-packages\landslide-1.1.3-py3.4.egg\landslide\themes\default\js\slides.js"></script>
+    
+    
+    
+    <!-- /Javascripts -->
+</head>
+<body>
+  <div id="blank"></div>
+  <div class="presentation">
+    <div id="current_presenter_notes">
+      <div id="presenter_note"></div>
+    </div>
+    <div class="slides">
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-1">
+          <div class="inner">
+            
+            <header><h1>Spark Memory Management <br /><font size="5">顾亮亮 <br />2016.01.26</font></h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              1/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-2">
+          <div class="inner">
+            
+            <header><h1>Agenda</h1></header>
+            
+            
+            <section><ul>
+<li>Static Memory Manager</li>
+<li>Unified Memory Manager</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              2/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-3">
+          <div class="inner">
+            
+            <header><h1>为什么Spark需要管理内存？</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              3/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-4">
+          <div class="inner">
+            
+            <header><h1>Static Memory Manager (in 1.5.0 and before)</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              4/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-5">
+          <div class="inner">
+            
+            <header><h1>Static Memory Manager</h1></header>
+            
+            
+            <section><h2>1. Execution Memory</h2>
+<ul>
+<li>解决Shuffles, Joins, Sorts和Aggregations过程中为了避免频繁IO需要的buffer</li>
+<li>通过参数spark.shuffle.memoryFraction(default=0.2)配置</li>
+</ul>
+<h2>2. Storage Memory</h2>
+<ul>
+<li>用来存储Block Cache(调用Rdd.cache, Rdd.persist等方法)</li>
+<li>以及Broadcasts和Task Results</li>
+<li>通过参数spark.storage.memoryFraction(default=0.6)设置</li>
+</ul>
+<h2>3. Other Memory</h2>
+<ul>
+<li>用户代码申请的内存，以及Spark内部使用的内存(defulat=0.2)</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              5/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-6">
+          <div class="inner">
+            
+            <header><h1>Safety Fraction</h1></header>
+            
+            
+            <section><p>为了避免OOM，Spark为每个存储区设置了Safety Fraction</p>
+<h2>Execution Memory真正的可用内存是</h2>
+<ul>
+<li>spark.shuffle.memoryFraction(default=0.2) * spark.shuffle.safetyFraction(default=0.8)</li>
+<li>即0.2 * 0.8 = 16%</li>
+</ul>
+<h2>Storage Memory真正的可用内存是</h2>
+<ul>
+<li>spark.storage.memoryFraction(default=0.6) * spark.storagge.safetyFraction(default=0.9)</li>
+<li>即0.6 * 0.9 = 54%</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              6/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-7">
+          <div class="inner">
+            
+            <header><h1>Storgae Memory Unroll Fraction</h1></header>
+            
+            
+            <section><ul>
+<li>用来保存Block Manage收到iterator类型的数据后展开的数据</li>
+<li>通过参数spark.storage.unrollFraction(default=0.2)配置</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              7/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-8">
+          <div class="inner">
+            
+            <header><h1>Static Memory Configuration</h1></header>
+            
+            
+            <section><ul>
+<li>spark.shuffle.memoryFraction(default=0.2)<ul>
+<li>spark.shuffle.safetyFraction(default=0.8)</li>
+</ul>
+</li>
+<li>spark.storage.memoryFraction(default=0.6)<ul>
+<li>spark.storage.safetyFraction(default=0.9)</li>
+<li>spark.storage.unrollFraction(default=0.2)</li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\SparkMemoryManagement\images/StaticMemory.PNG" /></p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              8/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-9">
+          <div class="inner">
+            
+            <header><h1>Static Memory Manager的问题</h1></header>
+            
+            
+            <section><ol>
+<li>谁都不能超过自己的上限，规定了是多少就是多少，虽然另外一片内存空闲</li>
+<li>增加使用者配置的难度，需要根据应用的特性配置相关的参数</li>
+</ol></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              9/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-10">
+          <div class="inner">
+            
+            <header><h1>Unified Memory Manager (since 1.6.0)</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              10/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-11">
+          <div class="inner">
+            
+            <header><h1>Unified Memory Manager</h1></header>
+            
+            
+            <section><h2>Executor向Storage借Memory</h2>
+<ul>
+<li>Execution内存不足时，会触发向Storage申请内存</li>
+<li>能借到的最大内存 = Max(Storage向Executor借的内存, Storage空闲内存)</li>
+</ul>
+<h2>Storage向Executor借Memory</h2>
+<ul>
+<li>Storage内存不足时，会触发向Executor申请内存</li>
+<li>当且仅当Execution有空闲内存时，才能借走该内存</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              11/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-12">
+          <div class="inner">
+            
+            <header><h1>Resolved Memory</h1></header>
+            
+            
+            <section><ul>
+<li>配置参数spark.testing.reservedMemory(default=300M)</li>
+<li>usableMemory = 实际内存 - reservedMemory</li>
+<li>ExecutionMemory 和 StorageMemory 会共享usableMemory * spark.memory.fraction(defulat=0.75)的内存</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              12/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-13">
+          <div class="inner">
+            
+            <header><h1>Unified Memory Configuration</h1></header>
+            
+            
+            <section><ul>
+<li>spark.memory.useLegacyMode(default=false)</li>
+<li>spark.testing.reservedMemory(default=300M)</li>
+<li>spark.memory.fraction(default=0.75)</li>
+<li>spark.memory.storageFraction(default=0.5)</li>
+</ul>
+<p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\SparkMemoryManagement\images/UnifiedMemory.PNG" /></p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              13/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-14">
+          <div class="inner">
+            
+            <header><h1>Code</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              14/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-15">
+          <div class="inner">
+            
+            <header><h1>类图</h1></header>
+            
+            
+            <section><p><img alt="" src="file://E:\Workspace\marsishandsome.github.com\slides\SparkMemoryManagement\images/class.PNG" /></p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              15/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-16">
+          <div class="inner">
+            
+            <header><h1>Storage向Executor借内存</h1></header>
+            
+            
+            <section><ul>
+<li>UnifiedMemoryManager.acquireStorageMemory</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              16/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-17">
+          <div class="inner">
+            
+            <header><h1>Executor向Storage借内存</h1></header>
+            
+            
+            <section><ul>
+<li>UnifiedMemoryManager.acquireExecutionMemory</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              17/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-18">
+          <div class="inner">
+            
+            <header><h1>初始化Memory Manager</h1></header>
+            
+            
+            <section><ul>
+<li>SparkEnv.create</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              18/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-19">
+          <div class="inner">
+            
+            <header><h1>使用Memory Manager</h1></header>
+            
+            
+            <section><ul>
+<li>BloackManager.初始化</li>
+<li>MemoryStore<ul>
+<li>tryToPut</li>
+<li>evictBlocksToFreeSpace</li>
+</ul>
+</li>
+<li>Executor.run</li>
+<li>TaskMemoryManager.acquireExecutionMemory</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              19/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-20">
+          <div class="inner">
+            
+            <header><h1>MemoryConsumer</h1></header>
+            
+            
+            <section><ul>
+<li>spill()</li>
+</ul>
+<p>子类</p>
+<ul>
+<li>BytesToBytesMap</li>
+<li>ShuffleExternalSorter</li>
+<li>UnsafeExternalSorter</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              20/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-21">
+          <div class="inner">
+            
+            <header><h1>Further Questions?</h1></header>
+            
+            
+            <section><ul>
+<li>Memory Overhead</li>
+<li>Non-heap内存管理 (Tungsten)</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              21/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: SparkMemoryManagement/Index.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-22">
+          <div class="inner">
+            
+            <header><h1>References</h1></header>
+            
+            
+            <section><ul>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-10000">SPARK-10000 Consolidate storage and execution memory management</a></li>
+<li><a href="https://issues.apache.org/jira/secure/attachment/12765646/unified-memory-management-spark-10000.pdf">Unified Memory Management in Spark 1.6
+</a></li>
+<li><a href="http://www.jianshu.com/p/b250797b452a">Spark 1.6 内存管理模型( Unified Memory Management)分析</a></li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="SparkMemoryManagement/Index.md">SparkMemoryManagement/Index.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              22/22
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div id="toc" class="sidebar hidden">
+    <h2>Table of Contents</h2>
+    <table>
+      <caption>Table of Contents</caption>
+      
+      <tr id="toc-row-1">
+        <th><a href="#slide1">Spark Memory Management <br /><font size="5">顾亮亮 <br />2016.01.26</font></a></th>
+        <td><a href="#slide1">1</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-2">
+        <th><a href="#slide2">Agenda</a></th>
+        <td><a href="#slide2">2</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-3">
+        <th><a href="#slide3">为什么Spark需要管理内存？</a></th>
+        <td><a href="#slide3">3</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-4">
+        <th><a href="#slide4">Static Memory Manager (in 1.5.0 and before)</a></th>
+        <td><a href="#slide4">4</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-5">
+        <th><a href="#slide5">Static Memory Manager</a></th>
+        <td><a href="#slide5">5</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-6">
+        <th><a href="#slide6">Safety Fraction</a></th>
+        <td><a href="#slide6">6</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-7">
+        <th><a href="#slide7">Storgae Memory Unroll Fraction</a></th>
+        <td><a href="#slide7">7</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-8">
+        <th><a href="#slide8">Static Memory Configuration</a></th>
+        <td><a href="#slide8">8</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-9">
+        <th><a href="#slide9">Static Memory Manager的问题</a></th>
+        <td><a href="#slide9">9</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-10">
+        <th><a href="#slide10">Unified Memory Manager (since 1.6.0)</a></th>
+        <td><a href="#slide10">10</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-11">
+        <th><a href="#slide11">Unified Memory Manager</a></th>
+        <td><a href="#slide11">11</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-12">
+        <th><a href="#slide12">Resolved Memory</a></th>
+        <td><a href="#slide12">12</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-13">
+        <th><a href="#slide13">Unified Memory Configuration</a></th>
+        <td><a href="#slide13">13</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-14">
+        <th><a href="#slide14">Code</a></th>
+        <td><a href="#slide14">14</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-15">
+        <th><a href="#slide15">类图</a></th>
+        <td><a href="#slide15">15</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-16">
+        <th><a href="#slide16">Storage向Executor借内存</a></th>
+        <td><a href="#slide16">16</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-17">
+        <th><a href="#slide17">Executor向Storage借内存</a></th>
+        <td><a href="#slide17">17</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-18">
+        <th><a href="#slide18">初始化Memory Manager</a></th>
+        <td><a href="#slide18">18</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-19">
+        <th><a href="#slide19">使用Memory Manager</a></th>
+        <td><a href="#slide19">19</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-20">
+        <th><a href="#slide20">MemoryConsumer</a></th>
+        <td><a href="#slide20">20</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-21">
+        <th><a href="#slide21">Further Questions?</a></th>
+        <td><a href="#slide21">21</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-22">
+        <th><a href="#slide22">References</a></th>
+        <td><a href="#slide22">22</a></td>
+      </tr>
+      
+      
+    </table>
+  </div>
+  
+  <div id="help" class="sidebar hidden">
+    <h2>Help</h2>
+    <table>
+      <caption>Help</caption>
+      <tr>
+        <th>Table of Contents</th>
+        <td>t</td>
+      </tr>
+      <tr>
+        <th>Exposé</th>
+        <td>ESC</td>
+      </tr>
+      <tr>
+        <th>Full screen slides</th>
+        <td>e</td>
+      </tr>
+      <tr>
+        <th>Presenter View</th>
+        <td>p</td>
+      </tr>
+      <tr>
+        <th>Source Files</th>
+        <td>s</td>
+      </tr>
+      <tr>
+        <th>Slide Numbers</th>
+        <td>n</td>
+      </tr>
+      <tr>
+        <th>Toggle screen blanking</th>
+        <td>b</td>
+      </tr>
+      <tr>
+        <th>Show/hide slide context</th>
+        <td>c</td>
+      </tr>
+      <tr>
+        <th>Notes</th>
+        <td>2</td>
+      </tr>
+      <tr>
+        <th>Help</th>
+        <td>h</td>
+      </tr>
+    </table>
+  </div>
+  <script>main()</script>
+</body>
+</html>
