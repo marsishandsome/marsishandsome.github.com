@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source pbase
+
+rm -rf gen/drafts
+pall "drafts" "gen" "drafts" "Mars的草稿"

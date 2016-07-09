@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source pbase
+
+rm -rf gen/posts
+pall "posts" "gen" "index" "Mars的笔记"

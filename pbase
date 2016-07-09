@@ -1,0 +1,69 @@
+#!/bin/bash
+
+function pall(){
+  post_dir=$1
+  gen_dir=$2
+  index=$3
+  title=$4
+
+  rm -f "$index.md"
+  rm -f "$index.xml"
+  rm -f "$index.html"
+  cp AboutMe.md "$index.md"
+  cat slides.md >> "$index.md"
+
+  echo $post_dir
+  mkdir -p $gen_dir
+
+  echo "<rss version='2.0'>
+  <channel>
+    <title>Mars的笔记</title>
+    <link>http://marsishandsome.github.io/</link>
+    <description>by Mars</description>
+  " > "$index.xml"
+
+  pFolder
+
+  echo "  </channel>
+</rss>
+  ">> "$index.xml"
+
+  ./pmd "$index.md" > "$index.html"
+}
+
+function pFolder(){
+  for post in `ls src/$post_dir`
+  do
+    if [ -d "src/$post_dir/$post" ]; then
+      echo "  $post"
+      pSubFolder "$post_dir/$post" $post
+    fi
+  done
+}
+
+function pSubFolder(){
+  sub_post_dir=$1
+  category=$2
+
+  echo -e "\n### $category" >> "$index.md"
+
+  for post in `ls src/$sub_post_dir`
+  do
+    if [ -f "src/$sub_post_dir/$post" ]; then
+      post_without_md=${post%.md}
+      post_with_space=${post_without_md//_/ }
+      echo "    $post_with_space"
+
+	  mkdir -p "$gen_dir/$sub_post_dir"
+      ./pmd "src/$sub_post_dir/$post" > "$gen_dir/$sub_post_dir/$post_without_md.html"
+      echo -e "- [$post_with_space]($gen_dir/$sub_post_dir/$post_without_md.html)" >> "$index.md"
+      echo "
+      <item>
+        <title>$post_with_space</title>
+        <link>http://marsishandsome.github.io/$gen_dir/$sub_post_dir/$post_without_md.html</link>
+        <description>$post_with_space</description>
+      </item>
+      " >> "$index.xml"
+    fi
+  done
+}
