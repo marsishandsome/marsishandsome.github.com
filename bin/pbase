@@ -28,7 +28,7 @@ function pall(){
 </rss>
   ">> "$index.xml"
 
-  ./pmd "$index.md" > "$index.html"
+  ./bin/pmd "$index.md" > "$index.html"
 }
 
 function pFolder(){
@@ -55,7 +55,7 @@ function pSubFolder(){
       echo "    $post_with_space"
 
 	  mkdir -p "$gen_dir/$sub_post_dir"
-      ./pmd "src/$sub_post_dir/$post" > "$gen_dir/$sub_post_dir/$post_without_md.html"
+      ./bin/pmd "src/$sub_post_dir/$post" > "$gen_dir/$sub_post_dir/$post_without_md.html"
       echo -e "- [$post_with_space]($gen_dir/$sub_post_dir/$post_without_md.html)" >> "$index.md"
       echo "
       <item>
