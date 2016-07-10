@@ -39,7 +39,7 @@ function pSlideItem() {
 }
 
 function pMetaHTMLHeader(){
-  cat template/head.html >> "$index.html"
+  cat template/home_head.html >> "$index.html"
 }
 
 function pMetaHTMLCategoryHeader(){
@@ -62,7 +62,7 @@ echo "
 }
 
 function pMetaHTMLFooter(){
-  cat template/foot.html >> "$index.html"
+  cat template/home_foot.html >> "$index.html"
 }
 
 function pMetaXMLHeader(){
