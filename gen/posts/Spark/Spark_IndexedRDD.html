@@ -5,53 +5,35 @@
 
    <title>Mars的笔记</title>
 
-   <!--jquery-->
-   <script src="http://marsishandsome.github.io/libs/jquery/jquery-1.11.3.min.js"></script>
-
-   <!--boostrap-->
-   <link href="http://marsishandsome.github.io/libs/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"></link>
-   <link href="http://marsishandsome.github.io/libs/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet"></link>
-
    <!--highlight-->
    <link rel="stylesheet" href="http://marsishandsome.github.io/libs/highlight/styles/androidstudio.css">
    <script src="http://marsishandsome.github.io/libs/highlight/highlight.pack.js"></script>
 
-   <!--home-->
-   <link href="http://marsishandsome.github.io/template/home.css" rel="stylesheet"></link>
+   <!--main-->
+   <link href="http://marsishandsome.github.io/template/main.css" rel="stylesheet"></link>
+
+    <!--highlight begin-->
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+      });
+    </script>
+    <!--highlight end-->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-72149435-1', 'auto');
+      ga('send', 'pageview');
+    </script>
 
 </head>
 <body>
-
-	<nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
-	    <div class="container-fluid">
-	        <!-- Brand and toggle get grouped for better mobile display -->
-	        <div class="navbar-header">
-	            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-	                <span class="sr-only">Toggle navigation</span>
-	                <span class="icon-bar"></span>
-	                <span class="icon-bar"></span>
-	                <span class="icon-bar"></span>
-	            </button>
-	            <a class="navbar-brand" href="/">Mars的笔记</a>
-	        </div>
-
-	        <!-- Collect the nav links, forms, and other content for toggling -->
-	        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	            <ul class="nav navbar-nav navbar-right">
-	                <li class="active"><a href="#">Blog</a></li>
-	                <li><a href="https://github.com/marsishandsome">GitHub</a></li>
-					<li><a href="http://feeds.feedburner.com/marsishandsome">RSS</a></li>
-	            </ul>
-	        </div><!-- /.navbar-collapse -->
-	    </div><!-- /.container-fluid -->
-	</nav>
-
-	<div class="row" style="padding-top: 70px">
-	  <div class="container center-block">
-	    <div class="col-md-2"></div>
-	    <div class="col-md-8 col-sm-12">
-	      <div class="panel panel-default">
-	        <div class="row">
 <h1 id="spark-indexedrdd-efficient-fine-grained-updates-for-rdds">Spark IndexedRDD: Efficient Fine-Grained Updates for RDDs</h1>
 <p>由于Spark RDD的Immutable特性，如果想要更新RDD里面的数据，就要对RDD中的每个Partition进行一次transformation，生成一个新的RDD。而对于Streaming Aggregation以及Incremental Algorithm之类的算法，每次迭代都会更新少量数据，但是需要迭代非常多的次数，每一次对RDD的更新代价相对较大。</p>
 <p>针对这个问题AMPLab的<a href="http://ankurdave.com/">Ankur Dave</a>提出了IndexedRDD，它是Immutability和Fine-Grained updates的精妙结合。IndexedRDD是一个基于RDD的Key-Value Store，扩展自RDD[(K, V)]，可以在IndexRDD上进行高效的查找、更新以及删除。</p>
@@ -287,31 +269,5 @@ libraryDependencies += &quot;amplab&quot; % &quot;spark-indexedrdd&quot; % &quot
 <li><a href="http://www3.informatik.tu-muenchen.de/~leis/papers/ART.pdf">ART论文</a><br /></li>
 <li><a href="https://github.com/ankurdave/part">Github: ART Java实现</a></li>
 </ul>
-
-
-    </div>
-  </div>
-</div>
-
-<!--highlight begin-->
-<script type="text/javascript">
-$(document).ready(function() {
-    $('pre code').each(function(i, block) {
-      hljs.highlightBlock(block);
-    });
-  });
-</script>
-<!--highlight end-->
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-72149435-1', 'auto');
-  ga('send', 'pageview');
-</script>
-
 </body>
 </html>

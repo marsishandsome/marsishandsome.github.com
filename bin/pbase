@@ -6,29 +6,87 @@ function pall(){
   index=$3
   title=$4
 
-  rm -f "$index.md"
   rm -f "$index.xml"
   rm -f "$index.html"
-  cp AboutMe.md "$index.md"
-  cat slides.md >> "$index.md"
 
   echo $post_dir
   mkdir -p $gen_dir
 
-  echo "<rss version='2.0'>
+  # begin
+  pMetaHTMLHeader
+  pMetaXMLHeader
+
+  # slides
+  category="Slides"
+  pMetaHTMLCategoryHeader
+  pSlideItem "HadoopSecurity-public" "HadoopSecurity"
+  pSlideItem "SparkMemoryManagement-public" "SparkMemoryManagement"
+  pMetaHTMLCategoryFooter
+
+  # posts
+  pFolder
+
+  # end
+  pMetaHTMLFooter
+  pMetaXMLFooter
+}
+
+function pSlideItem() {
+  echo "
+<li class='list-group-item title'>
+  <a href='slides/$1.html'>$2</a>
+</li>" >> "$index.html"
+}
+
+function pMetaHTMLHeader(){
+  cat template/head.html >> "$index.html"
+}
+
+function pMetaHTMLCategoryHeader(){
+  echo "
+<div class='panel-heading'>
+  <h3 class='panel-title'>$category</h3>
+</div>
+<ul class='list-group'>" >> "$index.html"
+}
+
+function pMetaHTMLCategoryFooter(){
+  echo "</ul>" >> "$index.html"
+}
+
+function pMetaHTMLItem(){
+echo "
+<li class='list-group-item title'>
+  <a href='$gen_dir/$sub_post_dir/$post_without_md.html'>$post_with_space</a>
+</li>" >> "$index.html"
+}
+
+function pMetaHTMLFooter(){
+  cat template/foot.html >> "$index.html"
+}
+
+function pMetaXMLHeader(){
+echo "
+<rss version='2.0'>
   <channel>
     <title>Mars的笔记</title>
     <link>http://marsishandsome.github.io/</link>
-    <description>by Mars</description>
-  " > "$index.xml"
+    <description>by Mars</description>" >> "$index.xml"
+}
 
-  pFolder
+function pMetaXMLFooter(){
+  echo "
+  </channel>
+</rss>">> "$index.xml"
+}
 
-  echo "  </channel>
-</rss>
-  ">> "$index.xml"
-
-  ./bin/pmd "$index.md" > "$index.html"
+function pMetaXMLItem(){
+echo "
+      <item>
+        <title>$post_with_space</title>
+        <link>http://marsishandsome.github.io/$gen_dir/$sub_post_dir/$post_without_md.html</link>
+        <description>$post_with_space</description>
+      </item>" >> "$index.xml"
 }
 
 function pFolder(){
@@ -45,7 +103,7 @@ function pSubFolder(){
   sub_post_dir=$1
   category=$2
 
-  echo -e "\n### $category" >> "$index.md"
+ pMetaHTMLCategoryHeader
 
   for post in `ls src/$sub_post_dir`
   do
@@ -56,14 +114,9 @@ function pSubFolder(){
 
 	  mkdir -p "$gen_dir/$sub_post_dir"
       ./bin/pmd "src/$sub_post_dir/$post" > "$gen_dir/$sub_post_dir/$post_without_md.html"
-      echo -e "- [$post_with_space]($gen_dir/$sub_post_dir/$post_without_md.html)" >> "$index.md"
-      echo "
-      <item>
-        <title>$post_with_space</title>
-        <link>http://marsishandsome.github.io/$gen_dir/$sub_post_dir/$post_without_md.html</link>
-        <description>$post_with_space</description>
-      </item>
-      " >> "$index.xml"
+      pMetaHTMLItem
+      pMetaXMLItem
     fi
+  pMetaHTMLCategoryFooter
   done
 }

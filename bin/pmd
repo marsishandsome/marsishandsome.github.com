@@ -1,9 +1,5 @@
 #!/bin/bash
 
-cat template/head.html
-#markdown $1
-#python -m markdown $1
-PDF=http://marsishandsome.github.io/libs/pdfjs/web/viewer.html?file=https://raw.githubusercontent.com/marsishandsome/files.github.com/master/
-pandoc --from markdown_github --to html $1 | sed 's/{{\(.*\).pdf}}/\1.pdf/g'
-echo ""
-cat template/foot.html
+cat template/post_head.html
+pandoc --from markdown_github --to html $1
+cat template/post_foot.html
