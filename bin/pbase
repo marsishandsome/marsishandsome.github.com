@@ -69,7 +69,7 @@ function pMetaXMLHeader(){
 echo "
 <rss version='2.0'>
   <channel>
-    <title>Mars的笔记</title>
+    <title>$title</title>
     <link>http://marsishandsome.github.io/</link>
     <description>by Mars</description>" >> "$index.xml"
 }
