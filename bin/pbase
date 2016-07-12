@@ -19,9 +19,7 @@ function pall(){
   # slides
   category="Slides"
   pMetaHTMLCategoryHeader
-  pSlideItem "HadoopSecurity"
-  pSlideItem "SparkMemoryManagement"
-  pSlideItem "Spark2.0andSparkAPIHistory"
+  pSlideFolder
   pMetaHTMLCategoryFooter
 
   # posts
@@ -32,10 +30,24 @@ function pall(){
   pMetaXMLFooter
 }
 
+function pSlideFolder(){
+  slide_gen_dir="slides/gen"
+
+  for slide in `ls $slide_gen_dir`
+  do
+    if [ -f "$slide_gen_dir/$slide" ]; then
+      slide_name=${slide%.html}
+      echo "    $slide_name"
+	  pSlideItem $slide_name
+    fi
+  pMetaHTMLCategoryFooter
+  done
+}
+
 function pSlideItem() {
   echo "
 <li class='list-group-item title'>
-  <a href='slides/$1.html'>$1</a>
+  <a href='slides/gen/$1.html'>$1</a>
 </li>" >> "$index.html"
 }
 
