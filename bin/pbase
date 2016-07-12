@@ -19,8 +19,9 @@ function pall(){
   # slides
   category="Slides"
   pMetaHTMLCategoryHeader
-  pSlideItem "HadoopSecurity-public" "HadoopSecurity"
-  pSlideItem "SparkMemoryManagement-public" "SparkMemoryManagement"
+  pSlideItem "HadoopSecurity"
+  pSlideItem "SparkMemoryManagement"
+  pSlideItem "Spark2.0andSparkAPIHistory"
   pMetaHTMLCategoryFooter
 
   # posts
@@ -34,7 +35,7 @@ function pall(){
 function pSlideItem() {
   echo "
 <li class='list-group-item title'>
-  <a href='slides/$1.html'>$2</a>
+  <a href='slides/$1.html'>$1</a>
 </li>" >> "$index.html"
 }
 
