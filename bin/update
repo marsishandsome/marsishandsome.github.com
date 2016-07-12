@@ -1,2 +1,5 @@
+FWDIR="$(cd "`dirname "$0"`"/..; pwd)"
+cd $FWDIR
+
 git fetch
 git rebase origin master

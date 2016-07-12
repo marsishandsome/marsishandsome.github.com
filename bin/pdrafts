@@ -1,4 +1,8 @@
 #!/bin/bash
+
+FWDIR="$(cd "`dirname "$0"`"/..; pwd)"
+cd $FWDIR
+
 source bin/pbase
 
 rm -rf gen/drafts
