@@ -22,8 +22,8 @@
 <h1 id="spark-1.6">Spark 1.6的几大亮点</h1>
 <h2 id="dataset-api">Dataset API</h2>
 <ul>
-<li><a href="https://issues.apache.org/jira/browse/SPARK-9999">SPARK-9999</a><br /></li>
-<li><a href="https://docs.google.com/document/d/1ZVaDqOcLm2-NcS0TElmslHLsEIEwqzt0vBvzpLrV6Ik/edit#">Design Doc</a><br /></li>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-9999">SPARK-9999</a></li>
+<li><a href="https://docs.google.com/document/d/1ZVaDqOcLm2-NcS0TElmslHLsEIEwqzt0vBvzpLrV6Ik/edit#">Design Doc</a></li>
 <li><a href="https://github.com/marmbrus/spark/pull/18/files">Prototype</a></li>
 </ul>
 <p>RDD API可以进行类型检查，但是不能使用Catalyst进行优化；</p>
@@ -39,40 +39,41 @@ ds.collect()</code></pre>
 <p>Dataset API类似于Twitter Scalding的<a href="https://github.com/twitter/scalding/wiki/Type-safe-api-reference">Type safe API</a>。</p>
 <h2 id="automatic-memory-configuration">Automatic memory configuration</h2>
 <ul>
-<li><a href="https://issues.apache.org/jira/browse/SPARK-10000">SPARK-10000</a><br /></li>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-10000">SPARK-10000</a></li>
 <li><a href="https://issues.apache.org/jira/secure/attachment/12765646/unified-memory-management-spark-10000.pdf">Design Doc</a></li>
 </ul>
 <p>在Spark-1.5中，Spark的内存分为三个部分</p>
 <ol>
-<li>执行内存 spark.shuffle.memoryFraction (default=0.2)<br /></li>
-<li>存储内存 spark.storage.memoryFraction (default=0.6)<br /></li>
+<li>执行内存 spark.shuffle.memoryFraction (default=0.2)</li>
+<li>存储内存 spark.storage.memoryFraction (default=0.6)</li>
 <li>其他内存 (default=0.2)</li>
 </ol>
-<p>这三部分内存是互相独立的，不能互相借用，这给使用者提出了很高的要求。<br />Spark-1.6中简化了内存配置，执行内存和存储内存可以互相借用，其中</p>
+<p>这三部分内存是互相独立的，不能互相借用，这给使用者提出了很高的要求。<br />
+Spark-1.6中简化了内存配置，执行内存和存储内存可以互相借用，其中</p>
 <ol>
-<li>spark.memory.fraction (default=0.75) 这部分内存用于执行和存储<br /></li>
+<li>spark.memory.fraction (default=0.75) 这部分内存用于执行和存储</li>
 <li>spark.memory.storageFraction (default=0.5) 这部分内存是存储内存的最大值</li>
 </ol>
 <h2 id="optimized-state-storage-in-spark-streaming">Optimized state storage in Spark Streaming</h2>
 <ul>
-<li><a href="https://issues.apache.org/jira/browse/SPARK-2629">SPARK-2629</a><br /></li>
-<li><a href="https://docs.google.com/document/d/1NoALLyd83zGs1hNGMm0Pc5YOVgiPpMHugGMk6COqxxE/edit#heading=h.ph3w0clkd4em">Design Doc</a><br /></li>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-2629">SPARK-2629</a></li>
+<li><a href="https://docs.google.com/document/d/1NoALLyd83zGs1hNGMm0Pc5YOVgiPpMHugGMk6COqxxE/edit#heading=h.ph3w0clkd4em">Design Doc</a></li>
 <li><a href="https://github.com/apache/spark/pull/9256">Prototype</a></li>
 </ul>
 <p><code>updateStateByKey</code>存在以下问题</p>
 <ol>
-<li>没有delete key机制，随着数据增多，每个Batch的处理时间会增大<br /></li>
+<li>没有delete key机制，随着数据增多，每个Batch的处理时间会增大</li>
 <li>没有Timeout机制</li>
 </ol>
 <p><code>trackStateByKey</code>试图解决这些问题，增加了delete key以及Timeout机制，用户可以更加灵活的使用有状态的Streaming。</p>
 <h2 id="pipeline-persistence-in-spark-ml">Pipeline persistence in Spark ML</h2>
 <ul>
-<li><a href="https://issues.apache.org/jira/browse/SPARK-6725">SPARK-6725</a><br /></li>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-6725">SPARK-6725</a></li>
 <li><a href="https://docs.google.com/document/d/1RleM4QiKwdfZZHf0_G6FBNaF7_koc1Ui7qfMT1pf4IA/edit">Design Doc</a></li>
 </ul>
 <p>Spark ML之前只能保存Module，1.6中新增可以保存Pipline，可用于</p>
 <ol>
-<li>重新运行workflow<br /></li>
+<li>重新运行workflow</li>
 <li>导出到外部的系统</li>
 </ol>
 <h2 id="sql-queries-on-files">SQL Queries on Files</h2>
@@ -89,7 +90,7 @@ ds.collect()</code></pre>
 %sql SELECT * FROM parquet.`/home/spark/1.6/people`</code></pre>
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="https://databricks.com/blog/2015/11/20/announcing-spark-1-6-preview-in-databricks.html">Announcing Spark 1.6 Preview in Databricks</a><br /></li>
+<li><a href="https://databricks.com/blog/2015/11/20/announcing-spark-1-6-preview-in-databricks.html">Announcing Spark 1.6 Preview in Databricks</a></li>
 <li><a href="https://docs.cloud.databricks.com/docs/spark/1.6/index.html#00%20Spark%201.6%20Preview.html">Spark 1.6.0 Preview</a></li>
 </ul>
 </body>

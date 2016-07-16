@@ -22,97 +22,99 @@
 <h1 id="spark-summit-east-2015"><a href="http://spark-summit.org/east/2015">SPARK SUMMIT EAST 2015</a></h1>
 <p>New Directions for Spark in 2015</p>
 <ul>
-<li>Matei Zaharia (CTO, Databricks)<br /></li>
+<li>Matei Zaharia (CTO, Databricks)</li>
 <li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-1-Matei-Zaharia.pdf">slide</a></li>
 </ul>
 <p>2014</p>
 <ul>
-<li>DataFrame API<br /></li>
-<li>Machine Learning Piplines<br /></li>
+<li>DataFrame API</li>
+<li>Machine Learning Piplines</li>
 <li>SparkR 1.4</li>
 </ul>
 <p>2015</p>
 <ul>
-<li>Data Science -- High-level interfaces similar to single-machine tools<br /></li>
+<li>Data Science -- High-level interfaces similar to single-machine tools</li>
 <li>Platform Interfaces -- Plug in data sources and algorithms</li>
 </ul>
 <p>Goal: Unified engine across data sources, workloads and environments</p>
 <h3 id="embracing-spark-as-the-scalable-data-analytics-platform-for-the-enterprise">Embracing Spark as the Scalable Data Analytics Platform for the Enterprise</h3>
 <ul>
-<li>Matthew Glickman (Managing Director, Goldman Sachs)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-4-Matthew-Glickman.pdf">slide</a><br /></li>
-<li>Don’t wrap Spark<br /></li>
-<li>Think of Spark Client API like ODBC/JDBC<br /></li>
-<li>using existing JVM IDE environment instead of spark-submit for easier debugging<br /></li>
+<li>Matthew Glickman (Managing Director, Goldman Sachs)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-4-Matthew-Glickman.pdf">slide</a></li>
+<li>Don’t wrap Spark</li>
+<li>Think of Spark Client API like ODBC/JDBC</li>
+<li>using existing JVM IDE environment instead of spark-submit for easier debugging</li>
 <li>Dynamically deploy code to cluster at run-time with lambda closures</li>
 </ul>
 <pre><code>val sc = new SparkContext(conf)
 sc.addJar(JarCreator.createJarFile(JarCreator.getClassesFromClassPath(getClass.getPackage.getName)))</code></pre>
 <h3 id="spark-user-concurrency-and-contextrdd-sharing-at-production-scale">Spark User Concurrency and Context/RDD Sharing at Production Scale</h3>
 <ul>
-<li>Farzad Aref (Zoomdata), Justin Langseth (Zoomdata)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-14-Zoomdata-Alarcon.pdf">slide</a><br /></li>
+<li>Farzad Aref (Zoomdata), Justin Langseth (Zoomdata)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-14-Zoomdata-Alarcon.pdf">slide</a></li>
 <li>类似于Spark Job Server, Hive Thrift Server</li>
 </ul>
 <h3 id="power-hive-with-spark">Power Hive with Spark</h3>
 <ul>
-<li>Chao Sun (Cloudera), Marcelo Vanzin (Cloudera)<br /></li>
+<li>Chao Sun (Cloudera), Marcelo Vanzin (Cloudera)</li>
 <li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-17-Marcelo-Vanzin-Chao-Sun.pdf">slide</a></li>
 </ul>
 <p>Dynamic Executor Allocation</p>
 <p>Remote Spark Context</p>
 <ul>
-<li>SparkContext uses non-trivial amount of memory<br /></li>
-<li>Spark doesn’t support multiple SparkContexts<br /></li>
-<li><code>new SparkContext()</code> doesn’t support cluster mode<br /></li>
-<li>Need to isolate user’s sessions<br /></li>
+<li>SparkContext uses non-trivial amount of memory</li>
+<li>Spark doesn’t support multiple SparkContexts</li>
+<li><code>new SparkContext()</code> doesn’t support cluster mode</li>
+<li>Need to isolate user’s sessions</li>
 <li><p>Need to account for user’s resource usage</p></li>
 <li><p>Solution: allow HS2 to start Spark apps out-of-process and interact with them.</p></li>
 </ul>
 <h3 id="developer-using-spark-and-elasticsearch-for-real-time-data-analysis">Developer Using Spark and Elasticsearch for real-time data analysis</h3>
 <ul>
-<li>Costin Leau (Elasticsearch)<br /></li>
+<li>Costin Leau (Elasticsearch)<br />
+</li>
 <li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-35-Leau.pdf">slide</a></li>
 </ul>
 <h3 id="spark-application-carousel-highlights-of-several-applications-built-with-spark">Spark Application Carousel: Highlights of Several Applications Built with Spark</h3>
 <ul>
-<li>Ankur Dave (UC Berkeley)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-20-Vida-Ha.pdf">slide</a><br /></li>
+<li>Ankur Dave (UC Berkeley)<br />
+</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-20-Vida-Ha.pdf">slide</a></li>
 <li><a href="https://www.youtube.com/watch?v=cnkaAnMvHb4&amp;index=5&amp;list=PL-x35fyliRwger2GwWLG4vigDRGCDyzCI">video</a></li>
 </ul>
 <p>案例一：Web Logs分析</p>
 <ul>
-<li>计算指标的最大最小值<br /></li>
-<li>计算访问超过N次的IP地址<br /></li>
-<li>把日志作为外部数据源导入到SparkSQL，用sql可以做各种分析<br /></li>
-<li>使用Partitioning <code>ALTER TABLE access_logs   ADD PARTITION (date='20150318') LOCATION    ‘/logs/2015/3/18’</code><br /></li>
-<li>Cache最近N天的数据<br /></li>
+<li>计算指标的最大最小值</li>
+<li>计算访问超过N次的IP地址</li>
+<li>把日志作为外部数据源导入到SparkSQL，用sql可以做各种分析</li>
+<li>使用Partitioning <code>ALTER TABLE access_logs   ADD PARTITION (date='20150318') LOCATION    ‘/logs/2015/3/18’</code></li>
+<li>Cache最近N天的数据</li>
 <li>把统计数据存入SparkSQL的Temp表格</li>
 </ul>
 <p>案例二：Wikipedia</p>
 <ul>
-<li>并行下载Wikipedia网页 <code>sc.parallelize</code><br /></li>
-<li>分割xml文件，每一行为一个xml Element<br /></li>
-<li>用xml parser提取感兴趣的数据，另存为parquet，注册为table<br /></li>
-<li>cache表格，用sql做分析<br /></li>
+<li>并行下载Wikipedia网页 <code>sc.parallelize</code></li>
+<li>分割xml文件，每一行为一个xml Element</li>
+<li>用xml parser提取感兴趣的数据，另存为parquet，注册为table</li>
+<li>cache表格，用sql做分析</li>
 <li>用MLlib做数据分析</li>
 </ul>
 <p>案例三：Facebook API</p>
 <ul>
-<li>抓取Facebook数据<br /></li>
+<li>抓取Facebook数据</li>
 <li>用GraphX的Page Rank算法计算最受欢迎的人</li>
 </ul>
 <h3 id="graphx-graph-analytics-in-spark">GraphX: Graph Analytics in Spark</h3>
 <ul>
-<li>Ankur Dave (UC Berkeley)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-23-Ankur-Dave.pdf">slide</a><br /></li>
+<li>Ankur Dave (UC Berkeley)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-23-Ankur-Dave.pdf">slide</a></li>
 <li><a href="https://www.youtube.com/watch?v=Y7hq5MudV9M&amp;index=6&amp;list=PL-x35fyliRwger2GwWLG4vigDRGCDyzCI">video</a></li>
 </ul>
 <p>GraphX入门</p>
 <h3 id="experience-and-lessons-learned-for-large-scale-graph-analysis-using-graphx">Experience and Lessons Learned for Large-Scale Graph Analysis using GraphX</h3>
 <ul>
-<li>Jason (Jinquan) Dai (Intel)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-26-Jason_Dai-NEW.pdf">slide</a><br /></li>
+<li>Jason (Jinquan) Dai (Intel)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-26-Jason_Dai-NEW.pdf">slide</a></li>
 <li><a href="https://www.youtube.com/watch?v=1MWxIUoIYFA&amp;index=6&amp;list=PL-x35fyliRwger2GwWLG4vigDRGCDyzCI">video</a></li>
 </ul>
 <p>Stack overflow error</p>
@@ -121,13 +123,13 @@ sc.addJar(JarCreator.createJarFile(JarCreator.getClassesFromClassPath(getClass.g
 </ul>
 <p>Work-arounds</p>
 <ul>
-<li>Allocate large JVM stack frame size<br /></li>
+<li>Allocate large JVM stack frame size</li>
 <li>Checkpoint RDD periodically</li>
 </ul>
 <h3 id="towards-modularizing-spark-machine-learning-jobs">Towards Modularizing Spark Machine Learning Jobs</h3>
 <ul>
-<li>Lance Co Ting Keh (Box)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-29-Lance-Co-Ting-Keh.pdf">slide</a><br /></li>
+<li>Lance Co Ting Keh (Box)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-29-Lance-Co-Ting-Keh.pdf">slide</a></li>
 <li><a href="https://www.youtube.com/watch?v=x6FnZNjS3lQ&amp;index=7&amp;list=PL-x35fyliRwger2GwWLG4vigDRGCDyzCI">video</a></li>
 </ul>
 <p>用Sparkle进行Spark ML模块化编程</p>
@@ -154,49 +156,50 @@ sc.addJar(JarCreator.createJarFile(JarCreator.getClassesFromClassPath(getClass.g
 }</code></pre>
 <h3 id="estimating-financial-risk-with-spark">Estimating Financial Risk with Spark</h3>
 <ul>
-<li>Sandy Ryza (Cloudera)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-21-Sandy-Ryza.pdf">slide</a><br /></li>
+<li>Sandy Ryza (Cloudera)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-21-Sandy-Ryza.pdf">slide</a></li>
 <li><a href="https://www.youtube.com/watch?v=0OM68k3np0E&amp;list=PL-x35fyliRwiiYSXHyI61RXdHlYR3QjZ1&amp;index=5">video</a></li>
 </ul>
 <p><a href="https://github.com/cloudera/spark-timeseries">spark-timeseries</a> -- A library for financial and time series calculations on Apache Spark</p>
 <h3 id="sparking-an-anti-money-laundering-revolution">Spark’ing an Anti Money Laundering Revolution</h3>
 <ul>
-<li>Katie Levans (Tresata)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-24-Levans-Kuipers.pdf">slide</a><br /></li>
+<li>Katie Levans (Tresata)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-24-Levans-Kuipers.pdf">slide</a></li>
 <li><a href="https://www.youtube.com/watch?v=g9_JehbQ17Q&amp;list=PL-x35fyliRwiiYSXHyI61RXdHlYR3QjZ1&amp;index=6">video</a></li>
 </ul>
 <h3 id="recommendations-in-a-flash-how-gilt-uses-spark-to-improve-its-customer-experience">Recommendations in a Flash: How Gilt Uses Spark to Improve Its Customer Experience</h3>
 <ul>
-<li>Zachary Cohn (Gilt Groupe)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-27-ZacharyCohn.pdf">slide</a><br /></li>
+<li>Zachary Cohn (Gilt Groupe)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-27-ZacharyCohn.pdf">slide</a></li>
 <li><a href="https://www.youtube.com/watch?v=vkHMBosm-U4&amp;index=7&amp;list=PL-x35fyliRwiiYSXHyI61RXdHlYR3QjZ1">video</a></li>
 </ul>
 <h3 id="graph-based-genomic-integration-using-spark">Graph-Based Genomic Integration using Spark</h3>
 <ul>
-<li>David Tester (Novartis Institutes for Biomedical Research)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-30-David-Tester.pdf">slide</a><br /></li>
+<li>David Tester (Novartis Institutes for Biomedical Research)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-30-David-Tester.pdf">slide</a></li>
 <li><a href="https://www.youtube.com/watch?v=ID0pbzf6o7E&amp;index=8&amp;list=PL-x35fyliRwiiYSXHyI61RXdHlYR3QjZ1">video</a></li>
 </ul>
 <h3 id="practical-machine-learning-pipelines-with-mllib">Practical Machine Learning Pipelines with MLlib</h3>
 <ul>
-<li>Joseph Bradley (Databricks)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-22-Joseph-Bradley.pdf">slide</a><br /></li>
+<li>Joseph Bradley (Databricks)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-22-Joseph-Bradley.pdf">slide</a></li>
 <li><a href="https://www.youtube.com/watch?v=Riuee7qxdX4&amp;index=5&amp;list=PL-x35fyliRwiy50Ud2ltPx8_yA4H34ppJ">video</a></li>
 </ul>
 <h3 id="streaming-machine-learning-in-spark">Streaming machine learning in Spark</h3>
 <ul>
-<li>Jeremy Freeman (HHMI Janelia Research Center)<br /></li>
+<li>Jeremy Freeman (HHMI Janelia Research Center)</li>
 <li><a href="https://www.youtube.com/watch?v=uUQTSPvD1mc&amp;list=PL-x35fyliRwiy50Ud2ltPx8_yA4H34ppJ&amp;index=6">video</a></li>
 </ul>
 <h3 id="heterospark-a-heterogeneous-cpugpu-spark-platform-for-deep-learning-algorithms">HeteroSpark: A Heterogeneous CPU/GPU Spark Platform for Deep Learning Algorithms</h3>
 <ul>
-<li>Peilong Li (U of Massachusetts Lowell), Yan Luo (U of Massachusetts Lowell)<br /></li>
-<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-28-Peilong-Li-Yan-Luo.pdf">slide</a><br /></li>
+<li>Peilong Li (U of Massachusetts Lowell), Yan Luo (U of Massachusetts Lowell)</li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2015/03/SSE15-28-Peilong-Li-Yan-Luo.pdf">slide</a></li>
 <li><a href="https://www.youtube.com/watch?v=jpQxWcmXKyU&amp;list=PL-x35fyliRwiy50Ud2ltPx8_yA4H34ppJ&amp;index=7">video</a></li>
 </ul>
 <h3 id="multi-modal-big-data-analysis-within-the-spark-ecosystem">Multi-modal big data analysis within the Spark ecosystem</h3>
 <ul>
-<li>Jordi Torres (Barcelona Supercomputing Center)<br /></li>
+<li>Jordi Torres (Barcelona Supercomputing Center)<br />
+</li>
 <li><a href="https://www.youtube.com/watch?v=aGXoN_SqpIo&amp;list=PL-x35fyliRwiy50Ud2ltPx8_yA4H34ppJ&amp;index=8">video</a></li>
 </ul>
 </body>

@@ -22,7 +22,7 @@
 <h1 id="java">Java序列化问题</h1>
 <h3 id="-scala">问题： 序列化Scala函数的时候，为什么需要参数的类的定义？</h3>
 <p>今天在序列化一个Scala的函数的时候，碰到一个java序列化的问题，程序如下：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import</span> java.io.{FileOutputStream, ObjectOutputStream}
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import</span> java.io.{FileOutputStream, ObjectOutputStream}
 <span class="kw">import</span> org.apache.spark.rdd.RDD
 
 object Test {
@@ -31,14 +31,14 @@ object Test {
     val oout = <span class="kw">new</span> ObjectOutputStream(<span class="kw">new</span> FileOutputStream(<span class="st">&quot;/tmp/obj&quot;</span>))
     oout.<span class="fu">writeObject</span>(obj)
   }
-}</code></pre>
+}</code></pre></div>
 <p>Maven配置中，spark-core设为provided，因为在运行时上述程序是不需要加载RDD的类。</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;dependency&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;dependency&gt;</span>
     <span class="kw">&lt;groupId&gt;</span>org.apache.spark<span class="kw">&lt;/groupId&gt;</span>
     <span class="kw">&lt;artifactId&gt;</span>spark-core_2.10<span class="kw">&lt;/artifactId&gt;</span>
     <span class="kw">&lt;version&gt;</span>${spark.version}<span class="kw">&lt;/version&gt;</span>
     <span class="kw">&lt;scope&gt;</span>provided<span class="kw">&lt;/scope&gt;</span>
-<span class="kw">&lt;/dependency&gt;</span></code></pre>
+<span class="kw">&lt;/dependency&gt;</span></code></pre></div>
 <p>结果运行时出现了如下的错误：</p>
 <pre><code>Exception in thread &quot;main&quot; java.lang.NoClassDefFoundError: org/apache/spark/rdd/RDD
     at java.lang.Class.getDeclaredMethods0(Native Method)
@@ -71,20 +71,20 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.rdd.RDD
     ... 19 more</code></pre>
 <h3>分析</h3>
 <p>Scala的函数<code>val obj: RDD[Int] =&gt; Int = rdd =&gt; rdd.first()</code>会被翻译为Function类</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> obj1 = <span class="kw">new</span> Function1[RDD[Int], Int]() {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> obj1 = <span class="kw">new</span> Function1[RDD[Int], Int]() {
   <span class="kw">override</span> <span class="kw">def</span> <span class="fu">apply</span>(v1: RDD[Int]): Int = {
     rdd.<span class="fu">first</span>()
   }
-}</code></pre>
+}</code></pre></div>
 <p>根据错误的stack信息，可以推测出Java在序列化Functoin1这个类的时候加载了RDD的类。原因如下：</p>
 <p>如果用户在类里面定义了writeObject方法，Java会优先选择这个方法来序列化该类。所以Java会首先通过反射的机制检查类中有没有writeObject方法</p>
-<pre class="sourceCode java"><code class="sourceCode java">ObjectStreamClass.<span class="fu">java</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ObjectStreamClass.<span class="fu">java</span>
 
 <span class="fu">getPrivateMethod</span>(cl, <span class="st">&quot;writeObject&quot;</span>,
                   <span class="kw">new</span> Class&lt;?&gt;[] { ObjectOutputStream.<span class="fu">class</span> },
-                  Void.<span class="fu">TYPE</span>);</code></pre>
+                  Void.<span class="fu">TYPE</span>);</code></pre></div>
 <p>在检查有没有writeObject方法的时候，调用了getDeclaredMethod获取所有的方法</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">private</span> <span class="dt">static</span> Method <span class="fu">getPrivateMethod</span>(Class&lt;?&gt; cl, String name,
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">private</span> <span class="dt">static</span> Method <span class="fu">getPrivateMethod</span>(Class&lt;?&gt; cl, String name,
                                            Class&lt;?&gt;[] argTypes,
                                            Class&lt;?&gt; returnType)
     {
@@ -98,9 +98,9 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.rdd.RDD
         } <span class="kw">catch</span> (NoSuchMethodException ex) {
             <span class="kw">return</span> <span class="kw">null</span>;
         }
-    }</code></pre>
+    }</code></pre></div>
 <p>getDeclaredMethod中调用了privateGetDeclaredMethods</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Method <span class="fu">getDeclaredMethod</span>(String name, Class&lt;?&gt;<span class="kw">... </span>parameterTypes)
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Method <span class="fu">getDeclaredMethod</span>(String name, Class&lt;?&gt;<span class="kw">... </span>parameterTypes)
         <span class="kw">throws</span> NoSuchMethodException, SecurityException {
         <span class="co">// be very careful not to change the stack depth of this</span>
         <span class="co">// checkMemberAccess call for security reasons</span>
@@ -111,9 +111,9 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.rdd.RDD
             <span class="kw">throw</span> <span class="kw">new</span> NoSuchMethodException(<span class="fu">getName</span>() + <span class="st">&quot;.&quot;</span> + name + <span class="fu">argumentTypesToString</span>(parameterTypes));
         }
         <span class="kw">return</span> method;
-    }</code></pre>
+    }</code></pre></div>
 <p>privateGetDeclaredMethods中调用了getDeclaredMethods0，该方法是一个native方法,getDeclaredMethods0会寻找所有方法中涉及到的类的定义，所以会出现RDD类找不到的错误。</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">private</span> Method[] <span class="fu">privateGetDeclaredMethods</span>(<span class="dt">boolean</span> publicOnly) {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">private</span> Method[] <span class="fu">privateGetDeclaredMethods</span>(<span class="dt">boolean</span> publicOnly) {
        <span class="fu">checkInitted</span>();
        Method[] res = <span class="kw">null</span>;
        <span class="kw">if</span> (useCaches) {
@@ -139,10 +139,10 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.rdd.RDD
            }
        }
        <span class="kw">return</span> res;
-   }</code></pre>
+   }</code></pre></div>
 <h3>解决</h3>
 <p>因为所有出现在Function1方法中的类型都需要存在在运行时环境中，所以我们可以定义一个Wrapper类来包装RDD。这样Java只会查找Wrapper类，而不需要RDD类。</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> java.<span class="fu">io</span>.{FileOutputStream, ObjectOutputStream}
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> java.<span class="fu">io</span>.{FileOutputStream, ObjectOutputStream}
 <span class="kw">import</span> org.<span class="fu">apache</span>.<span class="fu">spark</span>.<span class="fu">rdd</span>.<span class="fu">RDD</span>
 
 <span class="kw">class</span> Wrapper[T](@transient <span class="kw">val</span> value: T)
@@ -153,7 +153,7 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.rdd.RDD
     <span class="kw">val</span> oout = <span class="kw">new</span> ObjectOutputStream(<span class="kw">new</span> FileOutputStream(<span class="st">&quot;/tmp/obj&quot;</span>))
     oout.<span class="fu">writeObject</span>(obj)
   }
-}</code></pre>
+}</code></pre></div>
 <h3>思考</h3>
 <p>个人觉得这个可以算一个Java的bug，getPrivateMethod方法只捕获了NoSuchMethodException，其实应该再捕获一个NoClassDefFoundError。</p>
 </body>

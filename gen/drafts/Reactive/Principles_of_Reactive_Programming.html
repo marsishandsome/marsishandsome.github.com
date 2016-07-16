@@ -21,7 +21,7 @@
 <body>
 <h1 id="principles-of-reactive-programming">Principles of Reactive Programming</h1>
 <ul>
-<li>by Martin Odersky, Erik Meijer, Roland Kuhn<br /></li>
+<li>by Martin Odersky, Erik Meijer, Roland Kuhn</li>
 <li><a href="https://class.coursera.org/reactive-002/auth">Coursera Link</a></li>
 </ul>
 <h1 id="week-1">Week 1</h1>
@@ -306,8 +306,8 @@ type Observable[T] = (Try[Option[T]] =&gt; Unit) =&gt; Unit
 <h1 id="week-5">Week 5</h1>
 <h3 id="why-actors">Why Actors?</h3>
 <ul>
-<li>blocking synchronization introduces dead-locks<br /></li>
-<li>blocking is bad for CPU utilization<br /></li>
+<li>blocking synchronization introduces dead-locks</li>
+<li>blocking is bad for CPU utilization</li>
 <li>synchronous communication couples sender and receiver</li>
 </ul>
 <h3 id="the-actor-model">The Actor Model</h3>
@@ -335,8 +335,8 @@ trait ActorContext {
 <h3 id="message-passing-semantics">Message Passing Semantics</h3>
 <p>An actor is effectively single-threaded:</p>
 <ul>
-<li>messages are received sequentially<br /></li>
-<li>behavior change is effective before processing the next message<br /></li>
+<li>messages are received sequentially</li>
+<li>behavior change is effective before processing the next message</li>
 <li>processing one message is the atomic unit of execution</li>
 </ul>
 <h1 id="week-6">Week 6</h1>

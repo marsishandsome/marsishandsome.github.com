@@ -28,23 +28,23 @@
 <p><img src="../../../images/spark_job_server_remoting.png" /></p>
 <h3 id="spark-job-server-1">Spark Job Server</h3>
 <ul>
-<li><a href="http://spark-summit.org/wp-content/uploads/2014/07/Spark-Job-Server-Easy-Spark-Job-Management-Chan-Chu.pdf">Spark Summit</a><br /></li>
-<li><a href="https://github.com/spark-jobserver/spark-jobserver">Github New</a><br /></li>
+<li><a href="http://spark-summit.org/wp-content/uploads/2014/07/Spark-Job-Server-Easy-Spark-Job-Management-Chan-Chu.pdf">Spark Summit</a></li>
+<li><a href="https://github.com/spark-jobserver/spark-jobserver">Github New</a></li>
 <li><a href="http://github.com/ooyala/spark-jobserver">Github Old</a></li>
 </ul>
 <p><img src="../../../images/spark_job_server_spark_job_server.png" /></p>
 <ol>
-<li>&quot;Spark as a Service&quot;: Simple REST interface for all aspects of job, context management<br /></li>
-<li>Support for Spark SQL Contexts/jobs and custom job contexts, Works for Spark Streaming as well!<br /></li>
-<li>Supports sub-second low-latency jobs via long-running job contexts<br /></li>
-<li>Start and stop job contexts for RDD sharing and low-latency jobs; change resources on restart<br /></li>
-<li>Kill running jobs via stop context<br /></li>
-<li>Separate jar uploading step for faster job startup<br /></li>
-<li>Asynchronous and synchronous job API. Synchronous API is great for low latency jobs!<br /></li>
-<li>Works with Standalone Spark as well as Mesos and yarn-client<br /></li>
-<li>Job and jar info is persisted via a pluggable DAO interface<br /></li>
-<li>Named RDDs to cache and retrieve RDDs by name, improving RDD sharing and reuse among jobs.<br /></li>
-<li>Jars, job history and config are persisted via a pluggable API<br /></li>
+<li>&quot;Spark as a Service&quot;: Simple REST interface for all aspects of job, context management</li>
+<li>Support for Spark SQL Contexts/jobs and custom job contexts, Works for Spark Streaming as well!</li>
+<li>Supports sub-second low-latency jobs via long-running job contexts</li>
+<li>Start and stop job contexts for RDD sharing and low-latency jobs; change resources on restart</li>
+<li>Kill running jobs via stop context</li>
+<li>Separate jar uploading step for faster job startup</li>
+<li>Asynchronous and synchronous job API. Synchronous API is great for low latency jobs!</li>
+<li>Works with Standalone Spark as well as Mesos and yarn-client</li>
+<li>Job and jar info is persisted via a pluggable DAO interface</li>
+<li>Named RDDs to cache and retrieve RDDs by name, improving RDD sharing and reuse among jobs.</li>
+<li>Jars, job history and config are persisted via a pluggable API</li>
 <li>Async and sync API, JSON job results</li>
 </ol>
 <p>Example</p>
@@ -70,16 +70,16 @@ override def runJob(sc: SparkContext, config: Config): Any = {
 </ul>
 <h3 id="spark-admin">Spark-Admin</h3>
 <ul>
-<li>provides administrators and developers a GUI to provision and manage Spark clusters easily<br /></li>
+<li>provides administrators and developers a GUI to provision and manage Spark clusters easily</li>
 <li><a href="https://github.com/adatao/adatao-admin">github</a></li>
 </ul>
 <h3>二进制兼容问题</h3>
 <ul>
-<li>Reading from HDFS<br /></li>
-<li>Spark driver’s hadoop libraries need to match those on the spark cluster<br /></li>
-<li>We made these libraries configurable by:<br /></li>
-<li>Decoupling the spark driver into a separate process<br /></li>
-<li>Allowing administrators to configure what libraries through a UI<br /></li>
+<li>Reading from HDFS</li>
+<li>Spark driver’s hadoop libraries need to match those on the spark cluster</li>
+<li>We made these libraries configurable by:</li>
+<li>Decoupling the spark driver into a separate process</li>
+<li>Allowing administrators to configure what libraries through a UI</li>
 <li>Kicking off a spark driver process with the configured hadoop libraries</li>
 </ul>
 </body>

@@ -21,9 +21,9 @@
 <body>
 <h1 id="learning-scala">Learning Scala</h1>
 <ul>
-<li><a href="http://twitter.github.io/effectivescala/index.html">Effective Scala</a> -- Twitter<br /></li>
-<li><a href="https://class.coursera.org/reactive-002/auth">Principles of Reactive Programming</a> -- by Martin Odersky, Erik Meijer, Roland Kuhn<br /></li>
-<li><a href="https://github.com/ReactiveX/RxScala">RxScala Github</a><br /></li>
+<li><a href="http://twitter.github.io/effectivescala/index.html">Effective Scala</a> -- Twitter</li>
+<li><a href="https://class.coursera.org/reactive-002/auth">Principles of Reactive Programming</a> -- by Martin Odersky, Erik Meijer, Roland Kuhn</li>
+<li><a href="https://github.com/ReactiveX/RxScala">RxScala Github</a></li>
 <li><a href="http://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf">Scalable Component Abstractions</a> -- Martin Odersky</li>
 </ul>
 <table>
@@ -49,26 +49,26 @@
 </table>
 <h3 id="monads">Monads</h3>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Monad_%28functional_programming%29">monad wikipedia</a><br /></li>
-<li><a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html">functors,<em>applicatives,</em>and_monads_in_pictures</a><br /></li>
-<li><a href="http://stackoverflow.com/questions/2704652/monad-in-plain-english-for-the-oop-programmer-with-no-fp-background">Monad in plain English?</a><br /></li>
+<li><a href="https://en.wikipedia.org/wiki/Monad_%28functional_programming%29">monad wikipedia</a></li>
+<li><a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html">functors,_applicatives,_and_monads_in_pictures</a></li>
+<li><a href="http://stackoverflow.com/questions/2704652/monad-in-plain-english-for-the-oop-programmer-with-no-fp-background">Monad in plain English?</a></li>
 <li><a href="http://stackoverflow.com/questions/44965/what-is-a-monad">What is a monad?</a></li>
 </ul>
 <p>A monad M is a parametric type M[T] with two operations, flatMap and unit, that have to satisfy some laws.</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> M[T] {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> M[T] {
   <span class="kw">def</span> flatMap[U](f: T =&gt; M[U]): M[U]
 }
 
-<span class="kw">def</span> <span class="dt">unit</span>[T](x: T): M[T]</code></pre>
+<span class="kw">def</span> <span class="dt">unit</span>[T](x: T): M[T]</code></pre></div>
 <p>To qualify as a monad, a type has to satisfy three laws:</p>
 <p>Associativity</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">m flatMap f flatMap g == m <span class="fu">flatMap</span> (x =&gt; <span class="fu">f</span>(x) flatMap g)</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">m flatMap f flatMap g == m <span class="fu">flatMap</span> (x =&gt; <span class="fu">f</span>(x) flatMap g)</code></pre></div>
 <p>Left unit</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="dt">unit</span>(x) flatMap f == <span class="fu">f</span>(x)</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="dt">unit</span>(x) flatMap f == <span class="fu">f</span>(x)</code></pre></div>
 <p>Right unit</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">m flatMap <span class="dt">unit</span> == m</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">m flatMap <span class="dt">unit</span> == m</code></pre></div>
 <h3 id="try">Try</h3>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Try[+T] {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Try[+T] {
   <span class="kw">def</span> flatMap[U](f: T =&gt; Try[U]): Try[U] = <span class="kw">this</span> <span class="kw">match</span> {
     <span class="kw">case</span> <span class="fu">Success</span>(x) =&gt; <span class="kw">try</span> <span class="fu">f</span>(x) <span class="kw">catch</span> { <span class="kw">case</span> <span class="fu">NonFatal</span>(ex) =&gt; <span class="fu">Failure</span>(ex) }
     <span class="kw">case</span> fail: Failure =&gt; fail
@@ -96,9 +96,9 @@
       <span class="kw">case</span> <span class="fu">NonFatal</span>(ex) =&gt; <span class="fu">Failure</span>(ex)
     }
   }
-}</code></pre>
+}</code></pre></div>
 <h3 id="future">Future</h3>
-<pre class="sourceCode scala"><code class="sourceCode scala">tarit Awaitable[T] <span class="kw">extends</span> AnyRef {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">tarit Awaitable[T] <span class="kw">extends</span> AnyRef {
   <span class="kw">abstract</span> <span class="kw">def</span> <span class="fu">ready</span>(atMost: Duration): Unit
   <span class="kw">abstract</span> <span class="kw">def</span> <span class="fu">result</span>(atMode: Duration): T
 }
@@ -114,9 +114,9 @@
 <span class="kw">object</span> Future {
   <span class="kw">def</span> <span class="fu">apply</span>(body: =&gt; T)
     (<span class="kw">implicit</span> executor: ExecutorContext): Future[T]
-}</code></pre>
+}</code></pre></div>
 <h3 id="promise">Promise</h3>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Promise {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Promise {
   <span class="kw">def</span> future: Future[T]
   <span class="kw">def</span> <span class="fu">complete</span>(result: Try[T]): Unit
   <span class="kw">def</span> <span class="fu">tryComplete</span>(result: Try[T]): Boolean
@@ -126,16 +126,16 @@
   <span class="kw">def</span> <span class="fu">failure</span>(t: Throwable): Unit = {
     <span class="kw">this</span>.<span class="fu">complete</span>(<span class="fu">Failure</span>(t))
   }
-}</code></pre>
+}</code></pre></div>
 <h3 id="iterable">Iterable</h3>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Iterable[T] {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Iterable[T] {
   <span class="kw">def</span> iterator: Iterator[T]
 }
 
 <span class="kw">trait</span> Iterator[T] {
   <span class="kw">def</span> <span class="fu">hasNext</span>(): Boolean
   <span class="kw">def</span> <span class="fu">next</span>(): T
-}</code></pre>
+}</code></pre></div>
 <h3 id="observable">Observable</h3>
 </body>
 </html>
