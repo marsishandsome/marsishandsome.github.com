@@ -18,6 +18,12 @@
       </item>
 
       <item>
+        <title>Paxos</title>
+        <link>http://marsishandsome.github.io/gen/posts/Paxos/Paxos.html</link>
+        <description>Paxos</description>
+      </item>
+
+      <item>
         <title>Java序列化问题</title>
         <link>http://marsishandsome.github.io/gen/posts/Scala/Java序列化问题.html</link>
         <description>Java序列化问题</description>
