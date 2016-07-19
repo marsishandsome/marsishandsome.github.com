@@ -23,8 +23,8 @@
 <p>SparkR项目最近已经merge到spark的master分支，将会在spark-1.4.0中正式发布。</p>
 <p>我认为SparkR项目的意义在于：</p>
 <ol>
-<li>使用R语言的专业人士可以无缝地通过R语言来使用Spark</li>
-<li>在Spark上可以使用R的上千个package，避免重复发明轮子</li>
+<li>使用R语言的专业人士可以无缝地通过R语言来使用Spark<br /></li>
+<li>在Spark上可以使用R的上千个package，避免重复发明轮子<br /></li>
 <li>证明了Spark框架的可扩展性</li>
 </ol>
 <p>本篇主要来分析一下SparkR的架构。</p>
@@ -35,35 +35,35 @@
 <p><img src="../../../images/spark_r_dataflow.png" width="1000px"></p>
 <p>下面是介绍一些执行SparkR的详细流程：</p>
 <ol>
-<li>SparkSubmit判断是SparkR类型的任务，启动RRunner</li>
-<li>RRunner首先启动RBackend，然后再启动R进程执行用户的R脚本</li>
-<li>RBackend开启Socket Server，等待R进程链接</li>
-<li>R进程通过Socket连接到RBackend</li>
-<li>R脚本生成SparkContext，通过Socket通信，会在JVM中生成JavaSparkContext</li>
-<li>R脚本触发RRDD的action，通过Socket通信，Driver启动executor，并执行对于的任务</li>
-<li>在每个执行器中都会调用RRDD的compute函数，来计算RRDD中的数据</li>
-<li>compute函数首先开启Socket Server，等待R进程链接，然后启动一个R进程(worker.R)</li>
-<li>R进程通过Socket链接到执行器，读取执行器发送过来的任务，执行任务，并返回结果</li>
+<li>SparkSubmit判断是SparkR类型的任务，启动RRunner<br /></li>
+<li>RRunner首先启动RBackend，然后再启动R进程执行用户的R脚本<br /></li>
+<li>RBackend开启Socket Server，等待R进程链接<br /></li>
+<li>R进程通过Socket连接到RBackend<br /></li>
+<li>R脚本生成SparkContext，通过Socket通信，会在JVM中生成JavaSparkContext<br /></li>
+<li>R脚本触发RRDD的action，通过Socket通信，Driver启动executor，并执行对于的任务<br /></li>
+<li>在每个执行器中都会调用RRDD的compute函数，来计算RRDD中的数据<br /></li>
+<li>compute函数首先开启Socket Server，等待R进程链接，然后启动一个R进程(worker.R)<br /></li>
+<li>R进程通过Socket链接到执行器，读取执行器发送过来的任务，执行任务，并返回结果<br /></li>
 <li>compute函数读取R进程发来的结果数据，并返回iterator</li>
 </ol>
 <p>1-6属于driver端，7-10属于executor端。</p>
 <p><img src="../../../images/spark_r_workflow.png" width="1000px"></p>
 <h3>可能的问题及改进</h3>
 <ol>
-<li>Standalone模式如何控制R进程的资源？</li>
+<li>Standalone模式如何控制R进程的资源？<br /></li>
 <li>JVM进程和R进程通过Socket进行通信，代价多高？可否用共享内存？</li>
 </ol>
 <h3 id="links">Links</h3>
 <ul>
-<li><a href="http://amplab-extras.github.io/SparkR-pkg/">SparkR 官网</a></li>
-<li><a href="https://github.com/amplab-extras/SparkR-pkg">SparkR Github</a></li>
-<li><a href="https://issues.apache.org/jira/browse/SPARK-5654">SparkR Apache JIRA</a></li>
+<li><a href="http://amplab-extras.github.io/SparkR-pkg/">SparkR 官网</a><br /></li>
+<li><a href="https://github.com/amplab-extras/SparkR-pkg">SparkR Github</a><br /></li>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-5654">SparkR Apache JIRA</a><br /></li>
 <li><a href="https://github.com/apache/spark/pull/5096">SparkR Github Pull Request</a></li>
 </ul>
 <h3 id="documents">Documents</h3>
 <ul>
-<li><a href="http://spark-summit.org/2014/talk/sparkr-interactive-r-programs-at-scale-2">SparkR: Interactive R programs at Scale</a> - Spark Summit 2014</li>
-<li><a href="https://www.youtube.com/watch?v=Y21t3Taw7i8">SparkR Enabling Interactive Data Science at Scale on Hadoop</a> - Hadoop Summit</li>
+<li><a href="http://spark-summit.org/2014/talk/sparkr-interactive-r-programs-at-scale-2">SparkR: Interactive R programs at Scale</a> - Spark Summit 2014<br /></li>
+<li><a href="https://www.youtube.com/watch?v=Y21t3Taw7i8">SparkR Enabling Interactive Data Science at Scale on Hadoop</a> - Hadoop Summit<br /></li>
 <li><a href="https://www.youtube.com/watch?v=OxVIns6zvlk">AMP Camp 5: SparkR</a></li>
 </ul>
 <h3 id="details">Details</h3>

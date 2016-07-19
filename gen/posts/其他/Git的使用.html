@@ -24,28 +24,23 @@
 <p>编辑 <code>.git/config</code></p>
 <pre><code>receivepack = git receive-pack --reviewer reviewer1 --reviewer reviewer2</code></pre>
 <h3 id="rewrite-history">Rewrite History</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> filter-branch --tree-filter <span class="kw">`rm</span> -rf path/to/folder<span class="kw">`</span>
-<span class="kw">git</span> push origin --force</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> filter-branch --tree-filter <span class="kw">`rm</span> -rf path/to/folder<span class="kw">`</span>
+<span class="kw">git</span> push origin --force</code></pre>
 <p><a href="http://git-scm.com/docs/git-filter-branch">document</a></p>
 <h3 id="branch-merge">Branch Merge</h3>
-<p>1.git fetch<br />
-2.git checkout -b B origin/B<br />
-3.git merge --no-ff origin/A<br />
-4.git commit --amend<br />
-5.git push origin HEAD:refs/for/B</p>
+<p>1.git fetch<br />2.git checkout -b B origin/B<br />3.git merge --no-ff origin/A<br />4.git commit --amend<br />5.git push origin HEAD:refs/for/B</p>
 <h3 id="add-tag">Add tag</h3>
-<p>git tag -a v0.0.1 -m &quot;Release Version 0.0.1&quot;<br />
-git push origin v0.0.1</p>
+<p>git tag -a v0.0.1 -m &quot;Release Version 0.0.1&quot;<br />git push origin v0.0.1</p>
 <h3 id="reference">Reference</h3>
 <ul>
-<li><a href="http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/index.html">Git Magic</a> - Git简要教程</li>
-<li><a href="https://codewords.recurse.com/issues/two/git-from-the-inside-out">Git from the inside out</a></li>
-<li><a href="http://cloudbbs.org/forum.php?tid=30647&amp;page=1&amp;extra=&amp;mod=viewthread#pid201033">高富帅们的Git技巧</a> - Git使用技巧</li>
-<li><a href="https://www.howtoforge.com/how-to-install-the-latest-git-version-on-centos">How to install the latest GIT version on CentOS</a></li>
-<li><a href="https://help.github.com/articles/caching-your-github-password-in-git/">Caching your GitHub password in Git</a></li>
-<li><a href="http://pre-commit.com/">Pre Commit</a> -- Managing and maintaining multi-language pre-commit hooks</li>
-<li><a href="https://github.com/blog/2019-how-to-undo-almost-anything-with-git">How to undo (almost) anything with Git</a></li>
-<li><a href="https://github.com/xirong/my-git/blob/master/git-workflow-tutorial.md">Git Workflow Toturial</a></li>
+<li><a href="http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/index.html">Git Magic</a> - Git简要教程<br /></li>
+<li><a href="https://codewords.recurse.com/issues/two/git-from-the-inside-out">Git from the inside out</a><br /></li>
+<li><a href="http://cloudbbs.org/forum.php?tid=30647&amp;page=1&amp;extra=&amp;mod=viewthread#pid201033">高富帅们的Git技巧</a> - Git使用技巧<br /></li>
+<li><a href="https://www.howtoforge.com/how-to-install-the-latest-git-version-on-centos">How to install the latest GIT version on CentOS</a><br /></li>
+<li><a href="https://help.github.com/articles/caching-your-github-password-in-git/">Caching your GitHub password in Git</a><br /></li>
+<li><a href="http://pre-commit.com/">Pre Commit</a> -- Managing and maintaining multi-language pre-commit hooks<br /></li>
+<li><a href="https://github.com/blog/2019-how-to-undo-almost-anything-with-git">How to undo (almost) anything with Git</a><br /></li>
+<li><a href="https://github.com/xirong/my-git/blob/master/git-workflow-tutorial.md">Git Workflow Toturial</a><br /></li>
 <li><a href="http://blog.ploeh.dk/2015/01/15/10-tips-for-better-pull-requests/">10 tips for better Pull Requests</a> - by Mark Seemann</li>
 </ul>
 </body>

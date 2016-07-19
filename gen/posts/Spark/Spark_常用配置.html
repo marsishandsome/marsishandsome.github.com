@@ -25,30 +25,30 @@
 </ul>
 <h2 id="core">Core</h2>
 <ul>
-<li>spark.io.compression.codec=org.apache.spark.io.LZFCompressionCodec</li>
+<li>spark.io.compression.codec=org.apache.spark.io.LZFCompressionCodec<br /></li>
 <li>spark.serializer=org.apache.spark.serializer.KryoSerializer</li>
 </ul>
 <h2 id="jvm">JVM</h2>
 <ul>
-<li>spark.driver.extraJavaOptions=-XX:MaxPermSize=256m</li>
+<li>spark.driver.extraJavaOptions=-XX:MaxPermSize=256m<br /></li>
 <li>spark.executor.extraJavaOptions=-XX:MaxPermSize=256m</li>
 </ul>
 <h2 id="yarn">Yarn</h2>
 <ul>
-<li>spark.yarn.jar=hdfs://hadoop-namenode/path/to/spark-assembly-1.x.x.jar</li>
-<li>spark.yarn.maxAppAttempts=1</li>
-<li>spark.yarn.executor.memoryOverhead=2048</li>
+<li>spark.yarn.jar=hdfs://hadoop-namenode/path/to/spark-assembly-1.x.x.jar<br /></li>
+<li>spark.yarn.maxAppAttempts=1<br /></li>
+<li>spark.yarn.executor.memoryOverhead=2048<br /></li>
 <li>spark.yarn.historyServer.address=xxx.xxx.xxx.xxx:18080</li>
 </ul>
 <h2 id="log">Log</h2>
 <ul>
-<li>spark.eventLog.enabled=true</li>
+<li>spark.eventLog.enabled=true<br /></li>
 <li>spark.eventLog.dir=hdfs:///tmp/spark/logs</li>
 </ul>
 <h2 id="straming">Straming</h2>
 <h3 id="kafka-direct">Kafka Direct</h3>
 <ul>
-<li>spark.streaming.backpressure.enabled=true</li>
+<li>spark.streaming.backpressure.enabled=true<br /></li>
 <li>spark.streaming.kafka.maxRatePerPartition=100000</li>
 </ul>
 <h3 id="kafka-receiver">Kafka Receiver</h3>

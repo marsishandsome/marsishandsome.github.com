@@ -21,66 +21,63 @@
 <body>
 <h1 id="futurepromise">解读Future和Promise</h1>
 <p>Future和Promise的概念早在1977年就已经提出来了。</p>
-<p>Future是一个只读的占位符，它的值在未来某个时刻会被计算出来；<br />
-Promise是一个可写的容器，可以设置Future的值 。</p>
+<p>Future是一个只读的占位符，它的值在未来某个时刻会被计算出来；<br />Promise是一个可写的容器，可以设置Future的值 。</p>
 <h3 id="future-in-java">Future in Java</h3>
-<p>Future最早出现在Java5中，这个Future功能非常简单，只能通过轮询的方式进行查询；<br />
-Google Guava中实现了ListenableFuture，提供addListener和addCallback的方式进行回调；<br />
-Java8中实现了CompletableFuture，提供了比较完整的Future支持。</p>
+<p>Future最早出现在Java5中，这个Future功能非常简单，只能通过轮询的方式进行查询；<br />Google Guava中实现了ListenableFuture，提供addListener和addCallback的方式进行回调；<br />Java8中实现了CompletableFuture，提供了比较完整的Future支持。</p>
 <h5 id="java5-future">Java5: Future</h5>
 <ul>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html">api</a></li>
 </ul>
 <p>Java5中的Future只提供了主动查询的接口，功能非常弱。</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> Future&lt;V&gt; {
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> Future&lt;V&gt; {
   <span class="dt">boolean</span> <span class="fu">cancel</span>(<span class="dt">boolean</span> mayInterruptIfRunning);
   <span class="dt">boolean</span> <span class="fu">isCancelled</span>();
   <span class="dt">boolean</span> <span class="fu">isDone</span>();
   V <span class="fu">get</span>() <span class="kw">throws</span> InterruptedException, ExecutionException;
-}</code></pre></div>
+}</code></pre>
 <h5 id="guava-listenablefuture">Guava: ListenableFuture</h5>
 <ul>
-<li><a href="https://code.google.com/p/guava-libraries/wiki/ListenableFutureExplained">guava</a></li>
+<li><a href="https://code.google.com/p/guava-libraries/wiki/ListenableFutureExplained">guava</a><br /></li>
 <li><a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/util/concurrent/ListenableFuture.html">api</a></li>
 </ul>
 <p>Guava的ListenableFuture继承自Future，可以通过addListener函数添加Listener。</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> ListenableFuture&lt;V&gt; <span class="kw">extends</span> Future&lt;V&gt; {
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> ListenableFuture&lt;V&gt; <span class="kw">extends</span> Future&lt;V&gt; {
   <span class="dt">void</span> <span class="fu">addListener</span>(Runnable listener, Executor executor);
-}</code></pre></div>
+}</code></pre>
 <p>Guava还提供了一些Future的Util函数:</p>
 <ul>
-<li>addCallback: 可以在ListenerFuture上添加Callback</li>
+<li>addCallback: 可以在ListenerFuture上添加Callback<br /></li>
 <li>transform: 可以把一个ListenerFuture通过一个Function变成另外一个ListenerFuture</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> Futures {
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> Futures {
   <span class="kw">public</span> <span class="dt">static</span> &lt;V&gt; <span class="dt">void</span> <span class="fu">addCallback</span>(ListenableFuture&lt;V&gt; future,
                    FutureCallback&lt;? <span class="kw">super</span> V&gt; callback);
 
   <span class="kw">public</span> <span class="dt">static</span> &lt;I,O&gt; ListenableFuture&lt;O&gt; <span class="fu">transform</span>(ListenableFuture&lt;I&gt; input,
                    Function&lt;? <span class="kw">super</span> I,? <span class="kw">extends</span> O&gt; function);
   ...
-}</code></pre></div>
+}</code></pre>
 <p>Promise在Guava中对应于SettableFuture，可以通过set和setException函数设置Future的值</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> SettableFuture&lt;V&gt; <span class="kw">implements</span> ListenableFuture&lt;V&gt; {
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> SettableFuture&lt;V&gt; <span class="kw">implements</span> ListenableFuture&lt;V&gt; {
   <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">set</span>(<span class="fu">@Nullable</span> V value);
   <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">setException</span>(Throwable throwable)
-}</code></pre></div>
+}</code></pre>
 <h5 id="java8-completablefuture">Java8: CompletableFuture</h5>
 <ul>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">jdk1.8</a></li>
 </ul>
 <p>Java8中新增了CompletableFuture，是Future和Promise的结合：</p>
 <ul>
-<li>生产者可以通过complete和completeExceptionally函数设置Future的值</li>
+<li>生产者可以通过complete和completeExceptionally函数设置Future的值<br /></li>
 <li>消费者可以通过addListener函数添加Listener</li>
 </ul>
 <p>CompletableFuture还提供一些方便使用的函数：</p>
 <ul>
-<li>thenApply: 当Future执行完成后，调用后续的Future</li>
-<li>thenCombine: 合并两个Future</li>
+<li>thenApply: 当Future执行完成后，调用后续的Future<br /></li>
+<li>thenCombine: 合并两个Future<br /></li>
 <li>exceptionally: 当Future的执行抛出异常时，调用函数fn</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> CompletableFuture&lt;T&gt; {
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> CompletableFuture&lt;T&gt; {
   <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">complete</span>(T value);
 
   <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">completeExceptionally</span>(Throwable ex)
@@ -92,15 +89,15 @@ Java8中实现了CompletableFuture，提供了比较完整的Future支持。</p>
 
   <span class="kw">public</span> CompletableFuture&lt;T&gt; <span class="fu">exceptionally</span>(Function&lt;Throwable,? <span class="kw">extends</span> T&gt; fn)
   ...
-}</code></pre></div>
+}</code></pre>
 <h3 id="future-in-scala">Future In Scala</h3>
 <ul>
-<li><a href="http://www.scala-lang.org/api/current/#scala.concurrent.Future">future api</a></li>
-<li><a href="http://www.scala-lang.org/api/current/#scala.concurrent.Promise">promise api</a></li>
+<li><a href="http://www.scala-lang.org/api/current/#scala.concurrent.Future">future api</a><br /></li>
+<li><a href="http://www.scala-lang.org/api/current/#scala.concurrent.Promise">promise api</a><br /></li>
 <li><a href="http://docs.scala-lang.org/overviews/core/futures.html">Futures and Promises</a></li>
 </ul>
 <p>Scala中的Future和Promise是分开实现，提供的接口非常丰富。</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Future[T] {
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Future[T] {
   <span class="co">//轮询接口</span>
   <span class="kw">def</span> isCompleted: Boolean
 
@@ -128,35 +125,35 @@ Java8中实现了CompletableFuture，提供了比较完整的Future支持。</p>
   <span class="kw">def</span> <span class="fu">tryComplete</span>(result: Try[T]): Boolean
   <span class="kw">def</span> <span class="fu">success</span>(value: T): Unit
   <span class="kw">def</span> <span class="fu">failure</span>(t: Throwable): Unit
-}</code></pre></div>
+}</code></pre>
 <h3 id="future-in-c11">Future In C++11</h3>
 <ul>
-<li><a href="http://en.cppreference.com/w/cpp/thread/future">future api</a></li>
+<li><a href="http://en.cppreference.com/w/cpp/thread/future">future api</a><br /></li>
 <li><a href="http://en.cppreference.com/w/cpp/thread/promise">promise api</a></li>
 </ul>
 <p>C++11中的future非常简单，和java5中的Future类似，只能轮询或者阻塞等待，没有提供回调函数：</p>
-<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">template</span>&lt;<span class="kw">class</span> T&gt; <span class="kw">class</span> future {
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">template</span>&lt;<span class="kw">class</span> T&gt; <span class="kw">class</span> future {
   T get();
   <span class="dt">bool</span> valid() <span class="dt">const</span>;
   <span class="dt">void</span> wait() <span class="dt">const</span>;
   ...
-}</code></pre></div>
+}</code></pre>
 <p>C++11中的promise比较完整（因为promise本身比较简单）：</p>
-<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">template</span>&lt; <span class="kw">class</span> R &gt; <span class="kw">class</span> promise {
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">template</span>&lt; <span class="kw">class</span> R &gt; <span class="kw">class</span> promise {
   std::future&lt;T&gt; get_future();
   <span class="dt">void</span> set_value( <span class="dt">const</span> R&amp; value );
   <span class="dt">void</span> set_exception( std::exception_ptr p );
   ...
-}</code></pre></div>
+}</code></pre>
 <h3 id="references">References</h3>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Futures_and_promises">Wikipedia</a></li>
-<li><a href="http://www.wuzesheng.com/?p=2485">深入浅出Future Pattern</a></li>
-<li><a href="http://www.tuicool.com/articles/ABVV3q">Java8 中的纯异步编程</a></li>
-<li><a href="http://www.xker.com/page/e2015/06/198145.html">Java中使用CompletableFuture处理异步超时</a></li>
-<li><a href="http://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf">Scalable Component Abstractions</a></li>
-<li><a href="https://github.com/ReactiveX/RxScala">RxScala Github</a></li>
-<li><a href="http://twitter.github.io/finagle/guide/Futures.html">Twitter: Concurrent Programming with Futures</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Futures_and_promises">Wikipedia</a><br /></li>
+<li><a href="http://www.wuzesheng.com/?p=2485">深入浅出Future Pattern</a><br /></li>
+<li><a href="http://www.tuicool.com/articles/ABVV3q">Java8 中的纯异步编程</a><br /></li>
+<li><a href="http://www.xker.com/page/e2015/06/198145.html">Java中使用CompletableFuture处理异步超时</a><br /></li>
+<li><a href="http://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf">Scalable Component Abstractions</a><br /></li>
+<li><a href="https://github.com/ReactiveX/RxScala">RxScala Github</a><br /></li>
+<li><a href="http://twitter.github.io/finagle/guide/Futures.html">Twitter: Concurrent Programming with Futures</a><br /></li>
 <li><a href="http://twitter.github.io/effectivescala/index.html">Twitter: Effective Scala</a></li>
 </ul>
 </body>

@@ -18,9 +18,15 @@
       </item>
 
       <item>
-        <title>Paxos</title>
-        <link>http://marsishandsome.github.io/gen/posts/Paxos/Paxos.html</link>
-        <description>Paxos</description>
+        <title>Paxos算法介绍</title>
+        <link>http://marsishandsome.github.io/gen/posts/Paxos/Paxos算法介绍.html</link>
+        <description>Paxos算法介绍</description>
+      </item>
+
+      <item>
+        <title>Paxos算法应用</title>
+        <link>http://marsishandsome.github.io/gen/posts/Paxos/Paxos算法应用.html</link>
+        <description>Paxos算法应用</description>
       </item>
 
       <item>
