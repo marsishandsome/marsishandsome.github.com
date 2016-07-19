@@ -204,12 +204,10 @@ def propose(value: Object): Object {
 private def doPropose(value: Object, epoch: Integer): Object = {}
 
 private def doAccept(value: Object, epoch: Integer): Object = {
-  val acceptResults = acceptors.map(_.accept(value, epoch))
-															 .filter(成功返回结果的acceptor)
+  val acceptResults = acceptors.map(_.accept(value, epoch)).filter(成功返回结果的acceptor)
 
   if(acceptResults.size * 2 > numOfAcceptors) {
-    val (_, maxEpoch, maybeValue) = acceptResults
-		                                .filter(_._3 != null).sort(_._2).head
+    val (_, maxEpoch, maybeValue) = acceptResults.filter(_._3 != null).sort(_._2).head
     val numOfMaxEpochValue = acceptResults.filter(_._3 == maybeValue)
     if(numOfMaxEpochValue * 2 >= numOfAcceptors) {
       maybeValue
