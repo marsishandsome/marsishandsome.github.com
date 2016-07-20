@@ -201,7 +201,27 @@ def propose(value: Object): Object {
   doPropose(value, 1)
 }
 
-private def doPropose(value: Object, epoch: Integer): Object = {}
+private def doPropose(value: Object, epoch: Integer): Object = {
+  val prepareResults = acceptors.map(_.prepare(epoch, value)).filter(返回结果的acceptor)
+
+  if(prepareResults.size * 2 > numOfAcceptors) {
+    if(prepareResults.exists(_._3 != null) {
+      val (_, maxEpoch, maybeValue) = prepareResults.filter(_._3 != null).sort(_._2)
+      val numOfMaxEpochValue = prepareResults.filter(_._3 == maybeValue)
+      if(numOfMaxEpochValue * 2 > numOfAcceptors) {
+        doAccept(maybeValue, epoch)
+      } else {
+        Thread(1000)
+        doPropose(maxEpochValue, epoch + 1)
+      }
+    } else {
+        doAccept(value, epoch)
+    }
+  } else {
+    Thread.sleep(1000)
+    doPropose(value, epoch + 1)
+  }
+}
 
 private def doAccept(value: Object, epoch: Integer): Object = {
   val acceptResults = acceptors.map(_.accept(value, epoch)).filter(成功返回结果的acceptor)
