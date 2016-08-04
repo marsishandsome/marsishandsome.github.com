@@ -16,9 +16,15 @@ $ docker pull daocloud.io/library/centos:6
 $ docker run -i -t centos:6 /bin/bash
 ```
 
-## 命令查询
+## 基本命令
+### 命令查询
 - [Docker Cheat Sheet](http://zeroturnaround.com/wp-content/uploads/2016/03/Docker-cheat-sheet-by-RebelLabs.png)
 - [Docker Quick Ref](https://github.com/dimonomid/docker-quick-ref)
+
+### TODO
+
+## 打造自己的镜像
+TODO
 
 ## 参考
 - [Docker for Mac官方文档](https://docs.docker.com/docker-for-mac/)
