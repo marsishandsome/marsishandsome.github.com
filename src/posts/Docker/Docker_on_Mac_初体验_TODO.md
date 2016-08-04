@@ -19,9 +19,6 @@ $ docker run --rm -i -t --name test daocloud.io/library/centos:6 /bin/bash
 ```
 
 ## 基本命令
-### 命令查询
-- [Docker Cheat Sheet](http://zeroturnaround.com/wp-content/uploads/2016/03/Docker-cheat-sheet-by-RebelLabs.png)
-- [Docker Quick Ref](https://github.com/dimonomid/docker-quick-ref)
 
 ### 启动命令
 ```
@@ -77,6 +74,42 @@ $ docker images
 
 ### Dockerfile
 
+#### 编写Dockerfile
+```
+$ mkdir -p spark-dev/base
+$ vi spark-dev/base/Dockerfile
+```
+
+```
+FROM daocloud.io/library/centos:6
+
+RUN yum install -y \
+java-1.7.0-openjdk.x86_64 \
+openssh-server
+
+RUN curl \
+http://d3kbcqa49mib13.cloudfront.net/spark-2.0.0-bin-hadoop2.7.tgz \
+| tar -xzC /opt
+RUN ln -s /opt/spark-2.0.0-bin-hadoop2.7 /opt/spark
+
+ENV SPARK_HOME /opt/spark
+ENV PATH $SPARK_HOME:$PATH
+```
+
+#### 把Dockerfile编译成镜像
+```
+$ docker build -t spark-dev-base spark-dev/base/
+```
+
+#### 使用编译好的镜像
+```
+$ docker run --rm -ti --name spark-dev-base spark-dev-base /bin/bash
+
+> /opt/spark/bin/spark-shell --master local[*]
+```
+
+源码见：[https://github.com/marsishandsome/spark-docker](https://github.com/marsishandsome/spark-docker)
+
 ## 参考
 - [Docker for Mac官方文档](https://docs.docker.com/docker-for-mac/)
 - [Docker Resource All in One](https://github.com/hangyan/docker-resources/blob/master/README_zh.md)
@@ -86,3 +119,5 @@ $ docker images
 - [Docker基础技术：Linux CGroup](http://coolshell.cn/articles/17049.html)
 - [Docker基础技术：AUFS](http://coolshell.cn/articles/17061.html)
 - [Docker基础技术：DeviceMapper](http://coolshell.cn/articles/17200.html)
+- [Docker Cheat Sheet](http://zeroturnaround.com/wp-content/uploads/2016/03/Docker-cheat-sheet-by-RebelLabs.png)
+- [Docker Quick Ref](https://github.com/dimonomid/docker-quick-ref)

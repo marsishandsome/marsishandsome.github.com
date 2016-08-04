@@ -1,7 +1,8 @@
-./bin/pall
 
 FWDIR="$(cd "`dirname "$0"`"/..; pwd)"
 cd $FWDIR
+
+./bin/pposts
 
 git add .
 git commit -a -m "update"
