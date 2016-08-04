@@ -17,10 +17,8 @@ $ docker run -i -t centos:6 /bin/bash
 ```
 
 ## 命令查询
-[Docker Cheat Sheet](http://zeroturnaround.com/wp-content/uploads/2016/03/Docker-cheat-sheet-by-RebelLabs.png)
-![](http://zeroturnaround.com/wp-content/uploads/2016/03/Docker-cheat-sheet-by-RebelLabs.png)
-
-[Docker Quick Ref](https://github.com/dimonomid/docker-quick-ref)
+- [Docker Cheat Sheet](http://zeroturnaround.com/wp-content/uploads/2016/03/Docker-cheat-sheet-by-RebelLabs.png)
+- [Docker Quick Ref](https://github.com/dimonomid/docker-quick-ref)
 
 ## 参考
 - [Docker for Mac官方文档](https://docs.docker.com/docker-for-mac/)
