@@ -20,6 +20,7 @@
 </head>
 <body>
 <h1 id="docker">Docker原理</h1>
+<p>源码：<a href="https://github.com/marsishandsome/playground/tree/master/docker-principal" class="uri">https://github.com/marsishandsome/playground/tree/master/docker-principal</a></p>
 <h2 id="clone">clone系统调用</h2>
 <p><a href="http://man7.org/linux/man-pages/man2/clone.2.html">clone API文档</a></p>
 <pre><code>#define _GNU_SOURCE
@@ -222,7 +223,13 @@ rootfs/
         |-- clear
         |-- less
         |-- which
-        `-- whoami</code></pre>
+        `-- whoami
+
+tree conf
+conf
+|-- hostname
+|-- hosts
+`-- resolv.conf</code></pre>
 <pre><code>#define _GNU_SOURCE
 #include &lt;sys/types.h&gt;
 #include &lt;sys/wait.h&gt;
@@ -329,9 +336,9 @@ tmpfs on /run type tmpfs (rw,relatime)
 /dev/vdb on /etc/hosts type ext4 (rw,relatime,barrier=1,data=ordered)
 /dev/vdb on /etc/hostname type ext4 (rw,relatime,barrier=1,data=ordered)
 /dev/vdb on /etc/resolv.conf type ext4 (rw,relatime,barrier=1,data=ordered)</code></pre>
-<h2 id="network-namespaces">Network Namespaces</h2>
-<p>TODO</p>
 <h2 id="user-namespaces">User Namespaces</h2>
+<p>TODO</p>
+<h2 id="network-namespaces">Network Namespaces</h2>
 <p>TODO</p>
 <h2>参考</h2>
 <ul>

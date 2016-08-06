@@ -1,5 +1,7 @@
 # Docker原理
 
+源码：[https://github.com/marsishandsome/playground/tree/master/docker-principal](https://github.com/marsishandsome/playground/tree/master/docker-principal)
+
 ## clone系统调用
 [clone API文档](http://man7.org/linux/man-pages/man2/clone.2.html)
 
@@ -235,6 +237,12 @@ rootfs/
         |-- less
         |-- which
         `-- whoami
+
+tree conf
+conf
+|-- hostname
+|-- hosts
+`-- resolv.conf
 ```
 
 ```
@@ -349,10 +357,10 @@ tmpfs on /run type tmpfs (rw,relatime)
 /dev/vdb on /etc/resolv.conf type ext4 (rw,relatime,barrier=1,data=ordered)
 ```
 
-## Network Namespaces
+## User Namespaces
 TODO
 
-## User Namespaces
+## Network Namespaces
 TODO
 
 ## 参考
