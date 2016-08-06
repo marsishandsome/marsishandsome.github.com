@@ -1,0 +1,348 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Mars Gu" />
+
+    <title>Mars的笔记</title>
+
+    <!--post-->
+    <link href="http://marsishandsome.github.io/template/post.css" rel="stylesheet"></link>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72149435-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+<h1 id="docker">Docker原理</h1>
+<h2 id="clone">clone系统调用</h2>
+<p><a href="http://man7.org/linux/man-pages/man2/clone.2.html">clone API文档</a></p>
+<pre><code>#define _GNU_SOURCE
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sched.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;unistd.h&gt;
+
+/* 定义一个给 clone 用的栈，栈大小1M */
+#define STACK_SIZE (1024 * 1024)
+static char container_stack[STACK_SIZE];
+
+char* const container_args[] = {
+    &quot;/bin/bash&quot;,
+    NULL
+};
+
+int container_main(void* arg)
+{
+    printf(&quot;Container - inside the container!\n&quot;);
+    /* 直接执行一个shell，以便我们观察这个进程空间里的资源是否被隔离了 */
+    execv(container_args[0], container_args);
+    printf(&quot;Something&#39;s wrong!\n&quot;);
+    return 1;
+}
+
+int main()
+{
+    printf(&quot;Parent - start a container!\n&quot;);
+    /* 调用clone函数，其中传出一个函数，
+     * 还有一个栈空间的（为什么传尾指针，因为栈是反着的） */
+    int container_pid = clone(container_main, container_stack+STACK_SIZE,
+            SIGCHLD, NULL);
+    /* 等待子进程结束 */
+    waitpid(container_pid, NULL, 0);
+    printf(&quot;Parent - container stopped!\n&quot;);
+    return 0;
+}</code></pre>
+<pre><code>./target/clone
+Parent - start a container!
+Container - inside the container!
+
+ps
+  PID TTY          TIME CMD
+ 9645 pts/13   00:00:00 clone
+ 9646 pts/13   00:00:00 bash
+ 9795 pts/13   00:00:00 ps
+25829 pts/13   00:00:00 bash</code></pre>
+<h2 id="uts-namespaces">UTS Namespaces</h2>
+<pre><code>int container_main(void* arg)
+{
+    printf(&quot;Container - inside the container!\n&quot;);
+    sethostname(&quot;container&quot;,10); /* 设置hostname */
+    execv(container_args[0], container_args);
+    printf(&quot;Something&#39;s wrong!\n&quot;);
+    return 1;
+}
+
+int main()
+{
+    printf(&quot;Parent - start a container!\n&quot;);
+    /*启用CLONE_NEWUTS Namespace隔离 */
+    int container_pid = clone(container_main, container_stack+STACK_SIZE,
+            CLONE_NEWUTS | SIGCHLD, NULL);
+    waitpid(container_pid, NULL, 0);
+    printf(&quot;Parent - container stopped!\n&quot;);
+    return 0;
+}</code></pre>
+<pre><code>./target/uts
+Parent - start a container!
+Container - inside the container!
+
+[root@container docker-principal]# hostname
+container
+
+[root@container docker-principal]# uname -n
+container</code></pre>
+<h2 id="ipc-namespaces">IPC Namespaces</h2>
+<pre><code>/*启用CLONE_NEWIPC Namespace隔离 */
+int container_pid = clone(container_main, container_stack+STACK_SIZE,
+        CLONE_NEWUTS | CLONE_NEWIPC | SIGCHLD, NULL);</code></pre>
+<pre><code>ipcmk -Q
+Message queue id: 0
+
+ipcs -q
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    
+0x2aa2fd9f 0          root       644        0            0           
+
+./target/ipc
+Parent - start a container!
+Container - inside the container!
+
+ipcs -q
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    </code></pre>
+<h2 id="pid-namespaces">PID Namespaces</h2>
+<pre><code>int container_main(void* arg)
+{
+    /* 查看子进程的PID，我们可以看到其输出子进程的 pid 为 1 */
+    printf(&quot;Container [%5d] - inside the container!\n&quot;, getpid());
+    execv(container_args[0], container_args);
+    printf(&quot;Something&#39;s wrong!\n&quot;);
+    return 1;
+}
+
+int main()
+{
+    printf(&quot;Parent - start a container!\n&quot;);
+    /*启用CLONE_NEWPID Namespace隔离 */
+    int container_pid = clone(container_main, container_stack+STACK_SIZE,
+            CLONE_NEWUTS | CLONE_NEWPID | SIGCHLD, NULL);
+    waitpid(container_pid, NULL, 0);
+    printf(&quot;Parent - container stopped!\n&quot;);
+    return 0;
+}</code></pre>
+<pre><code>./target/pid
+Parent - start a container!
+Container [    1] - inside the container!
+
+echo $$
+1</code></pre>
+<h2 id="mount-namespaces">Mount Namespaces</h2>
+<pre><code>int container_main(void* arg)
+{
+    printf(&quot;Container [%5d] - inside the container!\n&quot;, getpid());
+    sethostname(&quot;container&quot;,10);
+    /* 重新mount proc文件系统到 /proc下 */
+    system(&quot;mount -t proc proc /proc&quot;);
+    execv(container_args[0], container_args);
+    printf(&quot;Something&#39;s wrong!\n&quot;);
+    return 1;
+}
+
+int main()
+{
+    printf(&quot;Parent [%5d] - start a container!\n&quot;, getpid());
+    /* 启用Mount Namespace - 增加CLONE_NEWNS参数 */
+    int container_pid = clone(container_main, container_stack+STACK_SIZE,
+            CLONE_NEWUTS | CLONE_NEWPID | CLONE_NEWNS | SIGCHLD, NULL);
+    waitpid(container_pid, NULL, 0);
+    printf(&quot;Parent - container stopped!\n&quot;);
+    return 0;
+}</code></pre>
+<pre><code>/target/mount
+Parent [13284] - start a container!
+Container [    1] - inside the container!
+
+ps -elf
+F S UID        PID  PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
+4 S root         1     0  0  80   0 - 27082 wait   11:11 pts/13   00:00:00 /bin/bash
+0 R root        30     1  0  80   0 - 27552 -      11:11 pts/13   00:00:00 ps -elf</code></pre>
+<h2 id="docker">山寨Docker</h2>
+<pre><code>tree rootfs/
+rootfs/
+|-- bin
+|   |-- bash
+|   |-- cat
+|   |-- ls
+|   |-- mount
+|   |-- ping
+|   |-- ps
+|   |-- pwd
+|   `-- sh
+|-- dev
+|-- etc
+|   |-- hostname
+|   |-- hosts
+|   `-- resolv.conf
+|-- home
+|-- lib
+|-- lib64
+|   |-- ld-linux-x86-64.so.2
+|   |-- libacl.so.1
+|   |-- libattr.so.1
+|   |-- libcap.so.2
+|   |-- libc.so.6
+|   |-- libdl.so.2
+|   |-- libidn.so.11
+|   |-- libpcre.so.0
+|   |-- libproc-3.2.8.so
+|   |-- libpthread.so.0
+|   |-- librt.so.1
+|   |-- libselinux.so.1
+|   `-- libtinfo.so.5
+|-- mnt
+|-- opt
+|-- proc
+|-- root
+|   `-- etc
+|-- run
+|-- sbin
+|-- sys
+|-- tmp
+|   `-- test
+`-- usr
+    `-- bin
+        |-- clear
+        |-- less
+        |-- which
+        `-- whoami</code></pre>
+<pre><code>#define _GNU_SOURCE
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;sys/mount.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sched.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;unistd.h&gt;
+
+/* 定义一个给 clone 用的栈，栈大小1M */
+#define STACK_SIZE (1024 * 1024)
+static char container_stack[STACK_SIZE];
+
+char* const container_args[] = {
+    &quot;/bin/bash&quot;,
+    NULL
+};
+
+int container_main(void* arg)
+{
+    printf(&quot;Container [%5d] - inside the container!\n&quot;, getpid());
+
+    // set hostname
+    sethostname(&quot;container&quot;,10);
+
+    //remount &quot;/proc&quot; to make sure the &quot;top&quot; and &quot;ps&quot; show container&#39;s information
+    if (mount(&quot;proc&quot;, &quot;rootfs/proc&quot;, &quot;proc&quot;, 0, NULL) !=0 ) {
+        perror(&quot;proc&quot;);
+    }
+    if (mount(&quot;sysfs&quot;, &quot;rootfs/sys&quot;, &quot;sysfs&quot;, 0, NULL)!=0) {
+        perror(&quot;sys&quot;);
+    }
+    if (mount(&quot;none&quot;, &quot;rootfs/tmp&quot;, &quot;tmpfs&quot;, 0, NULL)!=0) {
+        perror(&quot;tmp&quot;);
+    }
+    if (mount(&quot;udev&quot;, &quot;rootfs/dev&quot;, &quot;devtmpfs&quot;, 0, NULL)!=0) {
+        perror(&quot;dev&quot;);
+    }
+    if (mount(&quot;devpts&quot;, &quot;rootfs/dev/pts&quot;, &quot;devpts&quot;, 0, NULL)!=0) {
+        perror(&quot;dev/pts&quot;);
+    }
+    if (mount(&quot;shm&quot;, &quot;rootfs/dev/shm&quot;, &quot;tmpfs&quot;, 0, NULL)!=0) {
+        perror(&quot;dev/shm&quot;);
+    }
+    if (mount(&quot;tmpfs&quot;, &quot;rootfs/run&quot;, &quot;tmpfs&quot;, 0, NULL)!=0) {
+        perror(&quot;run&quot;);
+    }
+
+    /*
+     * 模仿Docker的从外向容器里mount相关的配置文件
+     * 你可以查看：/var/lib/docker/containers/&lt;container_id&gt;/目录，
+     * 你会看到docker的这些文件的。
+     */
+    if (mount(&quot;conf/hosts&quot;, &quot;rootfs/etc/hosts&quot;, &quot;none&quot;, MS_BIND, NULL)!=0 ||
+        mount(&quot;conf/hostname&quot;, &quot;rootfs/etc/hostname&quot;, &quot;none&quot;, MS_BIND, NULL)!=0 ||
+        mount(&quot;conf/resolv.conf&quot;, &quot;rootfs/etc/resolv.conf&quot;, &quot;none&quot;, MS_BIND, NULL)!=0 ) {
+        perror(&quot;conf&quot;);
+    }
+
+    /* 模仿docker run命令中的 -v, --volume=[] 参数干的事 */
+    /*if (mount(&quot;/tmp/t1&quot;, &quot;rootfs/mnt&quot;, &quot;none&quot;, MS_BIND, NULL)!=0) {
+       perror(&quot;mnt&quot;);
+    }*/
+
+    /* chroot 隔离目录 */
+    if ( chdir(&quot;./rootfs&quot;) != 0 || chroot(&quot;./&quot;) != 0 ){
+        perror(&quot;chdir/chroot&quot;);
+    }
+
+    execv(container_args[0], container_args);
+    perror(&quot;exec&quot;);
+    printf(&quot;Something&#39;s wrong!\n&quot;);
+    return 1;
+}
+
+int main()
+{
+    printf(&quot;Parent [%5d] - start a container!\n&quot;, getpid());
+    int container_pid = clone(container_main, container_stack+STACK_SIZE,
+            CLONE_NEWUTS | CLONE_NEWIPC | CLONE_NEWPID | CLONE_NEWNS | SIGCHLD, NULL);
+    waitpid(container_pid, NULL, 0);
+    printf(&quot;Parent - container stopped!\n&quot;);
+    return 0;
+}</code></pre>
+<pre><code>./target/docker
+Parent [   36] - start a container!
+Container [    1] - inside the container!
+
+bash-4.1# ls /bin /usr/bin
+/bin:
+bash  cat  ls  mount  ping  ps  pwd  sh
+
+/usr/bin:
+clear  less  which  whoami
+
+bash-4.1# mount
+proc on /proc type proc (rw,relatime)
+sysfs on /sys type sysfs (rw,relatime)
+none on /tmp type tmpfs (rw,relatime)
+udev on /dev type devtmpfs (rw,relatime,size=4018972k,nr_inodes=1004743,mode=755)
+devpts on /dev/pts type devpts (rw,relatime,mode=600,ptmxmode=000)
+shm on /dev/shm type tmpfs (rw,relatime)
+tmpfs on /run type tmpfs (rw,relatime)
+/dev/vdb on /etc/hosts type ext4 (rw,relatime,barrier=1,data=ordered)
+/dev/vdb on /etc/hostname type ext4 (rw,relatime,barrier=1,data=ordered)
+/dev/vdb on /etc/resolv.conf type ext4 (rw,relatime,barrier=1,data=ordered)</code></pre>
+<h2 id="network-namespaces">Network Namespaces</h2>
+<p>TODO</p>
+<h2 id="user-namespaces">User Namespaces</h2>
+<p>TODO</p>
+<h2>参考</h2>
+<ul>
+<li><a href="http://lwn.net/Articles/531114/">Namespaces in operation, part 1: namespaces overview</a></li>
+<li><a href="http://coolshell.cn/articles/17010.html">Docker基础技术：Linux Namespace（上）</a></li>
+<li><a href="http://coolshell.cn/articles/17029.html">Docker基础技术：Linux Namespace（下）</a></li>
+<li><a href="http://coolshell.cn/articles/17049.html">Docker基础技术：Linux CGroup</a></li>
+<li><a href="http://coolshell.cn/articles/17061.html">Docker基础技术：AUFS</a></li>
+<li><a href="http://coolshell.cn/articles/17200.html">Docker基础技术：DeviceMapper</a></li>
+<li><a href="https://github.com/hangyan/docker-resources/blob/master/README_zh.md">Docker Resource All in One</a></li>
+<li><a href="https://github.com/p8952/bocker">Bocker: Docker implemented in around 100 lines of bash</a></li>
+</ul>
+</body>
+</html>
