@@ -414,7 +414,7 @@ PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
 30272 root      20   0  3912  328  264 R 19.8  0.0   2:18.95 deadloop
 ```
 
-### memory
+### Memory
 memory.c
 
 ```
