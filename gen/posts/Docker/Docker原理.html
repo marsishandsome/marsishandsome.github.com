@@ -401,11 +401,11 @@ int main(void)
     }
     return 0;
 }</code></pre>
-<pre><code></code></pre>
-<p>./target/memory</p>
-<p>echo 64k &gt; cgroup/memory/hello/memory.limit_in_bytes</p>
-<p>echo 1058 &gt; cgroup/memory/hello/tasks<br />
-```</p>
+<pre><code>./target/memory
+
+echo 64k &gt; cgroup/memory/hello/memory.limit_in_bytes
+
+echo 1058 &gt; cgroup/memory/hello/tasks</code></pre>
 <p>没有效果，进程没有被kill！</p>
 <h2>参考</h2>
 <ul>

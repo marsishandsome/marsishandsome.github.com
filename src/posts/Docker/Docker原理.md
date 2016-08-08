@@ -446,7 +446,6 @@ int main(void)
 ```
 
 ```
-```
 ./target/memory
 
 echo 64k > cgroup/memory/hello/memory.limit_in_bytes
