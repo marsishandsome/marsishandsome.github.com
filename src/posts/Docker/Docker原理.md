@@ -465,7 +465,7 @@ echo 64k > cgroup/memory/hello/memory.limit_in_bytes
 echo 1058 > cgroup/memory/hello/tasks
 ```
 
-没有效果，进程没有被kill！
+<font color='red' size=18>没有效果，进程没有被kill！</font>
 
 ## 参考
 - [Namespaces in operation, part 1: namespaces overview](http://lwn.net/Articles/531114/)
