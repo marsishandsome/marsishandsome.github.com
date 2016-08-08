@@ -5,6 +5,8 @@
 ## clone系统调用
 [clone API文档](http://man7.org/linux/man-pages/man2/clone.2.html)
 
+clone.c
+
 ```
 #define _GNU_SOURCE
 #include <sys/types.h>
@@ -60,6 +62,8 @@ ps
 ```
 
 ## UTS Namespaces
+uts.c
+
 ```
 int container_main(void* arg)
 {
@@ -95,6 +99,8 @@ container
 ```
 
 ## IPC Namespaces
+ipc.c
+
 ```
 /*启用CLONE_NEWIPC Namespace隔离 */
 int container_pid = clone(container_main, container_stack+STACK_SIZE,
@@ -120,6 +126,8 @@ key        msqid      owner      perms      used-bytes   messages
 ```
 
 ## PID Namespaces
+pid.c
+
 ```
 int container_main(void* arg)
 {
@@ -152,6 +160,8 @@ echo $$
 ```
 
 ## Mount Namespaces
+mount.c
+
 ```
 int container_main(void* arg)
 {
@@ -244,6 +254,8 @@ conf
 |-- hosts
 `-- resolv.conf
 ```
+
+docker.c
 
 ```
 #define _GNU_SOURCE

@@ -23,6 +23,7 @@
 <p>源码：<a href="https://github.com/marsishandsome/playground/tree/master/docker-principal" class="uri">https://github.com/marsishandsome/playground/tree/master/docker-principal</a></p>
 <h2 id="clone">clone系统调用</h2>
 <p><a href="http://man7.org/linux/man-pages/man2/clone.2.html">clone API文档</a></p>
+<p>clone.c</p>
 <pre><code>#define _GNU_SOURCE
 #include &lt;sys/types.h&gt;
 #include &lt;sys/wait.h&gt;
@@ -72,6 +73,7 @@ ps
  9795 pts/13   00:00:00 ps
 25829 pts/13   00:00:00 bash</code></pre>
 <h2 id="uts-namespaces">UTS Namespaces</h2>
+<p>uts.c</p>
 <pre><code>int container_main(void* arg)
 {
     printf(&quot;Container - inside the container!\n&quot;);
@@ -101,6 +103,7 @@ container
 [root@container docker-principal]# uname -n
 container</code></pre>
 <h2 id="ipc-namespaces">IPC Namespaces</h2>
+<p>ipc.c</p>
 <pre><code>/*启用CLONE_NEWIPC Namespace隔离 */
 int container_pid = clone(container_main, container_stack+STACK_SIZE,
         CLONE_NEWUTS | CLONE_NEWIPC | SIGCHLD, NULL);</code></pre>
@@ -120,6 +123,7 @@ ipcs -q
 ------ Message Queues --------
 key        msqid      owner      perms      used-bytes   messages    </code></pre>
 <h2 id="pid-namespaces">PID Namespaces</h2>
+<p>pid.c</p>
 <pre><code>int container_main(void* arg)
 {
     /* 查看子进程的PID，我们可以看到其输出子进程的 pid 为 1 */
@@ -146,6 +150,7 @@ Container [    1] - inside the container!
 echo $$
 1</code></pre>
 <h2 id="mount-namespaces">Mount Namespaces</h2>
+<p>mount.c</p>
 <pre><code>int container_main(void* arg)
 {
     printf(&quot;Container [%5d] - inside the container!\n&quot;, getpid());
@@ -230,6 +235,7 @@ conf
 |-- hostname
 |-- hosts
 `-- resolv.conf</code></pre>
+<p>docker.c</p>
 <pre><code>#define _GNU_SOURCE
 #include &lt;sys/types.h&gt;
 #include &lt;sys/wait.h&gt;
