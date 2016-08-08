@@ -357,12 +357,6 @@ tmpfs on /run type tmpfs (rw,relatime)
 /dev/vdb on /etc/resolv.conf type ext4 (rw,relatime,barrier=1,data=ordered)
 ```
 
-## User Namespaces
-TODO
-
-## Network Namespaces
-TODO
-
 ## 参考
 - [Namespaces in operation, part 1: namespaces overview](http://lwn.net/Articles/531114/)
 - [Docker基础技术：Linux Namespace（上）](http://coolshell.cn/articles/17010.html)
