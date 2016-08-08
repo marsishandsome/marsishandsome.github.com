@@ -357,6 +357,105 @@ tmpfs on /run type tmpfs (rw,relatime)
 /dev/vdb on /etc/resolv.conf type ext4 (rw,relatime,barrier=1,data=ordered)
 ```
 
+## CGroup
+```
+mkdir cgroup
+mount -t tmpfs cgroup_root ./cgroup
+mkdir cgroup/cpuset
+mount -t cgroup -ocpuset cpuset ./cgroup/cpuset/
+mkdir cgroup/cpu
+mount -t cgroup -ocpu cpu ./cgroup/cpu/
+mkdir cgroup/memory
+mount -t cgroup -omemory memory ./cgroup/memory/
+```
+
+```
+ls cgroup/cpu
+cgroup.event_control  cpu.cfs_period_us  cpu.rt_period_us   cpu.shares  release_agent
+cgroup.procs          cpu.cfs_quota_us   cpu.rt_runtime_us  cpu.stat    notify_on_release  tasks
+```
+
+```
+mkdir cgroup/cpu/hello
+
+ls cgroup/cpu/hello
+ls cgroup/cpu/hello/
+cgroup.event_control  cpu.cfs_quota_us   cpu.shares         tasks
+cgroup.procs          cpu.rt_period_us   cpu.stat
+cpu.cfs_period_us     cpu.rt_runtime_us  notify_on_release
+```
+
+### CPU
+deadloop.c
+
+```
+int main(void)
+{
+    int i = 0;
+    for(;;) i++;
+    return 0;
+}
+```
+
+```
+./target/deadloop
+
+top
+
+PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+30272 root      20   0  3912  328  264 R 100.0  0.0   0:05.49 deadloop
+```
+
+```
+echo 20000 > cgroup/cpu/hello/cpu.cfs_quota_us
+echo 30272 > cgroup/cpu/hello/tasks
+
+PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+30272 root      20   0  3912  328  264 R 19.8  0.0   2:18.95 deadloop
+```
+
+### memory
+memory.c
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+int main(void)
+{
+    int size = 0;
+    int chunk_size = 512;
+    void *p = NULL;
+
+    while(1) {
+        p = malloc(chunk_size);
+        if (p == NULL) {
+            printf("out of memory!!\n");
+            break;
+        }
+        memset(p, 1, chunk_size);
+        size += chunk_size;
+        printf("[%d] - memory is allocated [%8d] bytes \n", getpid(), size);
+        sleep(1);
+    }
+    return 0;
+}
+```
+
+```
+```
+./target/memory
+
+echo 64k > cgroup/memory/hello/memory.limit_in_bytes
+
+echo 1058 > cgroup/memory/hello/tasks
+```
+
+没有效果，进程没有被kill！
+
 ## 参考
 - [Namespaces in operation, part 1: namespaces overview](http://lwn.net/Articles/531114/)
 - [Docker基础技术：Linux Namespace（上）](http://coolshell.cn/articles/17010.html)
