@@ -22,6 +22,13 @@
 <h1 id="flume">Flume架构</h1>
 <p>Flume NG是Cloudera提供的一个分布式、可靠、可用的系统，它能够将不同数据源的海量日志数据进行高效收集、聚合、移动，最后存储到一个中心化数据存储系统中。</p>
 <p>本文试图还原Flume的设计者设计Flume架构的过程。</p>
+<p>Flume的架构设计主要需要考虑：</p>
+<ol>
+<li>读取不同数据源</li>
+<li>写入不同数据库</li>
+<li>不丢数据</li>
+<li>支持水平扩展</li>
+</ol>
 <h2 id="flume">单机版Flume</h2>
 <p>设计单机版的Flume需要考虑：</p>
 <ol>
@@ -42,12 +49,8 @@
 <p><img src="../../../images/flume/flume2.png" /></p>
 <h2>单机版：如果保证不丢数据？</h2>
 <h3 id="source">如何保证Source不丢数据？</h3>
-<ol>
-<li>被动接收数据，数据发送方支持重新发送 =&gt; 只有在成功写入channel后才返回成功，否则返回error，寄希望于数据发送方重发数据</li>
-<li>被动接收数据，数据发送方不支持重新发送 =&gt; 当写入Channel失败或者Agent挂掉时，会丢数据</li>
-<li>主动读取数据，数据源是可重复读取 =&gt; 需要主动记录当前offset，并且持久化offset，Agent重启后从持久化恢复offset，只有在成功写入channel后才更新offset</li>
-<li>主动读取数据，数据源是不可重复读取 =&gt; 当写入Channel失败或者Agent挂掉时时，会丢数据</li>
-</ol>
+<p>Source是否能支持不丢数据，取决于接收数据的模式和Source的特性：</p>
+<p><img src="../../../images/flume/source.png" /></p>
 <h3 id="channel">如何保证Channel不丢数据？</h3>
 <ol>
 <li>Channel选择持久化存储（磁盘），Agent重启后Channel数据不会丢失</li>
@@ -80,9 +83,6 @@
 <li><a href="https://github.com/apache/flume">Flume Github</a></li>
 <li><a href="https://cwiki.apache.org/confluence/display/FLUME/Home;jsessionid=E7F7666DFE67BDEF020D03A64A845F62">Flume Document</a></li>
 <li><a href="https://cwiki.apache.org/confluence/display/FLUME/Getting+Started">Flume Getting Started</a></li>
-<li><a href="http://tech.meituan.com/mt-log-system-arch.html">基于Flume的美团日志收集系统(一)架构和设计</a></li>
-<li><a href="http://tech.meituan.com/mt-log-system-optimization.html">基于Flume的美团日志收集系统(二)改进和优化</a></li>
-<li><a href="https://github.com/javachen/mt-flume">美团对 flume 的扩展和改进</a></li>
 </ul>
 </body>
 </html>
