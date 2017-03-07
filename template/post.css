@@ -132,3 +132,7 @@ div.tweet i {
   margin-right: 0.5em;
   padding: 0px 2px;
 }
+
+img {
+  max-width: 600px
+}
