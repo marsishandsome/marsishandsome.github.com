@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Mars Gu" />
+
+    <title>Mars的笔记</title>
+
+    <!--post-->
+    <link href="http://marsishandsome.github.io/template/post.css" rel="stylesheet"></link>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72149435-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+<h1 id="storm">Storm架构</h1>
+<h2>流式系统的特点</h2>
+<p>Michael Stonebraker在论文The 8 Requirements of Real-Time Stream Processing中提出了在设计流式系统时需要考虑的8个条件：</p>
+<ol>
+<li>Keep the Data Moving：低延迟</li>
+<li>Query using SQL on Streams：支持StreamSQL</li>
+<li>Handle Stream Imperfections (Delayed, Missing and Out-of-Order Data)：能处理延迟数据、丢失数据、乱序数据</li>
+<li>Generate Predictable Outcomes：结果可预测</li>
+<li>Integrate Stored and Streaming Data：能保存中间状态</li>
+<li>Guarantee Data Safety and Availability：高可用HA</li>
+<li>Partition and Scale Applications Automatically：可扩展</li>
+<li>Process and Respond Instantaneously：低延迟</li>
+</ol>
+<p>钟翔在设计Gearpump时又将这8个条件浓缩为5个字：活大快准见。</p>
+<p><img src="../../../images/storm/streaming_requirements.png" /></p>
+<p>我觉得比较重要的几点：</p>
+<ul>
+<li>高可用</li>
+<li>可扩展性</li>
+<li>低延迟</li>
+<li>方便存储中间状态</li>
+<li>Exactly once语义</li>
+<li>支持升级</li>
+</ul>
+<h2 id="storm">单机版Storm</h2>
+<p><img src="../../../images/storm/storm1.png" /></p>
+<h3 id="storm">分布式Storm</h3>
+<p><a href="http://storm.apache.org/releases/current/Understanding-the-parallelism-of-a-Storm-topology.html" class="uri">http://storm.apache.org/releases/current/Understanding-the-parallelism-of-a-Storm-topology.html</a></p>
+<p><img src="../../../images/storm/storm2.png" /></p>
+<h2>高可用</h2>
+<h3 id="nimbus">Nimbus高可用</h3>
+<p><a href="http://storm.apache.org/releases/current/nimbus-ha-design.html" class="uri">http://storm.apache.org/releases/current/nimbus-ha-design.html</a></p>
+<p><img src="../../../images/storm/storm3.png" /></p>
+<h3 id="worker">Worker高可用</h3>
+<p><img src="../../../images/storm/storm4.png" /></p>
+<h2 id="reliability">Reliability</h2>
+<p><a href="http://storm.apache.org/releases/current/Guaranteeing-message-processing.html" class="uri">http://storm.apache.org/releases/current/Guaranteeing-message-processing.html</a></p>
+<h2>可扩展性</h2>
+<ul>
+<li>Nimbus</li>
+<li>Zookeeper</li>
+<li>Worker：扩容worker数量</li>
+</ul>
+<h2>低延迟</h2>
+<p>来一条消息立即处理，延迟时间=数据处理步骤 * (数据处理时间 + 数据传递时间)</p>
+<h2 id="streamsql">StreamSQL</h2>
+<p><a href="http://storm.apache.org/releases/current/storm-sql.html" class="uri">http://storm.apache.org/releases/current/storm-sql.html</a></p>
+<h2 id="exactly-oncetrident">Exactly once语义：Trident</h2>
+<p><a href="http://storm.apache.org/releases/current/Trident-tutorial.html" class="uri">http://storm.apache.org/releases/current/Trident-tutorial.html</a></p>
+<h2>方便存储中间状态</h2>
+<h2>支持升级</h2>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://github.com/apache/storm">Storm Github</a></li>
+<li><a href="http://storm.apache.org/releases/current/index.html">Storm文档</a></li>
+<li><a href="http://www.tutorialspoint.com/apache_storm/apache_storm_cluster_architecture.htm">Storm Architecture</a></li>
+<li><a href="https://www.oreilly.com/ideas/the-world-beyond-batch-streaming-101">the-world-beyond-batch-streaming-101</a></li>
+<li><a href="https://www.oreilly.com/ideas/the-world-beyond-batch-streaming-102">the-world-beyond-batch-streaming-102</a></li>
+<li><a href="http://www.infoq.com/cn/presentations/gearpump-a-new-generation-stream-processing-engine">Gearpump：基于Akka的新一代流处理引擎</a></li>
+<li><a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf">The 8 Requirements of Real-Time Stream Processing</a></li>
+</ul>
+</body>
+</html>
